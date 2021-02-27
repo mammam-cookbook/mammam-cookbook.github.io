@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import CreatePasswordPage from 'pages/CreatePassword'
+import ForgotPassword from 'pages/ForgotPassword'
+import Home from 'pages/Home'
+import SignIn from 'pages/SignIn'
+import SignUp from 'pages/SignUp'
+import React from 'react'
+import { HashRouter as Router, Route } from 'react-router-dom'
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
+import { history } from 'ultis/functions'
+import './App.less'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router history={history}>
+      <Route exact path="/" component={Home} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/forgot" component={ForgotPassword} />
+      <Route path="/reset/:token" component={CreatePasswordPage} />
+    </Router>
+  )
 }
 
-export default App;
+export default App
