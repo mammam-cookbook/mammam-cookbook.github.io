@@ -9,11 +9,13 @@ import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import '../SignIn/signin.css'
 import forgotPic from 'assets/images/forgot_password.jpg'
-import logo from 'assets/logo.png'
+import logo from 'assets/logo.svg'
+import { useTranslation } from 'react-i18next'
 
 function ForgotPassword() {
   const history = useHistory()
   const dispatch = useDispatch()
+  const { t } = useTranslation()
   const user = useSelector(state => state.Auth?.user)
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
 
@@ -27,10 +29,10 @@ function ForgotPassword() {
     email: yup
       .string()
       .trim()
-      .max(48, 'Email must have at most 48 characters')
-      .label('Email')
-      .email('Invalid email')
-      .required('* Please input email')
+      .max(48, t('signin.emailMax'))
+      .label(t('signin.email'))
+      .email(t('signin.emailInvalid'))
+      .required(t('signin.emailRequired'))
   })
 
   const handleForgot = values => {
@@ -75,9 +77,7 @@ function ForgotPassword() {
             }) => {
               return (
                 <Form className="formStyle">
-                  <span id="loginStyle">
-                    Ok let’s fetch you ya’ login details
-                  </span>
+                  <span id="loginStyle">{t('forgotPass.title')}</span>
                   <CInput
                     className="inputBox"
                     value={values.email}
@@ -89,7 +89,7 @@ function ForgotPassword() {
                     error={errors.email}
                   />
                   <div style={{ alignSelf: 'flex-end', marginBottom: 34 }}>
-                    <span>Already have an account? </span>
+                    <span>{t('signup.hadAccount')}</span>
                     <Button
                       style={{ padding: 0 }}
                       color="primary"
@@ -101,7 +101,7 @@ function ForgotPassword() {
                         })
                       }
                     >
-                      Back to Sign Up
+                      {t('forgotPass.backToSignin')}
                     </Button>
                   </div>
                   <Button
@@ -110,7 +110,7 @@ function ForgotPassword() {
                     type="primary"
                     onClick={handleSubmit}
                   >
-                    Proceed
+                    {t('forgotPass.proceed')}
                   </Button>
                 </Form>
               )

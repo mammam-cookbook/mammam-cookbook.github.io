@@ -10,13 +10,15 @@ import { ROLES } from 'ultis/functions'
 import * as yup from 'yup'
 import '../SignIn/signin.css'
 import signupPic from 'assets/images/signup.png'
-import logo from 'assets/logo.png'
+import logo from 'assets/logo.svg'
+import { useTranslation } from 'react-i18next'
 
 function SignUp() {
   const history = useHistory()
   const dispatch = useDispatch()
   const user = useSelector(state => state.Auth?.user)
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (user) {
@@ -28,28 +30,28 @@ function SignUp() {
     email: yup
       .string()
       .trim()
-      .max(48, 'Email must have at most 48 characters')
-      .label('Email')
-      .email('Invalid email')
-      .required('* Please input email'),
+      .max(48, t('signin.emailMax'))
+      .label(t('signin.email'))
+      .email(t('signin.emailInvalid'))
+      .required(t('signin.emailRequired')),
     password: yup
       .string()
-      .required('* Please input password')
-      .min(8, 'Password must include at least 8 characters')
-      .max(48, 'Password must include at most 48 characters')
+      .required(t('signin.passRequired'))
+      .min(8, t('signin.passMin'))
+      .max(48, t('signin.passMax'))
       .matches(/(?=.{8,})/, {
-        message: 'Password must include at least 8 characters'
+        message: t('signin.passMin')
       }),
     fullName: yup
       .string()
       .trim()
-      .required('* Please input password')
-      .min(3, 'Full name must include at least 3 characters')
-      .max(64, 'Full name must include at most 48 characters')
+      .required(t('signin.fullnameRequired'))
+      .min(3, t('signin.fullnameMin'))
+      .max(64, t('signin.fullnameMax'))
       .matches(
         /[^a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u,
         {
-          message: 'Invalid full name'
+          message: t('signin.fullnameInvalid')
         }
       )
   })
@@ -99,14 +101,14 @@ function SignUp() {
             }) => {
               return (
                 <Form className="formStyle">
-                  <span id="loginStyle">Please create a new account here</span>
+                  <span id="loginStyle">{t('signup.title')}</span>
                   <CInput
                     className="inputBox"
                     value={values.fullName}
                     onChange={handleChange('fullName')}
                     onTouchStart={() => setFieldTouched('fullName')}
                     onBlur={handleBlur('fullName')}
-                    placeholder="Full name"
+                    placeholder={t('signup.fullname')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
                     error={errors.fullName}
                   />
@@ -116,7 +118,7 @@ function SignUp() {
                     onChange={handleChange('email')}
                     onTouchStart={() => setFieldTouched('email')}
                     onBlur={handleBlur('email')}
-                    placeholder="Email"
+                    placeholder={t('signin.email')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
                     error={errors.email}
                   />
@@ -127,13 +129,13 @@ function SignUp() {
                     onTouchStart={() => setFieldTouched('password')}
                     value={values.password}
                     onBlur={handleBlur('password')}
-                    placeholder="Password"
+                    placeholder={t('signin.password')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
                     error={errors.password}
                     type="password"
                   />
                   <div style={{ alignSelf: 'flex-end', marginBottom: 34 }}>
-                    <span>Already have an account? </span>
+                    <span>{t('signup.hadAccount')}</span>
                     <Button
                       style={{ padding: 0 }}
                       color="primary"
@@ -145,7 +147,7 @@ function SignUp() {
                         })
                       }
                     >
-                      Sign in
+                      {t('auth.login')}
                     </Button>
                   </div>
                   <Button
@@ -154,7 +156,7 @@ function SignUp() {
                     type="primary"
                     onClick={handleSubmit}
                   >
-                    Sign up
+                    {t('auth.signup')}
                   </Button>
                 </Form>
               )

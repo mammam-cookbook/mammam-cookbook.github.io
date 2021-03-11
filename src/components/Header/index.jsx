@@ -98,7 +98,7 @@ function AppHeader(props) {
                 })
               }
             >
-              MAM MAM
+              MAM
             </span>
           </div>
           {/* <div>
@@ -201,7 +201,6 @@ function AppHeader(props) {
           ) : (
             <Button
               type="primary"
-              style={{ borderRadius: 50 }}
               onClick={() =>
                 history.push({
                   pathname: '/signin',
@@ -278,7 +277,7 @@ function AppHeader(props) {
                 >
                   <Button
                     type="primary"
-                    style={{ borderRadius: 50, width: '80%', marginBlock: 10 }}
+                    style={{ width: '80%', marginBlock: 10 }}
                     onClick={() =>
                       history.push({
                         pathname: '/signin',

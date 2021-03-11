@@ -295,10 +295,10 @@ responsive
 
 #logoText {
   color: #ff8a00;
-  font-family: Red Hat Display;
+  font-family: 'Lexend Zetta';
   font-size: calc(36px + 0.5vmin);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 64px;
   letter-spacing: 0em;
   text-align: left;

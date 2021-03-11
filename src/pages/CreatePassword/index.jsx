@@ -9,7 +9,8 @@ import { useHistory, useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import '../SignIn/signin.css'
 import forgotPic from 'assets/images/forgot_password.jpg'
-import logo from 'assets/logo.png'
+import logo from 'assets/logo.svg'
+import { useTranslation } from 'react-i18next'
 
 function CreatePasswordPage() {
   const param = useParams()
@@ -18,6 +19,7 @@ function CreatePasswordPage() {
   const dispatch = useDispatch()
   const user = useSelector(state => state.Auth?.user)
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (user || !token) {
@@ -28,24 +30,21 @@ function CreatePasswordPage() {
   const validationSchema = yup.object().shape({
     password: yup
       .string()
-      .required('* Please input password')
-      .min(8, 'Password must include at least 8 characters')
-      .max(48, 'Password must include at most 48 characters')
+      .required(t('signin.passRequired'))
+      .min(8, t('signin.passMin'))
+      .max(48, t('signin.passMax'))
       .matches(/(?=.{8,})/, {
-        message: 'Password must include at least 8 characters'
+        message: t('signin.passMin')
       }),
     confirm: yup
       .string()
-      .required('* Please input password')
-      .min(8, 'Password must include at least 8 characters')
-      .max(48, 'Password must include at most 48 characters')
+      .required(t('signin.passRequired'))
+      .min(8, t('signin.passMin'))
+      .max(48, t('signin.passMax'))
       .matches(/(?=.{8,})/, {
-        message: 'Password must include at least 8 characters'
+        message: t('signin.passMin')
       })
-      .oneOf(
-        [yup.ref('password'), null],
-        'Confirm password must be the same as password'
-      )
+      .oneOf([yup.ref('password'), null], t('createPass.confirmSameAsNew'))
   })
 
   const handleCreate = values => {
@@ -91,14 +90,14 @@ function CreatePasswordPage() {
             }) => {
               return (
                 <Form className="formStyle">
-                  <span id="loginStyle">Input new password to continue</span>
+                  <span id="loginStyle">{t('createPass.title')}</span>
                   <CInput
                     className="inputBox"
                     value={values.password}
                     onChange={handleChange('password')}
                     onTouchStart={() => setFieldTouched('password')}
                     onBlur={handleBlur('password')}
-                    placeholder="New password"
+                    placeholder={t('createPass.newPass')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
                     error={errors.password}
                     type="password"
@@ -109,7 +108,7 @@ function CreatePasswordPage() {
                     onChange={handleChange('confirm')}
                     onTouchStart={() => setFieldTouched('confirm')}
                     onBlur={handleBlur('confirm')}
-                    placeholder="Confirm password"
+                    placeholder={t('createPass.confirmPass')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
                     error={errors.confirm}
                     type="password"
@@ -121,7 +120,7 @@ function CreatePasswordPage() {
                     type="primary"
                     onClick={handleSubmit}
                   >
-                    Reset password
+                    {t('createPass.resetPass')}
                   </Button>
                 </Form>
               )

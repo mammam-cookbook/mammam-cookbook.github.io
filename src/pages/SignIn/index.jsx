@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import signinPic from 'assets/images/signin.png'
-import logo from 'assets/logo.png'
+import logo from 'assets/logo.svg'
 import CInput from 'components/CInput'
 import { Form, Formik } from 'formik'
 import React, { useEffect } from 'react'
@@ -35,21 +35,21 @@ function SignIn() {
   }, [user])
 
   const validationSchema = yup.object().shape({
-    password: yup
-      .string()
-      .required('* Please input password')
-      .min(8, 'Password must include at least 8 characters')
-      .max(48, 'Password must include at most 48 characters')
-      .matches(/(?=.{8,})/, {
-        message: 'Password must include at least 8 characters'
-      }),
     email: yup
       .string()
       .trim()
-      .max(48, 'Email must have at most 48 characters')
-      .label('Email')
-      .email('Invalid email')
-      .required('* Please input email')
+      .max(48, t('signin.emailMax'))
+      .label(t('signin.email'))
+      .email(t('signin.emailInvalid'))
+      .required(t('signin.emailRequired')),
+    password: yup
+      .string()
+      .required(t('signin.passRequired'))
+      .min(8, t('signin.passMin'))
+      .max(48, t('signin.passMax'))
+      .matches(/(?=.{8,})/, {
+        message: t('signin.passMin')
+      })
   })
 
   const handleLogin = values => {
@@ -66,6 +66,9 @@ function SignIn() {
 
   return (
     <div id="bg">
+      {isDesktopOrLaptop && (
+        <div id="imgBg" style={{ backgroundImage: `url(${signinPic})` }} />
+      )}
       <div id="loginBg">
         <a href="/" style={{ textDecoration: 'none', color: 'white' }}>
           <img src={logo} alt="signin" width={100} />
@@ -92,9 +95,7 @@ function SignIn() {
             }) => {
               return (
                 <Form className="formStyle">
-                  <span id="loginStyle">
-                    Sign in to your account to continue
-                  </span>
+                  <span id="loginStyle">{t('signin.title')}</span>
                   <CInput
                     className="inputBox"
                     value={values.email}
@@ -124,17 +125,17 @@ function SignIn() {
                       type="link"
                       onClick={() => history.push('/forgot')}
                     >
-                      Forgot password?
+                      {t('signin.forgotPassword')}
                     </Button>
                     <div>
-                      <span>Don’t have an account? </span>
+                      <span>{t('signin.donotHaveAccount')}</span>
                       <Button
                         style={{ padding: 0 }}
                         color="primary"
                         type="link"
                         onClick={() => history.push('/signup')}
                       >
-                        Sign up
+                        {t('auth.signup')}
                       </Button>
                     </div>
                   </div>
@@ -144,7 +145,7 @@ function SignIn() {
                     type="primary"
                     onClick={handleSubmit}
                   >
-                    Sign in
+                    {t('auth.login')}
                   </Button>
                 </Form>
               )
@@ -152,9 +153,6 @@ function SignIn() {
           </Formik>
         </div>
       </div>
-      {isDesktopOrLaptop && (
-        <div id="imgBg" style={{ backgroundImage: `url(${signinPic})` }} />
-      )}
     </div>
   )
 }

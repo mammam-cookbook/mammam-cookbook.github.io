@@ -8,12 +8,13 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             modifyVars: {
-              '@primary-color': '#FF8A00',
+              '@primary-color': '#FF993A',
               '@font-size-base': '14px', // major text font size
-              '@text-color': '#5C5C5C', // major text color
+              '@font-weight-base': '500',
+              '@text-color': '#000000', // major text color
               '@text-color-secondary': '#FFFFFF', // secondary text color
-              '@disabled-color': '#C4C4C4', // disable state color
-              '@border-radius-base': '8px' // major border radius
+              '@disabled-color': '#BDBDBD', // disable state color
+              '@border-radius-base': '10px' // major border radius
             },
             javascriptEnabled: true
           }
