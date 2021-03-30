@@ -8,7 +8,6 @@ import {
   GetWatchlist,
   GetWatchlistFailed,
   GetWatchlistSuccess,
-  RefreshTokenSuccess,
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
@@ -31,8 +30,8 @@ export function authReducer(state = initialState, action) {
     case SignInRequestSuccess.type:
       return {
         ...state,
-        token: action.payload.accessToken,
-        user: action.payload,
+        token: action.payload.token,
+        user: action.payload.user,
         prevLogin: new Date().getTime()
       }
     case UpdateProfile.type:

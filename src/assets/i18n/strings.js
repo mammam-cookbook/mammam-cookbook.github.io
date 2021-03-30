@@ -1,4 +1,14 @@
 export const en = {
+  common: {
+    information: 'Information',
+    error_message: 'An unexpected error has occured. Try again later.',
+    ok: 'OK',
+    cancel: 'Cancel',
+    signinErr: 'Email or password may not correct. Please try again.',
+    signupSuccess: 'Sign up succeed. Please sign in to continue.',
+    forgotPassSuccess: 'Please check your email to reset password.',
+    updatePassSuccess: 'Success updating password. Please login.'
+  },
   auth: {
     login: 'Sign In',
     signup: 'Sign Up'
@@ -93,6 +103,16 @@ export const en = {
 }
 
 export const vi = {
+  common: {
+    information: 'Thông báo',
+    error_message: 'Đã có lỗi xảy ra. Vui lòng thử lại sau.',
+    ok: 'OK',
+    cancel: 'Hủy',
+    signinErr: 'Email hoặc mật khẩu không đúng. Vui lòng thử lại',
+    signupSuccess: 'Đăng ký thành công. Vui lòng đăng nhập để tiếp tục',
+    forgotPassSuccess: 'Vui lòng kiểm tra email của bạn để đặt lại mật khẩu.',
+    updatePassSuccess: 'Cập nhật mật khẩu thành công. Vui lòng đăng nhập lại'
+  },
   auth: {
     login: 'Đăng nhập',
     signup: 'Đăng ký'

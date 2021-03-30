@@ -24,7 +24,10 @@ const searchCourseEpic$ = action$ =>
           if (result.status === 200) {
             return SearchCourseSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return SearchCourseFailed.get(result)
         }),
         catchError(error => {
@@ -47,7 +50,10 @@ const getHomeEpic$ = action$ =>
           if (result.status === 200) {
             return GetHomeCourseSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return GetHomeCourseFailed.get(result)
         }),
         catchError(error => {

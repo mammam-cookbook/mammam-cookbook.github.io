@@ -1,6 +1,7 @@
 import { Modal, Typography, Button } from 'antd'
 import React from 'react'
 import { MODAL_TYPE } from 'ultis/functions'
+import i18n from 'ultis/i18n'
 
 const { Text } = Typography
 
@@ -20,8 +21,8 @@ export default class GlobalModal extends React.Component {
   }
 
   static alertMessage = (
-    iTitle = 'Information',
-    iContent = 'An unexpected error has occured. Try again later.',
+    iTitle = i18n.t('common.information'),
+    iContent = i18n.t('common.error_message'),
     iType = MODAL_TYPE.NORMAL,
     onPress = () => {}
   ) => {
@@ -64,7 +65,7 @@ export default class GlobalModal extends React.Component {
                   onClick={GlobalModal.instance.handleOk}
                   size="large"
                 >
-                  OK
+                  {i18n.t('common.ok')}
                 </Button>
               ]
             : [
@@ -73,7 +74,7 @@ export default class GlobalModal extends React.Component {
                   onClick={GlobalModal.instance.handleCancel}
                   size="large"
                 >
-                  Cancel
+                  {i18n.t('common.cancel')}
                 </Button>,
                 <Button
                   key="okButton"
@@ -81,7 +82,7 @@ export default class GlobalModal extends React.Component {
                   type="primary"
                   onClick={GlobalModal.instance.handleOk}
                 >
-                  OK
+                  {i18n.t('common.ok')}
                 </Button>
               ]
         }

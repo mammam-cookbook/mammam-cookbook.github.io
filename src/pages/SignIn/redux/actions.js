@@ -28,17 +28,9 @@ export const UpdateProfile = defineAction('UPDATE_PROFILE_REQUEST')
 export const UpdateProfileSuccess = defineAction('UPDATE_PROFILE_SUCCESS')
 export const UpdateProfileFailed = defineAction('UPDATE_PROFILE_FAILED')
 
-export const VerifyEmail = defineAction('VERIFY_EMAIL')
-export const VerifyEmailSuccess = defineAction('VERIFY_EMAIL_SUCCESS')
-export const VerifyEmailFailed = defineAction('VERIFY_EMAIL_FAILED')
-
 export const GetWatchlist = defineAction('GET_WATCHLIST_REQUEST')
 export const GetWatchlistSuccess = defineAction('GET_WATCHLIST_SUCCESS')
 export const GetWatchlistFailed = defineAction('GET_WATCHLIST_FAILED')
-
-export const RefreshToken = defineAction('REFRESH_TOKEN_REQUEST')
-export const RefreshTokenSuccess = defineAction('REFRESH_TOKEN_SUCCESS')
-export const RefreshTokenFailed = defineAction('REFRESH_TOKEN_FAILED')
 
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')

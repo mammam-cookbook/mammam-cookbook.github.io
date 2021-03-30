@@ -5,6 +5,7 @@ import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
 import { history, MODAL_TYPE, ROLES } from 'ultis/functions'
+import i18n from 'ultis/i18n'
 import {
   ChangePassword,
   ChangePasswordFailed,
@@ -18,9 +19,6 @@ import {
   GetWatchlist,
   GetWatchlistFailed,
   GetWatchlistSuccess,
-  RefreshToken,
-  RefreshTokenFailed,
-  RefreshTokenSuccess,
   ResetPassword,
   ResetPasswordFailed,
   ResetPasswordSuccess,
@@ -33,10 +31,7 @@ import {
   SignUpRequestSuccess,
   UpdateProfile,
   UpdateProfileFailed,
-  UpdateProfileSuccess,
-  VerifyEmail,
-  VerifyEmailFailed,
-  VerifyEmailSuccess
+  UpdateProfileSuccess
 } from './actions'
 
 const signinEpic$ = action$ =>
@@ -53,8 +48,8 @@ const signinEpic$ = action$ =>
             return SignInRequestSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
-            'Information',
-            'Email or password may not correct. Please try again.'
+            i18n.t('common.information'),
+            i18n.t('common.signinErr')
           )
           return SignInRequestFailed.get(result.data.err)
         }),
@@ -81,13 +76,16 @@ const signupEpic$ = action$ =>
             } else {
               store.dispatch(replace('/signin', { from: '/signup' }))
               GlobalModal.alertMessage(
-                'Information',
-                'Sign up succeed. Please sign in to continue.'
+                i18n.t('common.information'),
+                i18n.t('common.signupSuccess')
               )
             }
             return SignUpRequestSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return SignUpRequestFailed.get(result)
         }),
         catchError(error => {
@@ -109,7 +107,7 @@ const changePassEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             GlobalModal.alertMessage(
-              'Information',
+              i18n.t('common.information'),
               'Change password succeed. Please sign in to continue.',
               MODAL_TYPE.NORMAL,
               () => {
@@ -122,7 +120,10 @@ const changePassEpic$ = action$ =>
             )
             return ChangePasswordSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return ChangePasswordFailed.get(result)
         }),
         catchError(error => {
@@ -186,37 +187,20 @@ const updateUserProfileEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             store.dispatch(GetProfile.get(action.payload.id))
-            GlobalModal.alertMessage('Information', 'Update profile succeed.')
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              'Update profile succeed.'
+            )
             return UpdateProfileSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return UpdateProfileFailed.get(result)
         }),
         catchError(error => {
           return UpdateProfileFailed.get(error)
-        })
-      )
-    })
-  )
-
-const refreshTokenEpic$ = action$ =>
-  action$.pipe(
-    ofType(RefreshToken.type),
-    exhaustMap(action => {
-      return request({
-        method: 'POST',
-        url: 'auth/refresh',
-        param: action.payload
-      }).pipe(
-        map(result => {
-          if (result.status === 200) {
-            return RefreshTokenSuccess.get(result.data)
-          }
-          GlobalModal.alertMessage()
-          return RefreshTokenFailed.get(result)
-        }),
-        catchError(error => {
-          return RefreshTokenFailed.get(error)
         })
       )
     })
@@ -228,14 +212,14 @@ const resetPasswordEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'auth/resetPassword',
+        url: 'auth/forgot-password',
         param: action.payload
       }).pipe(
         map(result => {
           if (result.status === 200) {
             GlobalModal.alertMessage(
-              'Information',
-              result.data.message,
+              i18n.t('common.information'),
+              i18n.t('common.forgotPassSuccess'),
               MODAL_TYPE.NORMAL,
               () => store.dispatch(replace('/'))
             )
@@ -257,14 +241,14 @@ const createPasswordEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'auth/createPassword',
+        url: 'auth/new-password',
         param: action.payload
       }).pipe(
         map(result => {
           if (result.status === 200) {
             GlobalModal.alertMessage(
-              'Information',
-              result.data.message,
+              i18n.t('common.information'),
+              i18n.t('common.updatePassSuccess'),
               MODAL_TYPE.NORMAL,
               () => store.dispatch(replace('/signin'))
             )
@@ -280,44 +264,13 @@ const createPasswordEpic$ = action$ =>
     })
   )
 
-const verifyEmailEpic$ = action$ =>
-  action$.pipe(
-    ofType(VerifyEmail.type),
-    exhaustMap(action => {
-      return request({
-        method: 'POST',
-        url: 'auth/verifyEmail',
-        param: action.payload
-      }).pipe(
-        map(result => {
-          if (result.status === 200) {
-            GlobalModal.alertMessage(
-              'Information',
-              result.data.message,
-              MODAL_TYPE.NORMAL,
-              () => store.dispatch(replace('/'))
-            )
-            return VerifyEmailSuccess.get(result.data)
-          }
-          GlobalModal.alertMessage('Information', result.data?.message)
-          return VerifyEmailFailed.get(result)
-        }),
-        catchError(error => {
-          return VerifyEmailFailed.get(error)
-        })
-      )
-    })
-  )
-
 export const authEpics = combineEpics(
   signinEpic$,
   signupEpic$,
   resetPasswordEpic$,
   createPasswordEpic$,
-  verifyEmailEpic$,
   changePassEpic$,
   updateUserProfileEpic$,
   getProfileEpic$,
-  getWatchlistEpic$,
-  refreshTokenEpic$
+  getWatchlistEpic$
 )
