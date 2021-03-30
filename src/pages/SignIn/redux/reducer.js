@@ -9,6 +9,7 @@ import {
   GetWatchlistFailed,
   GetWatchlistSuccess,
   RefreshTokenSuccess,
+  ResetReducer,
   SignInRequestSuccess,
   SignOut,
   UpdateProfile,
@@ -31,7 +32,6 @@ export function authReducer(state = initialState, action) {
       return {
         ...state,
         token: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken,
         user: action.payload,
         prevLogin: new Date().getTime()
       }
@@ -71,13 +71,6 @@ export function authReducer(state = initialState, action) {
     //   }
     // case AddToWatchListFailed.type:
     //   return { ...state, isLoading: false }
-    case RefreshTokenSuccess.type:
-      return {
-        ...state,
-        token: action.payload.accessToken,
-        user: { ...state.user, token: action.payload.accessToken },
-        prevLogin: new Date().getTime()
-      }
     case ChangePassword.type:
       return { ...state, isLoading: true }
     case ChangePasswordSuccess.type:
@@ -85,6 +78,8 @@ export function authReducer(state = initialState, action) {
     case ChangePasswordFailed.type:
       return { ...state, isLoading: false }
     case SignOut.type:
+      return initialState
+    case ResetReducer.type:
       return initialState
     default:
       return state

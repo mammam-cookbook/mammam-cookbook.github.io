@@ -41,5 +41,6 @@ export const RefreshTokenSuccess = defineAction('REFRESH_TOKEN_SUCCESS')
 export const RefreshTokenFailed = defineAction('REFRESH_TOKEN_FAILED')
 
 export const SignOut = defineAction('SIGNOUT_REQUEST')
+export const ResetReducer = defineAction('RESET_REDUCER')
 
 export const EmptyAction = defineAction('EMPTY_ACTION')

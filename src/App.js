@@ -1,4 +1,5 @@
 import CreatePasswordPage from 'pages/CreatePassword'
+import CreateRecipe from 'pages/CreateRecipe'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import SignIn from 'pages/SignIn'
@@ -18,6 +19,7 @@ function App() {
       <Route path="/signup" component={SignUp} />
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/reset/:token" component={CreatePasswordPage} />
+      <Route path="/create" component={CreateRecipe} />
     </Router>
   )
 }

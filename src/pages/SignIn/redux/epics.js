@@ -45,18 +45,18 @@ const signinEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'auth/login',
+        url: 'auth',
         param: action.payload
       }).pipe(
         map(result => {
-          if (result.status === 200 && result.data?.authenticated) {
+          if (result.status === 200) {
             return SignInRequestSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
             'Information',
             'Email or password may not correct. Please try again.'
           )
-          return SignInRequestFailed.get(result.data.message)
+          return SignInRequestFailed.get(result.data.err)
         }),
         catchError(error => {
           return SignInRequestFailed.get(error)
@@ -71,12 +71,12 @@ const signupEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'auth/signup',
+        url: 'user',
         param: action.payload
       }).pipe(
         map(result => {
-          if (result.status === 201) {
-            if (action.payload.role === ROLES.TEACHER) {
+          if (result.status === 200) {
+            if (action.payload?.role === ROLES.MOD) {
               // store.dispatch(GetUsers.get({ role: ROLES.TEACHER }))
             } else {
               store.dispatch(replace('/signin', { from: '/signup' }))

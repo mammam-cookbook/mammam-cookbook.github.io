@@ -2,14 +2,14 @@ import { createHashHistory } from 'history'
 
 export const history = createHashHistory({ forceRefresh: true })
 
-export const DOMAIN = 'https://coursedo.herokuapp.com/api'
-// export const DOMAIN = 'http://localhost:3001'
-export const __DEV__ = false
+// export const DOMAIN = 'https://coursedo.herokuapp.com/api'
+export const DOMAIN = 'http://localhost:3001/api'
+export const __DEV__ = true
 
 export const LIMIT_ITEMS = 12
 export const COLOR = {
-  primary1: '#FF8A00',
-  primary2: '#FFC000',
+  primary1: '#F6A13A',
+  primary2: '#F38B12',
   mainBlack: '#5C5C5C',
   gray: '#C4C4C4'
 }
@@ -20,10 +20,14 @@ export const MODAL_TYPE = {
 }
 
 export const ROLES = Object.freeze({
-  STUDENT: 0,
-  TEACHER: 1,
-  ADMIN: 2,
-  NOT_VERIFIED: 3
+  USER: 'user',
+  MOD: 'mod',
+  ADMIN: 'admin'
+})
+
+export const RECIPE_STATUS = Object.freeze({
+  PENDING: 'Pending',
+  MOD: 'Approved'
 })
 
 export const DEFAULT_PASSWORD = '12345678'

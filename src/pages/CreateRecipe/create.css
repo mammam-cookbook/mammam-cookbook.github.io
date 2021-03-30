@@ -1,0 +1,36 @@
+.container-fluid {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 15px;
+}
+
+.inputBox {
+  border: 1px solid #f6a13a;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.imgSrc {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center 40%;
+  border-radius: 10;
+  width: 100%;
+}
+
+.bgName {
+  width: 100%;
+  height: 72;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: white;
+  border-radius: 10px;
+  opacity: 0.8;
+}

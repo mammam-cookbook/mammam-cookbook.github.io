@@ -10,12 +10,7 @@ export function request(param) {
 
   const language = 'vi'
   const parameters = param.param
-  const { token, prevLogin, refreshToken } = store.getState().Auth
-  if (prevLogin) {
-    if (new Date().getTime() - prevLogin > 86000000) {
-      store.dispatch(RefreshToken.get({ accessToken: token, refreshToken }))
-    }
-  }
+  const { token } = store.getState().Auth
   const headers = token
     ? {
         'Content-Type': 'application/json',

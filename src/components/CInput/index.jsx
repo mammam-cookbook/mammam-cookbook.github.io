@@ -4,7 +4,14 @@ import React from 'react'
 
 function CInput(props) {
   return (
-    <div style={{ width: '100%', marginBottom: 12 }}>
+    <div
+      style={{
+        width: '100%',
+        marginBottom: 12,
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <Input {...props} />
       {props.error && <span className="errorStyle">{props.error}</span>}
     </div>

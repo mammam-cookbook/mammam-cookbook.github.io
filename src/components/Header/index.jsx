@@ -101,81 +101,26 @@ function AppHeader(props) {
               MAM
             </span>
           </div>
-          {/* <div>
-            {user?.role !== 1 ? (
-              <Dropdown
-                overlay={Categories(categoryList)}
-                style={{ marginBottom: 30 }}
-              >
-                <a id="categoriesTxt" className="ant-dropdown-link">
-                  Categories
-                </a>
-              </Dropdown>
-            ) : (
-              <div />
-            )}
-          </div> */}
         </div>
         <div className="mobileHidden">
-          {!(props?.from === 'addCourse') && user?.role === ROLES.TEACHER && (
+          <Button type="link" style={{ marginRight: 24 }}>
+            {t('home.browse')}
+          </Button>
+          <Button type="link" style={{ marginRight: 24 }}>
+            {t('home.recipes')}
+          </Button>
+          <Button type="link" style={{ marginRight: 24 }}>
+            {t('home.mealPlanner')}
+          </Button>
+          {!(props?.from === 'create') && (
             <Button
-              type="primary"
-              style={{ borderRadius: 50, marginRight: 24 }}
+              type="link"
+              style={{ marginRight: 24 }}
               onClick={() => history.push('/create')}
             >
-              Add new course
+              {t('home.createRecipe')}
             </Button>
           )}
-          {user?.role !== 1 ? (
-            <div>
-              <Search
-                style={{ width: '30vw' }}
-                placeholder="Search for Courses i.e web-development"
-                enterButton="Search"
-                size="large"
-                onSearch={value => {
-                  const keyword = value.trim()
-                  if (/\S+/.test(keyword)) {
-                    // dispatch(UpdateSearch.get())
-                    history.push({
-                      pathname: `/courses`,
-                      search: `keyword=${keyword}`,
-                      state: { from: `/` }
-                    })
-                  }
-                }}
-              />
-              <Button
-                shape="round"
-                style={{ borderWidth: 0 }}
-                id="btnTxt"
-                onClick={() =>
-                  history.push({
-                    pathname: '/courses',
-                    state: { from: `/` }
-                  })
-                }
-              >
-                Courses
-              </Button>
-              <Button
-                shape="round"
-                style={{ borderWidth: 0, marginRight: 30 }}
-                id="btnTxt"
-                onClick={() =>
-                  history.push({
-                    pathname: '/about',
-                    state: { from: `/` }
-                  })
-                }
-              >
-                About
-              </Button>
-            </div>
-          ) : (
-            <div />
-          )}
-
           {user ? (
             user?.avatar ? (
               <Popover
@@ -208,7 +153,7 @@ function AppHeader(props) {
                 })
               }
             >
-              {t('auth.login')}
+              {t('auth.login').toLocaleUpperCase()}
             </Button>
           )}
         </div>
@@ -244,8 +189,7 @@ function AppHeader(props) {
                   <p
                     className="ant-anchor-link"
                     style={{
-                      fontFamily: 'Source Sans Pro',
-                      fontWeight: 'bold',
+                      fontWeight: 700,
                       paddingTop: 10
                     }}
                   >
@@ -255,18 +199,12 @@ function AppHeader(props) {
               ) : (
                 <div />
               )}
-              {user?.role !== 1 ? (
-                <div>
-                  {/* <Link href="#courses" title="Courses" /> */}
-                  <Link href="#about" title="About" />
-                </div>
-              ) : (
-                <div />
+              <Link href="#create" title={t('home:browse')} />
+              <Link href="#create" title={t('home:recipes')} />
+              <Link href="#create" title={t('home:mealPlanner')} />
+              {!(props?.from === 'create') && (
+                <Link href="#create" title={t('home:createRecipe')} />
               )}
-              {!(props?.from === 'addCourse') &&
-                user?.role === ROLES.TEACHER && (
-                  <Link href="#create" title="Add new course" />
-                )}
               {!user ? (
                 <div
                   style={{
@@ -285,7 +223,7 @@ function AppHeader(props) {
                       })
                     }
                   >
-                    {t('auth:login')}
+                    {t('auth:login').toLocaleUpperCase()}
                   </Button>
                 </div>
               ) : (
