@@ -4,18 +4,16 @@ import CInput from 'components/CInput'
 import AppHeader from 'components/Header'
 import { Formik } from 'formik'
 import 'pages/CreateRecipe/create.css'
-import React, { useCallback, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { COLOR } from 'ultis/functions'
+import { COLOR, RECIPE_STATUS } from 'ultis/functions'
 import ImageUpload from './components/imageUpload'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
-import { CATEGORY_ITEMS, validationRecipeSchema } from './constant'
-import { SearchIngredient } from './redux/actions'
-import _ from 'lodash'
-import upload from 'ultis/uploadImage'
+import { LEVEL, validationRecipeSchema } from './constant'
+import { CreateRecipe, GetCategories, SearchIngredient } from './redux/actions'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -24,25 +22,58 @@ const { Option } = Select
 export default props => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.Auth.user)
-  const ingredients = useSelector(state => state.Create.ingredients)
+  const categories = useSelector(state => state.Create.categories)
   const history = useHistory()
   const { t } = useTranslation()
   const stepTitle = [t('create.step1'), t('create.step2'), t('create.step3')]
   const [currentStep, setCurrentStep] = useState(0)
   const [otherIngre, setOtherIngre] = useState('')
+  let listCategories = []
+  categories &&
+    categories.forEach(item => {
+      listCategories = listCategories.concat(item?.childrenCategories)
+    })
 
-  const addPictureStep = (steps, index, picture, setFieldValue) => {
-    steps[index].images = picture
-    setFieldValue('steps', steps)
+  useEffect(() => {
+    dispatch(GetCategories.get())
+  }, [])
+
+  const searchIngres = (text, values, setFieldValue) => {
+    dispatch(
+      SearchIngredient.get({
+        search: text,
+        onSuccess: data => {
+          if (data && data.length > 0) {
+            let ingres = values.ingredients
+            for (let i = 0; i < data.length; i++) {
+              if (ingres.filter(item => item.id === data[i].id).length > 0) {
+                continue
+              }
+              ingres.push({ ...data[i], selectAmount: 1, selectUnit: 0 })
+              setFieldValue('ingredients', ingres)
+              break
+            }
+          } else {
+            let ingres = values.ingredients
+            ingres.push({
+              img: null,
+              id: `${user.id}-${(Math.random() * 100000).toFixed(6)}`,
+              name: text,
+              unit: [{ measurement_description: 'g' }],
+              selectAmount: 1,
+              selectUnit: 0
+            })
+            setFieldValue('ingredients', ingres)
+          }
+        }
+      })
+    )
   }
 
-  const delayedQuery = useCallback(
-    _.debounce(q => dispatch(SearchIngredient.get({ search: q })), 500),
-    []
-  )
-
-  const searchIngres = text => {
-    delayedQuery(text)
+  const handleKeyPress = (event, values, setFieldValue) => {
+    if (event.key === 'Enter') {
+      searchIngres(event.target.value, values, setFieldValue)
+    }
   }
 
   const submitRecipe = async values => {
@@ -55,21 +86,31 @@ export default props => {
       })
       return { ...item, images }
     })
+    let ingredients_name = []
     const ingredients = values.ingredients.map(item => {
-      const tmp = { ...item, ...item.unit[item.selectUnit] }
-      delete tmp.unit
+      ingredients_name.push(item.name)
+      const tmp = {
+        img: item?.img,
+        name: item.name,
+        id: item.id,
+        unit: item.unit[item.selectUnit],
+        amount: item.selectAmount,
+        calories: item.unit[item.selectUnit]?.calories
+          ? Number(item.unit[item.selectUnit].calories) * item.selectAmount
+          : 0
+      }
       return tmp
     })
-    console.log({ ...values, avatar: avalink, steps, ingredients })
-    // dispatch(
-    //   CreateRecipe.get({
-    //     ...values,
-    //     ingredients: values.ingredients.join('|'),
-    //     categories: values.categories.join('|'),
-    //     userId: user?.id,
-    //     ration: values.ration.toString()
-    //   })
-    // )
+    dispatch(
+      CreateRecipe.get({
+        ...values,
+        avatar: avalink,
+        steps,
+        ingredients,
+        ingredients_name,
+        status: RECIPE_STATUS.APPROVED
+      })
+    )
   }
 
   if (!user) {
@@ -113,8 +154,8 @@ export default props => {
           description: '',
           avatar: [],
           ration: 1,
-          cookingTime: 20,
-          difficultLevel: 1,
+          cooking_time: 20,
+          level: LEVEL[0].code,
           ingredients: [],
           categories: [],
           hashtags: [],
@@ -135,9 +176,6 @@ export default props => {
           setFieldTouched,
           setFieldValue
         }) => {
-          console.log(errors)
-          console.log(values)
-
           return (
             <div>
               <Title level={2} style={{ paddingLeft: 24 }}>
@@ -157,7 +195,7 @@ export default props => {
                   disabled={currentStep < 1}
                   onClick={() => setCurrentStep(currentStep - 1)}
                 >
-                  {t('create.add')}
+                  {t('create.prev')}
                 </Button>
                 <Steps
                   style={{ marginLeft: 24, marginRight: 24 }}
@@ -172,7 +210,7 @@ export default props => {
                   disabled={currentStep > 1}
                   onClick={() => setCurrentStep(currentStep + 1)}
                 >
-                  {t('create.add')}
+                  {t('create.next')}
                 </Button>
               </div>
 
@@ -190,16 +228,12 @@ export default props => {
                     </div>
 
                     <div style={{ ...style.spaceBetween, marginTop: 16 }}>
-                      <div>
+                      <div style={{ flex: 3 }}>
                         <Title level={4}>
                           {t('create.title').toLocaleUpperCase()}
                         </Title>
                         <CInput
-                          style={{
-                            maxWidth: 400,
-                            width: 250,
-                            ...style.border
-                          }}
+                          style={style.border}
                           className="inputBox"
                           value={values.title}
                           onChange={handleChange('title')}
@@ -209,22 +243,25 @@ export default props => {
                           error={errors.title}
                         />
                       </div>
-                      <div>
+                      <div
+                        style={{ flex: 1.5, paddingLeft: 16, paddingRight: 16 }}
+                      >
                         <Title level={4}>
                           {t('create.level').toLocaleUpperCase()}
                         </Title>
-                        <CInput
-                          style={{ maxWidth: 160, ...style.border }}
-                          className="inputBox"
-                          value={values.difficultLevel}
-                          onChange={handleChange('difficultLevel')}
-                          onTouchStart={() => setFieldTouched('difficultLevel')}
-                          onBlur={handleBlur('difficultLevel')}
-                          placeholder={t('create.titlePlaceholder')}
-                          error={errors.difficultLevel}
-                        />
+                        <Select
+                          style={{ width: '100%', ...style.border }}
+                          defaultValue={values.level}
+                          onChange={value => setFieldValue('level', value)}
+                        >
+                          {LEVEL.map((item, index) => (
+                            <Option value={item.code} key={`level${index}`}>
+                              {item.title}
+                            </Option>
+                          ))}
+                        </Select>
                       </div>
-                      <div>
+                      <div style={{ flex: 1.5 }}>
                         <Title level={4}>
                           {t('create.time').toLocaleUpperCase()}
                         </Title>
@@ -232,12 +269,13 @@ export default props => {
                           <CInput
                             style={{ maxWidth: 100, ...style.border }}
                             className="inputBox"
-                            value={values.cookingTime}
-                            onChange={handleChange('cookingTime')}
-                            onTouchStart={() => setFieldTouched('cookingTime')}
-                            onBlur={handleBlur('cookingTime')}
+                            value={values.cooking_time}
+                            onChange={handleChange('cooking_time')}
+                            onTouchStart={() => setFieldTouched('cooking_time')}
+                            onBlur={handleBlur('cooking_time')}
                             placeholder={'200'}
-                            error={errors.cookingTime}
+                            error={errors.cooking_time}
+                            type="number"
                           />
                           <Title
                             level={4}
@@ -274,9 +312,9 @@ export default props => {
                       defaultValue={values.categories}
                       onChange={value => setFieldValue('categories', value)}
                     >
-                      {CATEGORY_ITEMS.map((item, index) => (
-                        <Option value={item} key={`category${index}`}>
-                          {item}
+                      {listCategories.map((item, index) => (
+                        <Option value={item.id} key={`category${index}`}>
+                          {item.vi}
                         </Option>
                       ))}
                     </Select>
@@ -285,53 +323,31 @@ export default props => {
                     style={{ flex: 1, padding: 24 }}
                     value={values.avatar}
                     onChange={data => setFieldValue('avatar', data)}
+                    error={errors.avatar}
                   />
                 </div>
               )}
               {currentStep === 1 && (
-                <div style={{ display: 'flex' }}>
-                  <div style={style.leftColumn}>
-                    <Title level={4}>
-                      {t('create.ingredients').toLocaleUpperCase()}
-                    </Title>
+                <div style={style.leftColumn}>
+                  <Title level={4}>
+                    {t('create.ingredients').toLocaleUpperCase()}
+                  </Title>
+                  <div style={{ ...style.spaceBetween }}>
                     <CInput
                       className="inputBox"
-                      onChange={event => searchIngres(event.target.value)}
+                      onKeyPress={event =>
+                        handleKeyPress(event, values, setFieldValue)
+                      }
+                      onChange={event => setOtherIngre(event.target.value)}
                       placeholder={t('create.ingredientsPlaceholder')}
                     />
-                    <div style={{ ...style.ingres, padding: 0 }}>
-                      {ingredients.map((item, index) => (
-                        <Ingredient
-                          index={index}
-                          item={item}
-                          isAdd={true}
-                          onAdd={value => {
-                            let ingres = values.ingredients
-                            ingres.push(value)
-                            setFieldValue('ingredients', ingres)
-                          }}
-                        />
-                      ))}
-                    </div>
-                    <Title level={4}>
-                      {t('create.otherIngredients').toLocaleUpperCase()}
-                    </Title>
-                    <CInput
-                      className="inputBox"
-                      onChange={event => setOtherIngre(event.target.value)}
-                      placeholder={t('create.otherIngredientsPlaceholder')}
-                    />
                     <Button
+                      style={{ marginLeft: 24 }}
                       type="primary"
-                      onClick={() => {
-                        let ingres = values.ingredients
-                        ingres.push({
-                          img: null,
-                          name: otherIngre,
-                          unit: [{ measurement_description: 'g' }]
-                        })
-                        setFieldValue('ingredients', ingres)
-                      }}
+                      size="large"
+                      onClick={() =>
+                        searchIngres(otherIngre, values, setFieldValue)
+                      }
                     >
                       {t('create.add')}
                     </Button>
@@ -353,9 +369,26 @@ export default props => {
                             ingres.splice(index, 1)
                             setFieldValue('ingredients', ingres)
                           }}
+                          onChangeCustomUnit={value => {
+                            let ingres = values.ingredients
+                            ingres[
+                              index
+                            ].unit[0].measurement_description = value
+                            setFieldValue('ingredients', ingres)
+                          }}
+                          error={
+                            errors.ingredients &&
+                            typeof errors.ingredients === 'object' &&
+                            errors.ingredients[index] &&
+                            errors.ingredients[index]
+                          }
                         />
                       ))}
                   </div>
+                  {errors.ingredients &&
+                    typeof errors.ingredients === 'string' && (
+                      <Text style={{ color: 'red' }}>{errors.ingredients}</Text>
+                    )}
                 </div>
               )}
               {currentStep === 2 && (
@@ -367,11 +400,15 @@ export default props => {
                     <Step
                       step={item}
                       index={index}
-                      onChangeImage={data =>
-                        addPictureStep(values.steps, index, data, setFieldValue)
-                      }
+                      onChangeImage={data => {
+                        let steps = values.steps
+                        console.log('steps', steps)
+                        steps[index].images = data
+                        setFieldValue('steps', steps)
+                      }}
                       onChangeMaking={data => {
                         let steps = values.steps
+                        console.log('steps2', steps)
                         steps[index].content = data
                         setFieldValue('steps', steps)
                       }}
@@ -380,16 +417,26 @@ export default props => {
                         steps[index].time = data
                         setFieldValue('steps', steps)
                       }}
+                      error={
+                        errors.steps &&
+                        typeof errors.steps === 'object' &&
+                        errors.steps[index] &&
+                        errors.steps[index]
+                      }
                     />
                   ))}
-
+                  {errors.steps && typeof errors.steps === 'string' && (
+                    <Text style={{ color: 'red' }}>{errors.steps}</Text>
+                  )}
                   <Button
                     type="primary"
                     onClick={() => {
                       setFieldValue('steps', [
                         ...values.steps,
                         {
-                          content: ''
+                          content: '',
+                          images: [],
+                          time: null
                         }
                       ])
                     }}

@@ -1,7 +1,8 @@
 import { ResetReducer } from 'pages/SignIn/redux/actions'
-import { SearchIngredientSuccess } from './actions'
+import { GetCategoriesSuccess, SearchIngredientSuccess } from './actions'
 const initialState = {
-  ingredients: []
+  ingredients: [],
+  categories: []
 }
 
 export function createReducer(state = initialState, action) {
@@ -10,6 +11,11 @@ export function createReducer(state = initialState, action) {
       return {
         ...state,
         ingredients: action.payload
+      }
+    case GetCategoriesSuccess.type:
+      return {
+        ...state,
+        categories: action.payload
       }
     case ResetReducer.type:
       return initialState

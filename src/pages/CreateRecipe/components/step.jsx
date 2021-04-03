@@ -1,4 +1,5 @@
 import { Input, Typography } from 'antd'
+import CInput from 'components/CInput'
 import 'pages/SignIn/signin.css'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +15,8 @@ function Step({
   index,
   onChangeImage,
   onChangeMaking,
-  onChangeTime
+  onChangeTime,
+  error
 }) {
   const { t } = useTranslation()
   return (
@@ -74,10 +76,13 @@ function Step({
             <Title level={5} style={{ marginRight: 12, marginTop: 8 }}>
               {t('create.time')}
             </Title>
-            <Input
+            <CInput
               style={{ width: 80, borderColor: COLOR.primary1 }}
               onChange={event => onChangeTime(event.target.value)}
               placeholder="5"
+              value={step?.time}
+              type="number"
+              error={error?.time}
             />
             <Title level={5} style={{ marginLeft: 8, marginTop: 8 }}>
               {t('create.min')}
@@ -87,8 +92,12 @@ function Step({
         <TextArea
           onChange={event => onChangeMaking(event.target.value)}
           rows={5}
+          value={step.content}
           placeholder={t('create.directionPlaceholder')}
         />
+        {error?.content && (
+          <Text style={{ color: 'red' }}>{error?.content}</Text>
+        )}
       </div>
       <ImageUpload
         style={{ flex: 1, marginLeft: 24 }}

@@ -1,11 +1,12 @@
 import { Button, Input, Select, Typography } from 'antd'
 import CInput from 'components/CInput'
+import _ from 'lodash'
 import 'pages/CreateRecipe/create.css'
 import 'pages/SignIn/signin.css'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { COLOR, debounce } from 'ultis/functions'
-import _ from 'lodash'
+import { useSelector } from 'react-redux'
+import { COLOR } from 'ultis/functions'
 
 const { Text, Title } = Typography
 const { TextArea } = Input
@@ -18,9 +19,12 @@ function Ingredient({
   index,
   onChange = value => {},
   onRemove = () => {},
-  onAdd = value => {}
+  onAdd = value => {},
+  onChangeCustomUnit = unit => {},
+  error
 }) {
   const { t } = useTranslation()
+  const user = useSelector(state => state.Auth.user)
   const [unitSelected, setUnitSelected] = useState(item.selectUnit || 0)
   const [amount, setAmount] = useState(item.selectAmount || 1)
 
@@ -41,17 +45,28 @@ function Ingredient({
     onChange({ ...item, selectUnit: unitIndex })
   }
 
+  const delayedChangeCustomUnit = useCallback(
+    _.debounce(q => {
+      onChangeCustomUnit(q)
+    }, 500),
+    []
+  )
+
+  const changeCustomUnit = text => {
+    delayedChangeCustomUnit(text)
+  }
+
   return (
     <div
       style={{
         ...style,
         display: 'flex',
-        width: '48%',
-        maxWidth: '48%',
+        width: '24%',
+        maxWidth: '24%',
         flexDirection: 'row',
         marginBottom: 24
       }}
-      key={`ingredient${index}`}
+      key={item.id}
     >
       <div
         style={{
@@ -97,23 +112,38 @@ function Ingredient({
           value={amount}
           onChange={event => changeAmount(event.target.value)}
           placeholder={'200'}
+          type="number"
+          error={error?.selectAmount}
         />
-        <Select
-          style={{
-            borderColor: COLOR.primary1,
-            width: '100%',
-            maxWidth: 190
-          }}
-          placeholder={t('create.categoriesPlaceholder')}
-          defaultValue={unitSelected}
-          onChange={value => changeUnit(value)}
-        >
-          {item.unit.map((unitItem, index) => (
-            <Option value={index} key={`ingredient${index}`}>
-              {unitItem.measurement_description}
-            </Option>
-          ))}
-        </Select>
+        {!item?.id?.includes(user.id) ? (
+          <Select
+            style={{
+              borderColor: COLOR.primary1,
+              width: '100%',
+              maxWidth: 190
+            }}
+            placeholder={t('create.measurePlaceholder')}
+            defaultValue={unitSelected}
+            onChange={value => changeUnit(value)}
+          >
+            {item.unit.map((unitItem, index) => (
+              <Option value={index} key={`ingredient${index}`}>
+                {unitItem.measurement_description}
+              </Option>
+            ))}
+          </Select>
+        ) : (
+          <CInput
+            style={{
+              borderColor: COLOR.primary1,
+              width: '100%',
+              maxWidth: 190
+            }}
+            defaultValue={item.unit[0].measurement_description}
+            placeholder={t('create.measurePlaceholder')}
+            onChange={event => changeCustomUnit(event.target.value)}
+          />
+        )}
         <Button
           type="primary"
           style={{ marginTop: 12 }}

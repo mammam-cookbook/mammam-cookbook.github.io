@@ -34,3 +34,7 @@
   border-radius: 10px;
   opacity: 0.8;
 }
+
+.ant-select-selection {
+  border-color: #f6a13a;
+}

@@ -18,7 +18,6 @@ function AppHeader(props) {
   const { t, i18n } = useTranslation()
 
   const showDrawer = () => {
-    console.info('show')
     setVisible(true)
   }
 

@@ -2,7 +2,7 @@ import { createHashHistory } from 'history'
 
 export const history = createHashHistory({ forceRefresh: true })
 
-// export const DOMAIN = 'https://coursedo.herokuapp.com/api'
+// export const DOMAIN = 'https://mam-staging.herokuapp.com/api'
 export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = true
 
@@ -27,7 +27,7 @@ export const ROLES = Object.freeze({
 
 export const RECIPE_STATUS = Object.freeze({
   PENDING: 'Pending',
-  MOD: 'Approved'
+  APPROVED: 'Approved'
 })
 
 export const DEFAULT_PASSWORD = '12345678'

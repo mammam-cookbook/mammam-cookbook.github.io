@@ -1,29 +1,55 @@
-import { Button } from 'antd'
+import { Button, Spin } from 'antd'
 import Text from 'antd/lib/typography/Text'
-import React, { useRef } from 'react'
+import Paragraph from 'antd/lib/typography/Paragraph'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiUpload, FiX } from 'react-icons/fi'
 import { COLOR } from 'ultis/functions'
-import upload from 'ultis/uploadImage'
+import { upload, deleteImg } from 'ultis/uploadImage'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
+const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+const MAX_IMAGES = 3
 function ImageUpload(props) {
   const inputRef = useRef()
   const { t } = useTranslation()
+  const [isUploading, setIsUploading] = useState(false)
+  const canUpload = props.value && props.value.length < MAX_IMAGES
 
-  const addPictureStep = picture => {
-    let reader = new FileReader()
-    reader.readAsDataURL(picture)
-    reader.onloadend = async () => {
-      console.log('picture', props.value)
-      const link = await upload(reader.result)
-      props.onChange([...props.value, { name: picture.name, src: link }])
+  const uploadList = async list => {
+    let newList = props.value || []
+    const lengthLeft = MAX_IMAGES - newList.length
+    const addLength = lengthLeft < list.length ? lengthLeft : list.length
+    if (newList.length < 3) {
+      setIsUploading(true)
+      for (let i = 0; i < addLength; i++) {
+        const link = await addPictureStep(list[i])
+        newList.push({ name: list[i].name, src: link })
+      }
+      props.onChange(newList)
+      setIsUploading(false)
     }
   }
 
-  const removeImg = index => {
-    let tmp = [...props.value]
-    tmp.splice(index)
-    props.onChange(tmp)
+  const addPictureStep = async picture => {
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader()
+      reader.readAsDataURL(picture)
+      reader.onloadend = async () => {
+        const link = await upload(reader.result)
+        resolve(link)
+      }
+    })
+  }
+
+  const removeImg = async index => {
+    let tmp = props.value
+    const deleteResult = await deleteImg(tmp[index].src.public_id)
+    if (deleteResult.result === 'ok') {
+      tmp.splice(index)
+      props.onChange(tmp)
+    }
   }
 
   return (
@@ -33,7 +59,12 @@ function ImageUpload(props) {
         style={{ display: 'none' }}
         ref={inputRef}
         type="file"
-        onChange={e => addPictureStep(e.target.files[0])}
+        multiple
+        onChange={e => {
+          if (e.target.files.length > 0 && canUpload) {
+            uploadList(e.target.files)
+          }
+        }}
       />
       <div
         style={{
@@ -48,14 +79,35 @@ function ImageUpload(props) {
           justifyContent: 'center',
           alignItems: 'center'
         }}
-        onClick={() => inputRef.current.click()}
+        onClick={() => {
+          if (canUpload && !isUploading) {
+            inputRef.current.click()
+          }
+        }}
       >
-        <FiUpload size={48} color={COLOR.primary1} />
-        <Text style={{ color: COLOR.primary1 }}>
-          {t('create.uploadThumbnail')}
-        </Text>
+        {!isUploading && <FiUpload size={48} color={COLOR.primary1} />}
+        {!isUploading && (
+          <Text style={{ color: COLOR.primary1 }}>
+            {t('create.uploadThumbnail')}
+          </Text>
+        )}
+        {!isUploading && canUpload && (
+          <Text style={{ color: COLOR.primary1 }}>{t('create.maxImg')}</Text>
+        )}
+        {!isUploading && !canUpload && (
+          <Text style={{ color: COLOR.primary1 }}>{t('create.maxReach')}</Text>
+        )}
+        {isUploading && <Spin indicator={loadingIcon} />}
+        {isUploading && (
+          <Text style={{ color: COLOR.primary1 }}>{t('create.uploading')}</Text>
+        )}
       </div>
-      <div>
+      <div
+        style={{
+          width: '100%'
+        }}
+      >
+        {props?.error && <Text style={{ color: 'red' }}>{props.error}</Text>}
         {props.value &&
           props.value.length > 0 &&
           props.value.map((item, index) => (
@@ -63,8 +115,12 @@ function ImageUpload(props) {
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center',
+                width: '100%',
+                marginBottom: 8,
+                flex: 1
               }}
+              key={`upload-${index}`}
             >
               <span
                 style={{
@@ -72,7 +128,9 @@ function ImageUpload(props) {
                   backgroundImage: `url("${item.src.url}")`
                 }}
               />
-              <Text>{item?.name}</Text>
+              <Text style={{ display: 'flex', flexGrow: 1, maxWidth: '20vw' }}>
+                {item?.name}
+              </Text>
               <Button
                 type="link"
                 shape="circle"
@@ -100,6 +158,8 @@ const style = {
     height: 84,
     backgroundSize: 'cover',
     backgroundPosition: 'center 40%',
-    borderRadius: 9
+    borderRadius: 9,
+    marginLeft: 16,
+    marginRight: 16
   }
 }

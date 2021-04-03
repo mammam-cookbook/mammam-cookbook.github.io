@@ -98,7 +98,16 @@ export const en = {
     min: 'min',
     step1: 'Summary',
     step2: 'Ingredients',
-    step3: 'Direction'
+    step3: 'Direction',
+    next: 'Next',
+    prev: 'Previous',
+    maxImg: '(Maximum 3 images)',
+    uploading: 'Uploading',
+    maxReach: 'Maximum images reached',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    measurePlaceholder: 'g'
   }
 }
 
@@ -202,6 +211,15 @@ export const vi = {
     min: 'phút',
     step1: 'Thông tin',
     step2: 'Nguyên liệu',
-    step3: 'Hướng dẫn'
+    step3: 'Hướng dẫn',
+    next: 'Tiếp',
+    prev: 'Trước',
+    maxImg: '(Tối đa 3 ảnh)',
+    uploading: 'Đang tải lên',
+    maxReach: 'Đã đủ ảnh',
+    easy: 'Dễ',
+    medium: 'Trung bình',
+    hard: 'Khó',
+    measurePlaceholder: 'g'
   }
 }
