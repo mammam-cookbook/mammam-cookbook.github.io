@@ -11,7 +11,8 @@ export const COLOR = {
   primary1: '#F6A13A',
   primary2: '#F38B12',
   mainBlack: '#5C5C5C',
-  gray: '#C4C4C4'
+  gray: '#C4C4C4',
+  grayText: '#828282'
 }
 
 export const MODAL_TYPE = {

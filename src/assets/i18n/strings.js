@@ -7,7 +7,8 @@ export const en = {
     signinErr: 'Email or password may not correct. Please try again.',
     signupSuccess: 'Sign up succeed. Please sign in to continue.',
     forgotPassSuccess: 'Please check your email to reset password.',
-    updatePassSuccess: 'Success updating password. Please login.'
+    updatePassSuccess: 'Success updating password. Please login.',
+    confirm: 'Confirm'
   },
   auth: {
     login: 'Sign In',
@@ -107,7 +108,29 @@ export const en = {
     easy: 'Easy',
     medium: 'Medium',
     hard: 'Hard',
-    measurePlaceholder: 'g'
+    measurePlaceholder: 'g',
+    ration: 'Ration'
+  },
+  recipe: {
+    sendComment: 'Send',
+    comment: 'Comments',
+    challenge: 'Challenge',
+    updatedBy: 'Updated by',
+    energy: 'Energy',
+    readDirection: 'Read directions',
+    iMadeIt: 'I made it',
+    noComments: 'There is no comments',
+    noChallenges: 'There is no challenges',
+    signinToComment: 'Sign in to leave comment',
+    showLessComment: 'Show less comments',
+    showMoreComment: 'Show all comments',
+    notSignIn: 'You are not signed in. Please sign in to leave comment',
+    reply: 'Reply',
+    oneReply: 'reply',
+    replies: 'replies',
+    confirmDeleteComment: 'Do you confirm to delete this comment?',
+    delete: 'Delete',
+    commentPlaceholder: 'Leave comment'
   }
 }
 
@@ -120,7 +143,8 @@ export const vi = {
     signinErr: 'Email hoặc mật khẩu không đúng. Vui lòng thử lại',
     signupSuccess: 'Đăng ký thành công. Vui lòng đăng nhập để tiếp tục',
     forgotPassSuccess: 'Vui lòng kiểm tra email của bạn để đặt lại mật khẩu.',
-    updatePassSuccess: 'Cập nhật mật khẩu thành công. Vui lòng đăng nhập lại'
+    updatePassSuccess: 'Cập nhật mật khẩu thành công. Vui lòng đăng nhập lại',
+    confirm: 'Xác nhận'
   },
   auth: {
     login: 'Đăng nhập',
@@ -220,6 +244,28 @@ export const vi = {
     easy: 'Dễ',
     medium: 'Trung bình',
     hard: 'Khó',
-    measurePlaceholder: 'g'
+    measurePlaceholder: 'g',
+    ration: 'Khẩu phần'
+  },
+  recipe: {
+    sendComment: 'Gửi',
+    comment: 'Nhận xét',
+    challenge: 'Thử thách',
+    updatedBy: 'Đăng bởi',
+    energy: 'Năng lượng',
+    readDirection: 'Đọc hướng dẫn',
+    iMadeIt: 'Tôi đã làm',
+    noComments: 'Chưa có nhận xét',
+    noChallenges: 'Chưa có thử thách',
+    signinToComment: 'Đăng nhập để nhận xét',
+    showLessComment: 'Thu gọn nhận xét',
+    showMoreComment: 'Xem tất cả nhận xét',
+    notSignIn: 'Bạn chưa đăng nhập. Vui lòng đăng nhập để nhận xét',
+    reply: 'Trả lời',
+    oneReply: 'trả lời',
+    replies: 'trả lời',
+    confirmDeleteComment: 'Bạn chắc chắn muốn xóa nhận xét này?',
+    delete: 'Xóa',
+    commentPlaceholder: 'Nhập nhận xét'
   }
 }

@@ -2,6 +2,7 @@ import GlobalModal from 'components/GlobalModal'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
+import { history, MODAL_TYPE } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import {
   CreateRecipe,
@@ -74,7 +75,9 @@ const createRecipeEpic$ = action$ =>
           if (result.status === 200) {
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Tạo công thức thàng công'
+              'Tạo công thức thàng công',
+              MODAL_TYPE.NORMAL,
+              () => history.replace(`/recipe/${result.data.recipe.id}`)
             )
             return CreateRecipeSuccess.get(result.data)
           }
