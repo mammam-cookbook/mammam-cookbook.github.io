@@ -13,9 +13,7 @@ export default function Direction({ item, index }) {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
-          borderColor: COLOR.primary1,
-          borderWidth: 16
+          alignItems: 'flex-end'
         }}
       >
         <div
@@ -26,9 +24,18 @@ export default function Direction({ item, index }) {
             borderTopRightRadius: 10
           }}
         />
-        <Title level={4} style={{ margin: 8 }}>
-          {t('create.step')} {index}
-        </Title>
+        <div>
+          <Title level={4} style={{ margin: 8 }}>
+            {t('create.step')} {index}
+          </Title>
+          <div
+            style={{
+              height: 4,
+              width: '100%',
+              backgroundColor: COLOR.primary1
+            }}
+          />
+        </div>
       </div>
       <Title level={5} style={{ marginTop: 16 }}>
         {item.content}

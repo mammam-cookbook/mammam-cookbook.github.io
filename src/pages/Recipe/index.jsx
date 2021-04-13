@@ -31,6 +31,7 @@ export default function RecipeDetail(props) {
   const post = useSelector(state => state.Recipe.recipeDetail)
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState('0')
+  console.log(post)
 
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
@@ -80,6 +81,20 @@ export default function RecipeDetail(props) {
               {t('recipe.updatedBy').toLocaleUpperCase()} {post?.author?.name} |{' '}
               {moment(post.updatedAt).format('DD-MM-YYYY')}
             </Text>
+            {post.categories && post.categories.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: 24 }}>
+                {post.categories.map(item => (
+                  <Button
+                    size="middle"
+                    style={{ marginRight: 16, borderRadius: 50 }}
+                    type="primary"
+                    onClick={() => {}}
+                  >
+                    {item.category['vi']}
+                  </Button>
+                ))}
+              </div>
+            )}
             <div
               style={{
                 display: 'flex',
@@ -126,10 +141,8 @@ export default function RecipeDetail(props) {
                 </Title>
               </div>
             </div>
-            {
-              //categories
-            }
-            <div style={styles.spaceBetween}>
+
+            <div style={{ ...styles.spaceBetween, marginTop: 24 }}>
               <Button
                 size="large"
                 style={{ flex: 1, marginRight: 24 }}
@@ -178,7 +191,14 @@ export default function RecipeDetail(props) {
             activeKey={currentTab}
             onChange={key => setCurrentTab(key)}
           >
-            <TabPane tab={t('create.ingredients').toLocaleUpperCase()} key="0">
+            <TabPane tab={t('recipe.comment').toLocaleUpperCase()} key="0">
+              {post.comments && post.comments.length > 0 ? (
+                <RecipeComments comments={post.comments} postId={post.id} />
+              ) : (
+                <Text>{t('recipe.noComments')}</Text>
+              )}
+            </TabPane>
+            <TabPane tab={t('create.ingredients').toLocaleUpperCase()} key="1">
               <div
                 style={{
                   display: 'flex',
@@ -194,19 +214,12 @@ export default function RecipeDetail(props) {
                 ))}
               </div>
             </TabPane>
-            <TabPane tab={t('create.direction').toLocaleUpperCase()} key="1">
+            <TabPane tab={t('create.direction').toLocaleUpperCase()} key="2">
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {post.steps.map((item, index) => (
                   <Direction item={item} index={index + 1} />
                 ))}
               </div>
-            </TabPane>
-            <TabPane tab={t('recipe.comment').toLocaleUpperCase()} key="2">
-              {post.comments && post.comments.length > 0 ? (
-                <RecipeComments comments={post.comments} postId={post.id} />
-              ) : (
-                <Text>{t('recipe.noComments')}</Text>
-              )}
             </TabPane>
             <TabPane tab={t('recipe.challenge').toLocaleUpperCase()} key="3">
               {t('recipe.noChallenges')}
