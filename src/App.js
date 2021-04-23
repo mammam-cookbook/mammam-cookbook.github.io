@@ -5,6 +5,7 @@ import Home from 'pages/Home'
 import SignIn from 'pages/SignIn'
 import SignUp from 'pages/SignUp'
 import RecipeDetail from 'pages/Recipe'
+import SearchRecipe from 'pages/SearchRecipe'
 import React from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import 'slick-carousel/slick/slick-theme.css'
@@ -23,6 +24,7 @@ function App() {
       <Route path="/forgot" component={ForgotPassword} />
       <Route path="/reset/:token" component={CreatePasswordPage} />
       <Route path="/create" component={CreateRecipe} />
+      <Route path="/recipee/search" component={SearchRecipe} />
       <Route path="/recipe/:id" component={RecipeDetail} />
     </Router>
   )
