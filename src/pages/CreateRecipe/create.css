@@ -1,7 +1,41 @@
-.container-fluid {
-  margin: 0 auto;
-  max-width: 1400px;
-  padding: 0 15px;
+@media only screen and (max-width: 2400px) {
+  .body-container {
+    padding-left: calc(220px + 0.5vmin);
+    padding-right: calc(220px + 0.5vmin);
+  }
+  .row-container {
+    flex-direction: row;
+  }
+}
+
+@media only screen and (max-width: 1367px) {
+  .body-container {
+    padding-left: calc(100px + 0.5vmin);
+    padding-right: calc(100px + 0.5vmin);
+  }
+  .row-container {
+    flex-direction: row;
+  }
+}
+
+@media only screen and (max-width: 1056px) {
+  .body-container {
+    padding-left: calc(100px + 0.5vmin);
+    padding-right: calc(100px + 0.5vmin);
+  }
+  .row-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 766px) {
+  .body-container {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .row-container {
+    flex-direction: column;
+  }
 }
 
 .inputBox {

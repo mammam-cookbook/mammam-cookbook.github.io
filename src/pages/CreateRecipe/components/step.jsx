@@ -1,8 +1,8 @@
 import { Input, Typography } from 'antd'
-import CInput from 'components/CInput'
 import 'pages/SignIn/signin.css'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useMediaQuery } from 'react-responsive'
 import { COLOR } from 'ultis/functions'
 import ImageUpload from './imageUpload'
 
@@ -19,13 +19,14 @@ function Step({
   error
 }) {
   const { t } = useTranslation()
+  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   return (
     <div
       style={{
         width: '100%',
         ...style,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: isDesktopOrLaptop ? 'row' : 'column',
         marginTop: 16
       }}
     >
@@ -34,13 +35,13 @@ function Step({
           display: 'flex',
           flex: 1,
           flexDirection: 'column',
-          paddingRight: 24
+          paddingRight: isDesktopOrLaptop ? 24 : 0
         }}
       >
         <div
           style={{
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: 24
           }}
@@ -53,7 +54,7 @@ function Step({
           >
             <div
               style={{
-                width: 150,
+                width: isDesktopOrLaptop ? 150 : 50,
                 height: 50,
                 backgroundColor: COLOR.primary1,
                 borderTopRightRadius: 10
@@ -82,13 +83,15 @@ function Step({
             <Title level={5} style={{ marginRight: 12, marginTop: 8 }}>
               {t('create.time')}
             </Title>
-            <CInput
-              style={{ width: 80, borderColor: COLOR.primary1 }}
+            <Input
+              style={{
+                width: isDesktopOrLaptop ? 80 : 56,
+                borderColor: COLOR.primary1
+              }}
               onChange={event => onChangeTime(event.target.value)}
               placeholder="5"
               value={step?.time}
               type="number"
-              error={error?.time}
             />
             <Title level={5} style={{ marginLeft: 8, marginTop: 8 }}>
               {t('create.min')}
@@ -106,7 +109,11 @@ function Step({
         )}
       </div>
       <ImageUpload
-        style={{ flex: 1, marginLeft: 24 }}
+        style={{
+          flex: 1,
+          marginLeft: isDesktopOrLaptop ? 24 : 0,
+          marginTop: isDesktopOrLaptop ? 0 : 24
+        }}
         value={step.images}
         onChange={data => onChangeImage(data)}
       />

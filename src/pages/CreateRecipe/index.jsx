@@ -7,6 +7,7 @@ import 'pages/CreateRecipe/create.css'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+import { useMediaQuery } from 'react-responsive'
 import { useHistory } from 'react-router-dom'
 import { COLOR, RECIPE_STATUS } from 'ultis/functions'
 import ImageUpload from './components/imageUpload'
@@ -21,6 +22,7 @@ const { Option } = Select
 
 export default props => {
   const dispatch = useDispatch()
+  const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const user = useSelector(state => state.Auth.user)
   const categories = useSelector(state => state.Create.categories)
   const history = useHistory()
@@ -146,7 +148,7 @@ export default props => {
   }
 
   return (
-    <div className="container-fluid">
+    <>
       <AppHeader from="create" />
       <Formik
         initialValues={{
@@ -177,7 +179,7 @@ export default props => {
           setFieldValue
         }) => {
           return (
-            <div>
+            <div className="body-container">
               <Title level={2} style={{ paddingLeft: 24 }}>
                 {t('home.createRecipe')}
               </Title>
@@ -202,7 +204,10 @@ export default props => {
                   current={currentStep}
                 >
                   {stepTitle.map(item => (
-                    <AntdStep key={item} title={item} />
+                    <AntdStep
+                      key={item}
+                      title={isDesktopOrLaptop ? item : null}
+                    />
                   ))}
                 </Steps>
                 <Button
@@ -215,32 +220,48 @@ export default props => {
               </div>
 
               {currentStep === 0 && (
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex' }} className="row-container">
                   <div style={style.leftColumn}>
-                    <div style={style.spaceBetween}>
-                      <Title level={5} style={{ color: COLOR.primary1 }}>
+                    <div style={{ ...style.spaceBetween, marginBottom: 24 }}>
+                      <Text style={{ color: COLOR.primary1, fontWeight: 600 }}>
                         {t('create.contributeToCreate')}
-                      </Title>
+                      </Text>
                       <Switch
                         defaultChecked
                         onChange={data => console.log(data)}
                       />
                     </div>
+                    <div style={{ flex: 1 }}>
+                      <Title level={4}>
+                        {t('create.title').toLocaleUpperCase()}
+                      </Title>
+                      <CInput
+                        style={style.border}
+                        className="inputBox"
+                        value={values.title}
+                        onChange={handleChange('title')}
+                        onTouchStart={() => setFieldTouched('title')}
+                        onBlur={handleBlur('title')}
+                        placeholder={t('create.titlePlaceholder')}
+                        error={errors.title}
+                      />
+                    </div>
 
                     <div style={{ ...style.spaceBetween, marginTop: 16 }}>
-                      <div style={{ flex: 3 }}>
+                      <div style={{ flex: 1.5 }}>
                         <Title level={4}>
-                          {t('create.title').toLocaleUpperCase()}
+                          {t('create.time').toLocaleUpperCase()}
                         </Title>
                         <CInput
                           style={style.border}
                           className="inputBox"
-                          value={values.title}
-                          onChange={handleChange('title')}
-                          onTouchStart={() => setFieldTouched('title')}
-                          onBlur={handleBlur('title')}
-                          placeholder={t('create.titlePlaceholder')}
-                          error={errors.title}
+                          value={values.ration}
+                          onChange={handleChange('ration')}
+                          onTouchStart={() => setFieldTouched('ration')}
+                          onBlur={handleBlur('ration')}
+                          placeholder={'200'}
+                          error={errors.ration}
+                          type="number"
                         />
                       </div>
                       <div
@@ -267,7 +288,7 @@ export default props => {
                         </Title>
                         <div style={style.spaceBetween}>
                           <CInput
-                            style={{ maxWidth: 100, ...style.border }}
+                            style={{ maxWidth: 120, ...style.border }}
                             className="inputBox"
                             value={values.cooking_time}
                             onChange={handleChange('cooking_time')}
@@ -429,6 +450,7 @@ export default props => {
                     <Text style={{ color: 'red' }}>{errors.steps}</Text>
                   )}
                   <Button
+                    style={{ marginTop: 48 }}
                     type="primary"
                     onClick={() => {
                       setFieldValue('steps', [
@@ -470,7 +492,7 @@ export default props => {
           )
         }}
       </Formik>
-    </div>
+    </>
   )
 }
 
