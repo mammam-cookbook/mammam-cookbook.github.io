@@ -180,14 +180,10 @@ export default props => {
         }) => {
           return (
             <div className="body-container">
-              <Title level={2} style={{ paddingLeft: 24 }}>
-                {t('home.createRecipe')}
-              </Title>
+              <Title level={2}>{t('home.createRecipe')}</Title>
               <div
                 style={{
                   ...style.spaceBetween,
-                  paddingLeft: 24,
-                  paddingRight: 24,
                   paddingTop: 24,
                   paddingBottom: 24
                 }}
@@ -413,7 +409,7 @@ export default props => {
                 </div>
               )}
               {currentStep === 2 && (
-                <div style={{ padding: 24 }}>
+                <div>
                   <Title level={4}>
                     {t('create.direction').toLocaleUpperCase()}
                   </Title>
@@ -500,8 +496,7 @@ const style = {
   leftColumn: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1,
-    padding: 24
+    flex: 1
   },
   spaceBetween: {
     display: 'flex',

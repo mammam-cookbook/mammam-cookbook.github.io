@@ -8,7 +8,7 @@ import { COLOR } from 'ultis/functions'
 import { CommentPost } from '../redux/actions'
 
 export default props => {
-  const { owner, postId } = props
+  const { owner, postId, padding } = props
   const dispatch = useDispatch()
   const [cmt, setCmt] = useState('')
   const { t } = useTranslation()
@@ -38,17 +38,25 @@ export default props => {
       style={{
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingLeft: padding ? 60 : 0
       }}
     >
-      {owner.avatar ? (
-        <Avatar size={48} src={owner.avatar} />
-      ) : (
-        <Avatar size={48} icon={<UserOutlined />} />
-      )}
+      <div style={{ flex: 1 }}>
+        {owner.avatar ? (
+          <Avatar size={48} src={owner.avatar} />
+        ) : (
+          <Avatar size={48} icon={<UserOutlined />} />
+        )}
+      </div>
+
       <TextArea
-        rows={3}
-        style={{ borderColor: COLOR.primary1, marginLeft: 24, marginRight: 24 }}
+        rows={2}
+        style={{
+          borderColor: COLOR.primary1,
+          marginLeft: 12,
+          marginRight: 24
+        }}
         value={cmt}
         onChange={event => setCmt(event.target.value)}
         placeholder={t('recipe.commentPlaceholder')}

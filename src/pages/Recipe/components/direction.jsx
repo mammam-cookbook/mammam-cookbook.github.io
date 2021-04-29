@@ -10,32 +10,39 @@ export default function Direction({ item, index }) {
 
   return (
     <div style={{ marginBottom: 48 }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-end'
-        }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div
           style={{
-            width: 240,
-            height: 50,
-            backgroundColor: COLOR.primary1,
-            borderTopRightRadius: 10
+            display: 'flex',
+            alignItems: 'flex-end'
           }}
-        />
-        <div>
-          <Title level={4} style={{ margin: 8 }}>
-            {t('create.step')} {index}
-          </Title>
+        >
           <div
             style={{
-              height: 4,
-              width: '100%',
-              backgroundColor: COLOR.primary1
+              width: 240,
+              height: 50,
+              backgroundColor: COLOR.primary1,
+              borderTopRightRadius: 10
             }}
           />
+          <div>
+            <Title level={4} style={{ margin: 8 }}>
+              {t('create.step')} {index}
+            </Title>
+            <div
+              style={{
+                height: 4,
+                width: '100%',
+                backgroundColor: COLOR.primary1
+              }}
+            />
+          </div>
         </div>
+        {item.time && (
+          <Title level={4} style={{ margin: 8 }}>
+            {item?.time} {t('create.min')}
+          </Title>
+        )}
       </div>
       <Title level={5} style={{ marginTop: 16 }}>
         {item.content}

@@ -9,7 +9,7 @@ import { UserOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
 export default function CommentView(props) {
-  const { comment, canReply, postId } = props
+  const { comment, canReply, postId, padding } = props
   const user = useSelector(state => state.Auth.user)
   const [isShowReply, setIsShowReply] = useState(false)
   const dispatch = useDispatch()
@@ -69,7 +69,7 @@ export default function CommentView(props) {
     )
   ]
   return (
-    <>
+    <div style={padding ? { paddingLeft: 60 } : {}}>
       <Comment
         actions={actions}
         author={<a>{comment?.author?.name}</a>}
@@ -87,6 +87,7 @@ export default function CommentView(props) {
       />
       {isShowReply && user && (
         <CommentSend
+          padding={true}
           owner={user}
           postId={postId}
           parentComment={comment.id}
@@ -98,12 +99,13 @@ export default function CommentView(props) {
         comment.childrenComments.length > 0 &&
         comment.childrenComments.map(item => (
           <CommentView
+            padding={true}
             key={item.id}
             postId={postId}
             comment={item}
             canReply={false}
           />
         ))}
-    </>
+    </div>
   )
 }

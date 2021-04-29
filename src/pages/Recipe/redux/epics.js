@@ -4,7 +4,14 @@ import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
 import { history, MODAL_TYPE } from 'ultis/functions'
+import i18n from 'ultis/i18n'
 import {
+  AddToMenu,
+  AddToMenuListFailed,
+  AddToMenuListSuccess,
+  AddToShoppingList,
+  AddToShoppingListFailed,
+  AddToShoppingListSuccess,
   CommentPost,
   CommentPostFailed,
   CommentPostSuccess,
@@ -72,7 +79,65 @@ const getDetailRecipeEpic$ = action$ =>
     })
   )
 
+const addShoppingListEpic$ = action$ =>
+  action$.pipe(
+    ofType(AddToShoppingList.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'shopinglist',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              'Đã thêm vào danh sách mua'
+            )
+            return AddToShoppingListSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage()
+          return AddToShoppingListFailed.get(result)
+        }),
+        catchError(error => {
+          GlobalModal.alertMessage()
+          return AddToShoppingListFailed.get(error)
+        })
+      )
+    })
+  )
+
+const addMenuEpic$ = action$ =>
+  action$.pipe(
+    ofType(AddToMenu.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'menu',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              'Đã thêm vào thực đơn'
+            )
+            return AddToMenuListSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage()
+          return AddToMenuListFailed.get(result)
+        }),
+        catchError(error => {
+          GlobalModal.alertMessage()
+          return AddToMenuListFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const recipeEpics = combineEpics(
   getDetailRecipeEpic$,
-  commentRecipeEpic$
+  commentRecipeEpic$,
+  addShoppingListEpic$,
+  addMenuEpic$
 )

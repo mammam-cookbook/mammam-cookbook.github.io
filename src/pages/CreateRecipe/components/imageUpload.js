@@ -1,13 +1,11 @@
+import { LoadingOutlined } from '@ant-design/icons'
 import { Button, Spin } from 'antd'
 import Text from 'antd/lib/typography/Text'
-import Paragraph from 'antd/lib/typography/Paragraph'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiUpload, FiX } from 'react-icons/fi'
 import { COLOR } from 'ultis/functions'
-import { upload, deleteImg } from 'ultis/uploadImage'
-import { LoadingOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { deleteImg, upload } from 'ultis/uploadImage'
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 const MAX_IMAGES = 3

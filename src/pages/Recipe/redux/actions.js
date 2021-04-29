@@ -23,3 +23,15 @@ export const CommentPostFailed = defineAction('COMMENT_POST_FAILED')
 export const DeleteComment = defineAction('DELETE_COMMENT')
 export const DeleteCommentSuccess = defineAction('DELETE_COMMENT_SUCCESS')
 export const DeleteCommentFailed = defineAction('DELETE_COMMENT_FAILED')
+
+export const AddToShoppingList = defineAction('ADD_TO_SHOPPING_LIST')
+export const AddToShoppingListSuccess = defineAction(
+  'ADD_TO_SHOPPING_LIST_SUCCESS'
+)
+export const AddToShoppingListFailed = defineAction(
+  'ADD_TO_SHOPPING_LIST_FAILED'
+)
+
+export const AddToMenu = defineAction('ADD_TO_MENU')
+export const AddToMenuListSuccess = defineAction('ADD_TO_MENU_SUCCESS')
+export const AddToMenuListFailed = defineAction('ADD_TO_MENU_FAILED')
