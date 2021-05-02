@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 import { useHistory } from 'react-router-dom'
-import { ROLES } from 'ultis/functions'
+import { NAME_REGEX, ROLES } from 'ultis/functions'
 import * as yup from 'yup'
 import '../SignIn/signin.css'
 import signupPic from 'assets/images/signup.png'
@@ -42,18 +42,15 @@ function SignUp() {
       .matches(/(?=.{8,})/, {
         message: t('signin.passMin')
       }),
-    fullName: yup
+    name: yup
       .string()
       .trim()
       .required(t('signin.fullnameRequired'))
       .min(3, t('signin.fullnameMin'))
       .max(64, t('signin.fullnameMax'))
-      .matches(
-        /[^a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u,
-        {
-          message: t('signin.fullnameInvalid')
-        }
-      )
+      .matches(NAME_REGEX, {
+        message: t('signin.fullnameInvalid')
+      })
   })
 
   const handleSignup = values => {
@@ -61,7 +58,7 @@ function SignUp() {
       SignUpRequest.get({
         ...values,
         email: values.email.toLowerCase(),
-        role: ROLES.NOT_VERIFIED
+        role: ROLES.USER
       })
     )
   }
@@ -83,7 +80,7 @@ function SignUp() {
             initialValues={{
               email: '',
               password: '',
-              fullName: ''
+              name: ''
             }}
             isInitialValid={false}
             validationSchema={validationSchema}
@@ -104,13 +101,13 @@ function SignUp() {
                   <span id="loginStyle">{t('signup.title')}</span>
                   <CInput
                     className="inputBox"
-                    value={values.fullName}
-                    onChange={handleChange('fullName')}
-                    onTouchStart={() => setFieldTouched('fullName')}
-                    onBlur={handleBlur('fullName')}
+                    value={values.name}
+                    onChange={handleChange('name')}
+                    onTouchStart={() => setFieldTouched('name')}
+                    onBlur={handleBlur('name')}
                     placeholder={t('signup.fullname')}
                     onKeyPress={event => handleKeyPress(isValid, event, values)}
-                    error={errors.fullName}
+                    error={errors.name}
                   />
                   <CInput
                     className="inputBox"

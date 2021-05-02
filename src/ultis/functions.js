@@ -2,8 +2,8 @@ import { createHashHistory } from 'history'
 
 export const history = createHashHistory({ forceRefresh: true })
 
-// export const DOMAIN = 'https://mammammam.herokuapp.com/api'
-export const DOMAIN = 'http://localhost:3001/api'
+export const DOMAIN = 'https://mammammam.herokuapp.com/api'
+// export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = true
 
 export const LIMIT_ITEMS = 12
@@ -14,6 +14,8 @@ export const COLOR = {
   gray: '#C4C4C4',
   grayText: '#828282'
 }
+
+export const NAME_REGEX = /^[A-Z0-9a-z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*$/
 
 export const MODAL_TYPE = {
   NORMAL: 'NORMAL',

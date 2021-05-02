@@ -13,6 +13,7 @@ import * as easyData from 'assets/lottie/easy.json'
 import * as hardData from 'assets/lottie/hard.json'
 import * as yuckData from 'assets/lottie/yuck.json'
 import * as yummyData from 'assets/lottie/yummy.json'
+import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
 import moment from 'moment'
 import { LEVEL } from 'pages/CreateRecipe/constant'
@@ -34,12 +35,14 @@ import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-import { COLOR } from 'ultis/functions'
+import { COLOR, MODAL_TYPE } from 'ultis/functions'
+import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
 import RecipeComments from './components/comment'
 import Direction from './components/direction'
 import RecipeIngredient from './components/ingredient'
 import { AddToShoppingList, GetDetailRecipe } from './redux/actions'
+import { FacebookShareButton } from 'react-share'
 
 const { TabPane } = Tabs
 const loadingIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />
@@ -90,11 +93,14 @@ export default function RecipeDetail(props) {
   const { id } = params // Recipe ID (The UUID was returned from API)
   const dispatch = useDispatch()
   const post = useSelector(state => state.Recipe.recipeDetail)
+  const user = useSelector(state => state.Auth.user)
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState('0')
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const history = useHistory()
   const [isShowSaveMenu, setIsShowSaveMenu] = useState(false)
+  const [isShowSaveCollection, setIsShowSaveCollection] = useState(false)
+  const [isShowPopover, setIsShowPopover] = useState(false)
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search)
@@ -103,17 +109,35 @@ export default function RecipeDetail(props) {
   const readMode = query.get('readMode')
   const step = Number(query.get('step'))
   const [isCountdown, setIsCountdown] = useState(false)
-  const [random, setRandom] = useState(Math.random())
   const [timerTime, setTimerTime] = useState('00:00')
   const [timer, setTimer] = useState(null)
 
   let timeLeft = 0
 
-  console.log(post)
+  console.log('post', post)
 
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
   }, [])
+
+  const onClickSave = () => {
+    if (user) {
+      setIsShowPopover(!isShowPopover)
+    } else {
+      GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
+        history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
+      )
+    }
+  }
+
+  const onClickFollow = () => {
+    if (user) {
+    } else {
+      GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
+        history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
+      )
+    }
+  }
 
   const startTimer = timeCount => {
     timeLeft = timeCount * 60
@@ -156,14 +180,23 @@ export default function RecipeDetail(props) {
 
   const saveContent = (
     <Menu style={{ width: 200 }}>
-      <Menu.Item key={'save_to_collection'} onClick={() => {}}>
-        Lưu vào bộ sưu tập
+      <Menu.Item
+        key={'save_to_collection'}
+        onClick={() => {
+          setIsShowPopover(false)
+          setIsShowSaveCollection(true)
+        }}
+      >
+        {t('recipe.addToCollection')}
       </Menu.Item>
       <Menu.Item
         key={'save_to_mealPlanner'}
-        onClick={() => setIsShowSaveMenu(true)}
+        onClick={() => {
+          setIsShowPopover(false)
+          setIsShowSaveMenu(true)
+        }}
       >
-        Thêm vào thực đơn
+        {t('recipe.addToMenu')}
       </Menu.Item>
     </Menu>
   )
@@ -213,8 +246,8 @@ export default function RecipeDetail(props) {
             <div style={{ display: 'flex', flexDirection: 'column', flex: 4 }}>
               <Title level={2}>{post.title}</Title>
               <Text style={{ color: COLOR.grayText }}>
-                {t('recipe.updatedBy').toLocaleUpperCase()} {post?.author?.name}{' '}
-                | {moment(post.updatedAt).format('DD-MM-YYYY')}
+                {t('recipe.updatedBy')} {post?.author?.name} |{' '}
+                {moment(post.updatedAt).format('DD-MM-YYYY')}
               </Text>
               {post.categories && post.categories.length > 0 && (
                 <div
@@ -244,38 +277,36 @@ export default function RecipeDetail(props) {
                   <Text style={styles.grayInfo}>
                     {t('create.time').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
-                    {post.cooking_time} {t('create.min')}
-                  </Title>
+                  <Text style={styles.orangeInfo}>
+                    {post.cooking_time} {t('create.min').toLocaleUpperCase()}
+                  </Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('create.level').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
+                  <Text style={styles.orangeInfo}>
                     {LEVEL.filter(
                       item => item.code === post.level
                     )[0].title.toLocaleUpperCase()}
-                  </Title>
+                  </Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('create.ration').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
-                    {post.ration}
-                  </Title>
+                  <Text style={styles.orangeInfo}>{post.ration}</Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('recipe.energy').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
+                  <Text style={styles.orangeInfo}>
                     {(
                       post?.ingredients?.reduce(calcCalories, 0) / 1000
                     ).toFixed(0)}{' '}
                     KCAL
-                  </Title>
+                  </Text>
                 </div>
               </div>
 
@@ -333,6 +364,7 @@ export default function RecipeDetail(props) {
                 <Button
                   style={styles.iconButton}
                   shape="circle"
+                  type="text"
                   icon={<FiSmile size={24} color={COLOR.primary2} />}
                 />
               </Popover>
@@ -341,26 +373,36 @@ export default function RecipeDetail(props) {
                 content={saveContent}
                 placement="topLeft"
                 trigger="click"
+                visible={isShowPopover}
               >
                 <Button
                   style={styles.iconButton}
                   shape="circle"
+                  type="text"
+                  onClick={onClickSave}
                   icon={<FiBookmark size={24} color={COLOR.primary2} />}
                 />
               </Popover>
               <Button
                 style={styles.iconButton}
                 shape="circle"
+                type="text"
+                onClick={onClickFollow}
                 icon={<FiUserPlus size={24} color={COLOR.primary2} />}
               />
+              <FacebookShareButton
+                style={{
+                  ...styles.iconButton,
+                  borderRadius: 50
+                }}
+                url={window.location.href}
+              >
+                <FiFacebook size={24} color={COLOR.primary2} />
+              </FacebookShareButton>
               <Button
                 style={styles.iconButton}
                 shape="circle"
-                icon={<FiFacebook size={24} color={COLOR.primary2} />}
-              />
-              <Button
-                style={styles.iconButton}
-                shape="circle"
+                type="text"
                 icon={<FiPrinter size={24} color={COLOR.primary2} />}
               />
             </div>
@@ -375,6 +417,7 @@ export default function RecipeDetail(props) {
                   <Button
                     style={styles.iconButton}
                     shape="circle"
+                    type="text"
                     icon={<FiSmile size={24} color={COLOR.primary2} />}
                   />
                 </Popover>
@@ -382,10 +425,13 @@ export default function RecipeDetail(props) {
                   content={saveContent}
                   placement="right"
                   trigger="click"
+                  visible={isShowPopover}
                 >
                   <Button
                     style={styles.iconButton}
                     shape="circle"
+                    type="text"
+                    onClick={onClickSave}
                     icon={<FiBookmark size={24} color={COLOR.primary2} />}
                   />
                 </Popover>
@@ -393,16 +439,23 @@ export default function RecipeDetail(props) {
                 <Button
                   style={styles.iconButton}
                   shape="circle"
+                  type="text"
+                  onClick={onClickFollow}
                   icon={<FiUserPlus size={24} color={COLOR.primary2} />}
                 />
+                <FacebookShareButton
+                  style={{
+                    ...styles.iconButton,
+                    borderRadius: 50
+                  }}
+                  url={window.location.href}
+                >
+                  <FiFacebook size={24} color={COLOR.primary2} />
+                </FacebookShareButton>
                 <Button
                   style={styles.iconButton}
                   shape="circle"
-                  icon={<FiFacebook size={24} color={COLOR.primary2} />}
-                />
-                <Button
-                  style={styles.iconButton}
-                  shape="circle"
+                  type="text"
                   icon={<FiPrinter size={24} color={COLOR.primary2} />}
                 />
               </div>
@@ -414,11 +467,7 @@ export default function RecipeDetail(props) {
               onChange={key => setCurrentTab(key)}
             >
               <TabPane tab={t('recipe.comment').toLocaleUpperCase()} key="0">
-                {post.comments && post.comments.length > 0 ? (
-                  <RecipeComments comments={post.comments} postId={post.id} />
-                ) : (
-                  <Text>{t('recipe.noComments')}</Text>
-                )}
+                <RecipeComments comments={post.comments} postId={post.id} />
               </TabPane>
               <TabPane
                 tab={t('create.ingredients').toLocaleUpperCase()}
@@ -445,7 +494,7 @@ export default function RecipeDetail(props) {
                       dispatch(AddToShoppingList.get({ recipe_id: id }))
                     }
                   >
-                    Thêm vào danh sách mua
+                    {t('recipe.addToShoppingList')}
                   </Button>
                 </>
               </TabPane>
@@ -472,38 +521,36 @@ export default function RecipeDetail(props) {
                   <Text style={styles.grayInfo}>
                     {t('create.time').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
-                    {post.cooking_time} {t('create.min')}
-                  </Title>
+                  <Text style={styles.orangeInfo}>
+                    {post.cooking_time} {t('create.min').toLocaleUpperCase()}
+                  </Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('create.level').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
+                  <Text style={styles.orangeInfo}>
                     {LEVEL.filter(
                       item => item.code === post.level
                     )[0].title.toLocaleUpperCase()}
-                  </Title>
+                  </Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('create.ration').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
-                    {post.ration}
-                  </Title>
+                  <Text style={styles.orangeInfo}>{post.ration}</Text>
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
                     {t('recipe.energy').toLocaleUpperCase()}
                   </Text>
-                  <Title style={{ color: COLOR.primary1 }} level={4}>
+                  <Text style={styles.orangeInfo}>
                     {(
                       post?.ingredients?.reduce(calcCalories, 0) / 1000
                     ).toFixed(0)}{' '}
                     KCAL
-                  </Title>
+                  </Text>
                 </div>
               </div>
             </Affix>
@@ -642,20 +689,26 @@ export default function RecipeDetail(props) {
           </div>
         </div>
       )}
-      {isShowSaveMenu && (
-        <ModalAddMenu
-          recipeId={id}
-          isShow={isShowSaveMenu}
-          closeModal={() => setIsShowSaveMenu(false)}
-        />
-      )}
+      <ModalAddMenu
+        recipeId={id}
+        isShow={isShowSaveMenu}
+        closeModal={() => setIsShowSaveMenu(false)}
+      />
+      <ModalAddCollection
+        recipeId={id}
+        isShow={isShowSaveCollection}
+        closeModal={() => setIsShowSaveCollection(false)}
+      />
     </div>
   )
 }
 
 const styles = {
   info: {
-    textAlign: 'center'
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 20
   },
   spaceBetween: {
     display: 'flex',
@@ -669,6 +722,7 @@ const styles = {
     borderRadius: 100
   },
   grayInfo: { color: COLOR.grayText, fontWeight: 600 },
+  orangeInfo: { color: COLOR.primary1, fontWeight: 700, fontSize: 18 },
   iconButton: {
     marginBottom: 24,
     marginRight: 24,

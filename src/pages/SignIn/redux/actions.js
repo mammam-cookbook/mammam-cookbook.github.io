@@ -28,10 +28,6 @@ export const UpdateProfile = defineAction('UPDATE_PROFILE_REQUEST')
 export const UpdateProfileSuccess = defineAction('UPDATE_PROFILE_SUCCESS')
 export const UpdateProfileFailed = defineAction('UPDATE_PROFILE_FAILED')
 
-export const GetWatchlist = defineAction('GET_WATCHLIST_REQUEST')
-export const GetWatchlistSuccess = defineAction('GET_WATCHLIST_SUCCESS')
-export const GetWatchlistFailed = defineAction('GET_WATCHLIST_FAILED')
-
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')
 

@@ -46,12 +46,12 @@ export const validationRecipeSchema = yup.object().shape({
     .max(255, 'Tiêu đề không được quá 255 kí tự'),
   ration: yup
     .number()
-    .required('* Vui lòng nhập khẩu phần')
-    .min(1, 'Công thức dành cho ít nhất 1 người ăn'),
+    .required('* Nhập khẩu phần')
+    .min(1, 'Ít nhất 1 người ăn'),
   cooking_time: yup
     .number()
-    .required('* Vui lòng nhập thời gian thực hiện')
-    .min(1, 'Thời gian thực hiện nhiều hơn 0 phút')
+    .required('* Nhập thời gian thực hiện')
+    .min(1, 'Thời gian nhiều hơn 0 phút')
     .max(
       MAX_COOKING_TIME,
       `Thời gian thực hiện không quá ${MAX_COOKING_TIME} phút`

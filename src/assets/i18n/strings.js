@@ -8,7 +8,11 @@ export const en = {
     signupSuccess: 'Sign up succeed. Please sign in to continue.',
     forgotPassSuccess: 'Please check your email to reset password.',
     updatePassSuccess: 'Success updating password. Please login.',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    create: 'Create',
+    add: 'Add',
+    en: 'English',
+    vi: 'Vietnamese'
   },
   auth: {
     login: 'Sign In',
@@ -130,7 +134,19 @@ export const en = {
     replies: 'replies',
     confirmDeleteComment: 'Do you confirm to delete this comment?',
     delete: 'Delete',
-    commentPlaceholder: 'Leave comment'
+    commentPlaceholder: 'Leave comment',
+    addToCollection: 'Add to collection',
+    addToMenu: 'Add to meal planner',
+    addToShoppingList: 'Add to shopping list',
+    noCollection: 'There is no collection',
+    collectionNamePlaceholder: 'Please input collection name',
+    collectionNameError: 'Invalid collection name',
+    addNewCollection: 'Add new collection',
+    chooseDate: 'Choose date',
+    chooseSession: 'Choose session',
+    morning: 'Breakfast',
+    lunch: 'Lunch',
+    dinner: 'Dinner'
   }
 }
 
@@ -144,7 +160,11 @@ export const vi = {
     signupSuccess: 'Đăng ký thành công. Vui lòng đăng nhập để tiếp tục',
     forgotPassSuccess: 'Vui lòng kiểm tra email của bạn để đặt lại mật khẩu.',
     updatePassSuccess: 'Cập nhật mật khẩu thành công. Vui lòng đăng nhập lại',
-    confirm: 'Xác nhận'
+    confirm: 'Xác nhận',
+    create: 'Tạo',
+    add: 'Thêm',
+    en: 'Tiếng Anh',
+    vi: 'Tiếng Việt'
   },
   auth: {
     login: 'Đăng nhập',
@@ -190,7 +210,7 @@ export const vi = {
     tryItOut: 'Thử ngay',
     browse: 'KHÁM PHÁ',
     recipes: 'CÔNG THỨC',
-    mealPlanner: 'TẠO MENU',
+    mealPlanner: 'TẠO THỰC ĐƠN',
     createRecipe: 'ĐĂNG CÔNG THỨC',
     searchHere: 'Tìm kiếm',
     result: 'Kết quả',
@@ -266,6 +286,18 @@ export const vi = {
     replies: 'trả lời',
     confirmDeleteComment: 'Bạn chắc chắn muốn xóa nhận xét này?',
     delete: 'Xóa',
-    commentPlaceholder: 'Nhập nhận xét'
+    commentPlaceholder: 'Nhập nhận xét',
+    addToCollection: 'Thêm vào bộ sưu tập',
+    addToMenu: 'Thêm vào thực đơn',
+    addToShoppingList: 'Thêm vào danh sách mua',
+    noCollection: 'Chưa có bộ sưu tập',
+    collectionNamePlaceholder: 'Nhập tên bộ sưu tập',
+    collectionNameError: 'Tên bộ sưu tập không hợp lệ',
+    addNewCollection: 'Thêm bộ sưu tập mới',
+    chooseDate: 'Chọn ngày',
+    chooseSession: 'Chọn bữa',
+    morning: 'Bữa sáng',
+    lunch: 'Bữa trưa',
+    dinner: 'Bữa tối'
   }
 }

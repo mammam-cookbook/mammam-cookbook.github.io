@@ -101,7 +101,7 @@ const changePassEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: `users/${action.payload.id}/changePassword`,
+        url: `user/${action.payload.id}/changePassword`,
         param: action.payload.data
       }).pipe(
         map(result => {
@@ -139,7 +139,7 @@ const getProfileEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'GET',
-        url: `users/${action.payload}`
+        url: `user/${action.payload}`
       }).pipe(
         map(result => {
           if (result.status === 200) {
@@ -154,34 +154,13 @@ const getProfileEpic$ = action$ =>
     })
   )
 
-const getWatchlistEpic$ = action$ =>
-  action$.pipe(
-    ofType(GetWatchlist.type),
-    exhaustMap(action => {
-      return request({
-        method: 'GET',
-        url: `users/${action.payload}/watchlist`
-      }).pipe(
-        map(result => {
-          if (result.status === 200) {
-            return GetWatchlistSuccess.get(result.data)
-          }
-          return GetWatchlistFailed.get(result)
-        }),
-        catchError(error => {
-          return GetWatchlistFailed.get(error)
-        })
-      )
-    })
-  )
-
 const updateUserProfileEpic$ = action$ =>
   action$.pipe(
     ofType(UpdateProfile.type),
     exhaustMap(action => {
       return request({
-        method: 'PATCH',
-        url: `users/${action.payload.id}`,
+        method: 'PUT',
+        url: `user/${action.payload.id}`,
         param: action.payload.data
       }).pipe(
         map(result => {
@@ -271,6 +250,5 @@ export const authEpics = combineEpics(
   createPasswordEpic$,
   changePassEpic$,
   updateUserProfileEpic$,
-  getProfileEpic$,
-  getWatchlistEpic$
+  getProfileEpic$
 )

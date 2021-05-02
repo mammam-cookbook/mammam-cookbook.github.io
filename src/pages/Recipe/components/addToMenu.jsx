@@ -1,8 +1,7 @@
-import { Modal, Typography, Button, Row, Col, Select, DatePicker } from 'antd'
+import { Button, Col, DatePicker, Modal, Row, Select, Typography } from 'antd'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { MODAL_TYPE } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import { AddToMenu } from '../redux/actions'
 
@@ -38,7 +37,7 @@ export default function ModalAddMenu({
 
   return (
     <Modal
-      title={'Thêm vào thực đơn'}
+      title={i18n.t('recipe.addToMenu')}
       visible={isShow}
       centered
       onOk={handleOk}
@@ -48,13 +47,13 @@ export default function ModalAddMenu({
           {i18n.t('common.cancel')}
         </Button>,
         <Button key="okButton" size="large" type="primary" onClick={handleOk}>
-          Thêm
+          {i18n.t('common.add')}
         </Button>
       ]}
     >
-      <Row gutter={16}>
+      <Row align="middle" gutter={16}>
         <Col className="gutter-row" span={6}>
-          <Text>Chọn ngày</Text>
+          <Text>{i18n.t('recipe.chooseDate')}</Text>
         </Col>
         <Col className="gutter-row" span={18}>
           <DatePicker
@@ -65,9 +64,9 @@ export default function ModalAddMenu({
           />
         </Col>
       </Row>
-      <Row gutter={16} style={{ marginTop: 16 }}>
+      <Row align="middle" gutter={16} style={{ marginTop: 16 }}>
         <Col className="gutter-row" span={6}>
-          <Text>Chọn buổi</Text>
+          <Text>{i18n.t('recipe.chooseSession')}</Text>
         </Col>
         <Col className="gutter-row" span={18}>
           <Select
@@ -75,9 +74,9 @@ export default function ModalAddMenu({
             style={{ width: '100%' }}
             onChange={value => setSession(value)}
           >
-            <Option value="morning">Bữa sáng</Option>
-            <Option value="noon">Bữa trưa</Option>
-            <Option value="night">Bữa tối</Option>
+            <Option value="morning">{i18n.t('recipe.morning')}</Option>
+            <Option value="noon">{i18n.t('recipe.lunch')}</Option>
+            <Option value="night">{i18n.t('recipe.dinner')}</Option>
           </Select>
         </Col>
       </Row>

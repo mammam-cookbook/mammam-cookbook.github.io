@@ -5,9 +5,6 @@ import {
   GetProfile,
   GetProfileFailed,
   GetProfileSuccess,
-  GetWatchlist,
-  GetWatchlistFailed,
-  GetWatchlistSuccess,
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
@@ -21,7 +18,6 @@ const initialState = {
   user: null,
   isLoading: false,
   isLoadingProfile: false,
-  watchlist: [],
   prevLogin: null
 }
 
@@ -50,26 +46,6 @@ export function authReducer(state = initialState, action) {
       }
     case GetProfileFailed.type:
       return { ...state, isLoadingProfile: false }
-    case GetWatchlist.type:
-      return { ...state, isLoading: true }
-    case GetWatchlistSuccess.type:
-      return {
-        ...state,
-        watchlist: action.payload,
-        isLoading: false
-      }
-    case GetWatchlistFailed.type:
-      return { ...state, isLoading: false }
-    // case AddToWatchList.type:
-    //   return { ...state, isLoading: true }
-    // case AddToWatchListSuccess.type:
-    //   return {
-    //     ...state,
-    //     watchlist: action.payload,
-    //     isLoading: false
-    //   }
-    // case AddToWatchListFailed.type:
-    //   return { ...state, isLoading: false }
     case ChangePassword.type:
       return { ...state, isLoading: true }
     case ChangePasswordSuccess.type:

@@ -246,7 +246,7 @@ export default props => {
                     <div style={{ ...style.spaceBetween, marginTop: 16 }}>
                       <div style={{ flex: 1.5 }}>
                         <Title level={4}>
-                          {t('create.time').toLocaleUpperCase()}
+                          {t('create.ration').toLocaleUpperCase()}
                         </Title>
                         <CInput
                           style={style.border}
@@ -284,14 +284,16 @@ export default props => {
                         </Title>
                         <div style={style.spaceBetween}>
                           <CInput
-                            style={{ maxWidth: 120, ...style.border }}
+                            style={{
+                              maxWidth: 120,
+                              ...style.border
+                            }}
                             className="inputBox"
                             value={values.cooking_time}
                             onChange={handleChange('cooking_time')}
                             onTouchStart={() => setFieldTouched('cooking_time')}
                             onBlur={handleBlur('cooking_time')}
                             placeholder={'200'}
-                            error={errors.cooking_time}
                             type="number"
                           />
                           <Title
@@ -301,6 +303,11 @@ export default props => {
                             {t('create.min').toLocaleUpperCase()}
                           </Title>
                         </div>
+                        {errors.cooking_time && (
+                          <span className="errorStyle">
+                            {errors.cooking_time}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <Title level={4} style={{ marginTop: 16 }}>
