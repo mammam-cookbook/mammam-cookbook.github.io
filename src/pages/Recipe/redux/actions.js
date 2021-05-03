@@ -35,3 +35,7 @@ export const AddToShoppingListFailed = defineAction(
 export const AddToMenu = defineAction('ADD_TO_MENU')
 export const AddToMenuListSuccess = defineAction('ADD_TO_MENU_SUCCESS')
 export const AddToMenuListFailed = defineAction('ADD_TO_MENU_FAILED')
+
+export const ReactRecipe = defineAction('REACT_RECIPE')
+export const ReactRecipeSuccess = defineAction('REACT_RECIPE_SUCCESS')
+export const ReactRecipeFailed = defineAction('REACT_RECIPE_FAILED')

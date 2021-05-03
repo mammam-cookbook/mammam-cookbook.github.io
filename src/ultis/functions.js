@@ -1,4 +1,5 @@
 import { createHashHistory } from 'history'
+import i18n from './i18n'
 
 export const history = createHashHistory({ forceRefresh: true })
 
@@ -33,7 +34,12 @@ export const RECIPE_STATUS = Object.freeze({
   APPROVED: 'Approved'
 })
 
+export const REACTION = ['easy peasy', 'yum', 'yuck', 'tough nut']
+
 export const DEFAULT_PASSWORD = '12345678'
+
+export const getCurrentLng = () =>
+  i18n.language || window.localStorage.i18nextLng || ''
 
 export function log(...arg) {
   if (__DEV__) {

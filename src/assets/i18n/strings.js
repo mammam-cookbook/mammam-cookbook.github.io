@@ -16,7 +16,11 @@ export const en = {
   },
   auth: {
     login: 'Sign In',
-    signup: 'Sign Up'
+    signup: 'Sign Up',
+    logout: 'Log out',
+    profile: 'Profile',
+    settings: 'Settings',
+    dashboard: 'Dashboard'
   },
   signin: {
     title: 'Sign in to your account to continue',
@@ -71,7 +75,8 @@ export const en = {
     inMyRecipe: ' IN MY FRIDGE',
     dishType: 'DISH TYPE',
     event: 'EVENTS',
-    cuisine: 'CUISINE'
+    cuisine: 'CUISINE',
+    searchPlaceholder: 'Search recipes'
   },
   create: {
     title: 'Title',
@@ -168,7 +173,11 @@ export const vi = {
   },
   auth: {
     login: 'Đăng nhập',
-    signup: 'Đăng ký'
+    signup: 'Đăng ký',
+    logout: 'Đăng xuất',
+    profile: 'Hồ sơ',
+    settings: 'Cài đặt',
+    dashboard: 'Quản lý'
   },
   signin: {
     title: 'Đăng nhập để tiếp tục',
@@ -223,7 +232,8 @@ export const vi = {
     inMyRecipe: ' TRONG TỦ CỦA TÔI',
     dishType: 'DISH TYPE',
     event: 'DỊP LỂ',
-    cuisine: 'ẨM THỰC'
+    cuisine: 'ẨM THỰC',
+    searchPlaceholder: 'Tìm kiếm công thức'
   },
   create: {
     title: 'Tiêu đề',

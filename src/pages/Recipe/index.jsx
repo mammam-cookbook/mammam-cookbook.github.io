@@ -9,10 +9,6 @@ import {
   Tabs,
   Typography
 } from 'antd'
-import * as easyData from 'assets/lottie/easy.json'
-import * as hardData from 'assets/lottie/hard.json'
-import * as yuckData from 'assets/lottie/yuck.json'
-import * as yummyData from 'assets/lottie/yummy.json'
 import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
 import moment from 'moment'
@@ -35,14 +31,24 @@ import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-import { COLOR, MODAL_TYPE } from 'ultis/functions'
+import { COLOR, MODAL_TYPE, REACTION } from 'ultis/functions'
 import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
 import RecipeComments from './components/comment'
 import Direction from './components/direction'
 import RecipeIngredient from './components/ingredient'
-import { AddToShoppingList, GetDetailRecipe } from './redux/actions'
+import {
+  AddToShoppingList,
+  GetDetailRecipe,
+  ReactRecipe
+} from './redux/actions'
 import { FacebookShareButton } from 'react-share'
+import ButtonBase from 'components/ButtonBase'
+
+const easyData = require('assets/lottie/easy.json')
+const hardData = require('assets/lottie/hard.json')
+const yuckData = require('assets/lottie/yuck.json')
+const yummyData = require('assets/lottie/yummy.json')
 
 const { TabPane } = Tabs
 const loadingIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />
@@ -160,20 +166,22 @@ export default function RecipeDetail(props) {
     }
   }
 
+  const reactToRecipe = react => {
+    dispatch(ReactRecipe.get({ recipe_id: id, react }))
+  }
+
   const reactContent = (
     <div style={{ display: 'flex' }}>
-      {REACT_ARRAY.map(item => (
-        // <Button
-        //   shape="circle"
-        //   icon={<Lottie options={item} height={48} width={48} />}
-        // />
-        <Lottie
-          options={item}
-          height={48}
-          width={48}
-          isStopped={false}
-          isPaused={false}
-        />
+      {REACT_ARRAY.map((item, index) => (
+        <ButtonBase onClick={() => reactToRecipe(REACTION[index])}>
+          <Lottie
+            options={item}
+            height={48}
+            width={48}
+            isStopped={false}
+            isPaused={false}
+          />
+        </ButtonBase>
       ))}
     </div>
   )

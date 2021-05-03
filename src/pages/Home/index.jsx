@@ -18,8 +18,6 @@ function Home() {
   return (
     <div className="main">
       <Header />
-      <Button onClick={() => i18n.changeLanguage('vi')}>Tiếng Việt</Button>
-      <Button onClick={() => i18n.changeLanguage('en')}>English</Button>
     </div>
   )
 }

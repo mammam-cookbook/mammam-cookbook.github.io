@@ -14,9 +14,10 @@ import { SignOut } from 'pages/SignIn/redux/actions'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { COLOR, ROLES } from 'ultis/functions'
+import { COLOR, ROLES, getCurrentLng } from 'ultis/functions'
 import { useTranslation } from 'react-i18next'
 import { FiUser, FiBell, FiSearch, FiMenu, FiX } from 'react-icons/fi'
+import i18n from 'ultis/i18n'
 
 const { Search } = Input
 const { Link } = Anchor
@@ -28,16 +29,25 @@ function AppHeader(props) {
   const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const currentLng = getCurrentLng().toLocaleUpperCase()
 
   const menu = (
     <Menu>
       <Menu.Item>
-        <Button type="text" style={{ fontSize: 12 }}>
+        <Button
+          type="text"
+          onClick={() => i18n.changeLanguage('vi')}
+          style={{ fontSize: 12 }}
+        >
           VI
         </Button>
       </Menu.Item>
       <Menu.Item>
-        <Button type="text" style={{ fontSize: 12 }}>
+        <Button
+          type="text"
+          onClick={() => i18n.changeLanguage('en')}
+          style={{ fontSize: 12 }}
+        >
           EN
         </Button>
       </Menu.Item>
@@ -66,7 +76,7 @@ function AppHeader(props) {
           history.push(`/profile`)
         }}
       >
-        Profile
+        {t('auth.profile')}
       </Menu.Item>
       <Menu.Item
         key={'course'}
@@ -74,7 +84,7 @@ function AppHeader(props) {
           history.push(`/my-courses`)
         }}
       >
-        My courses
+        {t('auth.settings')}
       </Menu.Item>
       <Menu.Item
         key={'logout'}
@@ -82,7 +92,7 @@ function AppHeader(props) {
           dispatch(SignOut.get())
         }}
       >
-        Log Out
+        {t('auth.logout')}
       </Menu.Item>
     </Menu>
   )
@@ -95,7 +105,7 @@ function AppHeader(props) {
           history.push(`/profile`)
         }}
       >
-        Profile
+        {t('auth.profile')}
       </Menu.Item>
       <Menu.Item
         key={'dashboard'}
@@ -103,7 +113,7 @@ function AppHeader(props) {
           history.push(`/admin`)
         }}
       >
-        Dashboard
+        {t('auth.dashboard')}
       </Menu.Item>
       <Menu.Item
         key={'logout'}
@@ -111,7 +121,7 @@ function AppHeader(props) {
           dispatch(SignOut.get())
         }}
       >
-        Log Out
+        {t('auth.logout')}
       </Menu.Item>
     </Menu>
   )
@@ -159,7 +169,7 @@ function AppHeader(props) {
             style={styles.inputStyle}
             onChange={event => setSearchText(event.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder={'Search name of recipe'}
+            placeholder={t('home.searchPlaceholder')}
             suffix={<FiSearch size={20} color={COLOR.primary1} />}
           />
           {user && (
@@ -198,7 +208,7 @@ function AppHeader(props) {
           )}
           <Dropdown overlay={menu} placement="bottomRight">
             <Button type="link" style={{ fontSize: 12 }}>
-              VI
+              {currentLng}
             </Button>
           </Dropdown>
         </div>
@@ -305,7 +315,7 @@ function AppHeader(props) {
                   type="text"
                   style={{ marginTop: 24, padding: 0, fontSize: 12 }}
                 >
-                  VI
+                  {currentLng}
                 </Button>
               </Dropdown>
             </div>
