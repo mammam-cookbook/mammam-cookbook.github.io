@@ -1,3 +1,22 @@
 .slick-slide img {
   margin: auto;
 }
+
+.imgIngreSquareDiv {
+  position: relative;
+  border-radius: 10px;
+  width: 33%;
+  margin-right: 16px;
+}
+
+.imgIngreSquare {
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
+  margin-right: 16px;
+}
+.imgIngreSquare:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}

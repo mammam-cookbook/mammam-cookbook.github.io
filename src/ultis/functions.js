@@ -3,7 +3,7 @@ import i18n from './i18n'
 
 export const history = createHashHistory({ forceRefresh: true })
 
-export const DOMAIN = 'https://mammammam.herokuapp.com/api'
+export const DOMAIN = 'http://174.138.19.44:3000/api'
 // export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = true
 

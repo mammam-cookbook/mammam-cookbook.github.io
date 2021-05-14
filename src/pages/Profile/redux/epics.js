@@ -1,3 +1,4 @@
+import GlobalModal from 'components/GlobalModal'
 import { store } from 'core/store'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
@@ -61,6 +62,7 @@ const createCollectionsEpic$ = action$ =>
             store.dispatch(GetCollections.get())
             return CreateCollectionSuccess.get(result?.data)
           }
+          GlobalModal.alertMessage()
           return CreateCollectionFailed.get(result)
         }),
         catchError(error => {
@@ -105,6 +107,7 @@ const addRecipeToCollectionEpic$ = action$ =>
             store.dispatch(GetCollectionDetail.get(action.payload.collectionId))
             return AddRecipeToCollectionSuccess.get(result?.data)
           }
+          GlobalModal.alertMessage()
           return AddRecipeToCollectionFailed.get(result)
         }),
         catchError(error => {
@@ -128,6 +131,7 @@ const deleteRecipeInCollectionEpic$ = action$ =>
             store.dispatch(GetCollectionDetail.get(action.payload.collectionId))
             return DeleteRecipeInCollectionSuccess.get(result?.data)
           }
+          GlobalModal.alertMessage()
           return DeleteRecipeInCollectionFailed.get(result)
         }),
         catchError(error => {
@@ -150,6 +154,7 @@ const deleteCollectionEpic$ = action$ =>
             store.dispatch(GetCollections.get())
             return DeleteCollectionSuccess.get(result?.data)
           }
+          GlobalModal.alertMessage()
           return DeleteCollectionFailed.get(result)
         }),
         catchError(error => {
@@ -174,6 +179,7 @@ const updateCollectionEpic$ = action$ =>
             store.dispatch(GetCollectionDetail.get(action.payload.collectionId))
             return UpdateCollectionSuccess.get(result?.data)
           }
+          GlobalModal.alertMessage()
           return UpdateCollectionFailed.get(result)
         }),
         catchError(error => {

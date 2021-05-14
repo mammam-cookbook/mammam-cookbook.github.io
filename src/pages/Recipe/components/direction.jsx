@@ -1,7 +1,9 @@
 import { Typography } from 'antd'
+import ButtonBase from 'components/ButtonBase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { COLOR } from 'ultis/functions'
+import 'pages/Recipe/recipe.css'
 
 const { Text, Title } = Typography
 
@@ -19,7 +21,7 @@ export default function Direction({ item, index }) {
         >
           <div
             style={{
-              width: 240,
+              width: 120,
               height: 50,
               backgroundColor: COLOR.primary1,
               borderTopRightRadius: 10
@@ -47,15 +49,24 @@ export default function Direction({ item, index }) {
       <Title level={5} style={{ marginTop: 16 }}>
         {item.content}
       </Title>
-      {item.images.map(item => (
-        <img
-          style={{ borderRadius: 10, marginRight: 16, flex: 1 }}
-          width={200}
-          height={200}
-          src={item}
-          alt=""
-        />
-      ))}
+      <div style={{ display: 'flex' }}>
+        {item.images.map((img, index) => (
+          <div
+            className="imgIngreSquareDiv"
+            style={{
+              marginRight: index < item.images.length - 1 ? 16 : 0
+            }}
+          >
+            <ButtonBase
+              style={{
+                padding: 0
+              }}
+            >
+              <img className="imgIngreSquare" src={img} alt="" />
+            </ButtonBase>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

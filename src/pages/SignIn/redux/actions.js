@@ -31,4 +31,6 @@ export const UpdateProfileFailed = defineAction('UPDATE_PROFILE_FAILED')
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')
 
+export const ChangeLanguage = defineAction('CHANGE_LANGUAGE')
+
 export const EmptyAction = defineAction('EMPTY_ACTION')

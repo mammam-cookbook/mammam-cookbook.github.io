@@ -13,8 +13,9 @@ import { COLOR, RECIPE_STATUS } from 'ultis/functions'
 import ImageUpload from './components/imageUpload'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
-import { LEVEL, validationRecipeSchema } from './constant'
 import { CreateRecipe, GetCategories, SearchIngredient } from './redux/actions'
+import * as yup from 'yup'
+import { MAX_COOKING_TIME } from './constants'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -36,6 +37,54 @@ export default props => {
       listCategories = listCategories.concat(item?.childrenCategories)
     })
 
+  const LEVEL = [
+    {
+      code: 'easy',
+      title: t('create.easy')
+    },
+    {
+      code: 'medium',
+      title: t('create.medium')
+    },
+    {
+      code: 'hard',
+      title: t('create.hard')
+    }
+  ]
+
+  const stepsSchema = yup.object({
+    content: yup.string().trim().required(t('validation.contentRequired')),
+    time: yup.number().nullable().min(1, t('validation.cookingTime'))
+  })
+
+  const ingresSchema = yup.object({
+    selectAmount: yup.number().min(1, t('validation.massRequired'))
+  })
+
+  const validationRecipeSchema = yup.object().shape({
+    title: yup
+      .string()
+      .trim()
+      .required(t('validation.titleRequired'))
+      .max(255, t('validation.titleMaxLength')),
+    ration: yup
+      .number()
+      .required(t('validation.rationRequired'))
+      .min(1, t('validation.rationMin')),
+    cooking_time: yup
+      .number()
+      .required(t('validation.cookingTimeRequired'))
+      .min(1, t('validation.cookingTimeMin'))
+      .max(MAX_COOKING_TIME, t('validation.cookingTimeMax')),
+    level: yup.string().required(t('validation.levelChoose')),
+    ingredients: yup
+      .array()
+      .required(t('validation.ingredientRequired'))
+      .of(ingresSchema),
+    steps: yup.array().required(t('validation.stepRequired')).of(stepsSchema),
+    avatar: yup.array().required(t('validation.thumbnailRequired'))
+  })
+
   useEffect(() => {
     dispatch(GetCategories.get())
   }, [])
@@ -45,6 +94,7 @@ export default props => {
       SearchIngredient.get({
         search: text,
         onSuccess: data => {
+          setOtherIngre('')
           if (data && data.length > 0) {
             let ingres = values.ingredients
             for (let i = 0; i < data.length; i++) {
@@ -178,6 +228,7 @@ export default props => {
           setFieldTouched,
           setFieldValue
         }) => {
+          console.log(errors)
           return (
             <div className="body-container">
               <Title level={2}>{t('home.createRecipe')}</Title>
@@ -362,6 +413,7 @@ export default props => {
                       onKeyPress={event =>
                         handleKeyPress(event, values, setFieldValue)
                       }
+                      value={otherIngre}
                       onChange={event => setOtherIngre(event.target.value)}
                       placeholder={t('create.ingredientsPlaceholder')}
                     />
@@ -395,9 +447,8 @@ export default props => {
                           }}
                           onChangeCustomUnit={value => {
                             let ingres = values.ingredients
-                            ingres[
-                              index
-                            ].unit[0].measurement_description = value
+                            ingres[index].unit[0].measurement_description =
+                              value
                             setFieldValue('ingredients', ingres)
                           }}
                           error={
@@ -513,9 +564,9 @@ const style = {
   ingres: {
     display: 'flex',
     flex: 1,
-    justifyContent: 'space-between',
-    padding: 24,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    paddingLeft: 24,
+    paddingTop: 48
   },
   border: {
     borderColor: COLOR.primary1

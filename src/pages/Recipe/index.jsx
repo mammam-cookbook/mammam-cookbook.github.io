@@ -12,7 +12,6 @@ import {
 import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
 import moment from 'moment'
-import { LEVEL } from 'pages/CreateRecipe/constant'
 import 'pages/Recipe/recipe.css'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -119,6 +118,21 @@ export default function RecipeDetail(props) {
   const [timer, setTimer] = useState(null)
 
   let timeLeft = 0
+
+  const LEVEL = [
+    {
+      code: 'easy',
+      title: t('create.easy')
+    },
+    {
+      code: 'medium',
+      title: t('create.medium')
+    },
+    {
+      code: 'hard',
+      title: t('create.hard')
+    }
+  ]
 
   console.log('post', post)
 

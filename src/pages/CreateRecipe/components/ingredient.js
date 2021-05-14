@@ -37,7 +37,9 @@ function Ingredient({
   )
 
   const changeAmount = text => {
-    delayedQuery(text)
+    // delayedQuery(text)
+    setAmount(Number(text))
+    onChange({ ...item, selectAmount: Number(text) })
   }
 
   const changeUnit = unitIndex => {
@@ -59,13 +61,9 @@ function Ingredient({
   return (
     <div
       style={{
-        ...style,
-        display: 'flex',
-        width: '24%',
-        maxWidth: '24%',
-        flexDirection: 'row',
-        marginBottom: 24
+        ...style
       }}
+      className="ingredient-create"
       key={item.id}
     >
       <div
@@ -83,20 +81,26 @@ function Ingredient({
             width: 100
           }}
         >
-          <span
-            className="imgSrc"
-            style={{ backgroundImage: `url("${item.img}")` }}
-          />
+          {item.img ? (
+            <span
+              className="imgSrc"
+              style={{ backgroundImage: `url("${item.img}")` }}
+            />
+          ) : (
+            <span className="imgSrcDefault" />
+          )}
           <div className="bgName">
-            <Text>{item.name}</Text>
+            <Text style={{ fontWeight: 600 }}>{item.name}</Text>
           </div>
         </div>
         {item?.unit &&
         item?.unit?.length > 0 &&
         item.unit[unitSelected]?.calories ? (
-          <Text>{Number(item.unit[unitSelected].calories) * amount} calo</Text>
+          <Text style={{ fontWeight: 600, color: COLOR.grayText }}>
+            {Number(item.unit[unitSelected].calories) * amount} calo
+          </Text>
         ) : (
-          <Text>0 calo</Text>
+          <Text style={{ fontWeight: 600, color: COLOR.grayText }}>0 calo</Text>
         )}
       </div>
       <div
@@ -141,7 +145,7 @@ function Ingredient({
             }}
             defaultValue={item.unit[0].measurement_description}
             placeholder={t('create.measurePlaceholder')}
-            onChange={event => changeCustomUnit(event.target.value)}
+            onChange={event => onChangeCustomUnit(event.target.value)}
           />
         )}
         <Button

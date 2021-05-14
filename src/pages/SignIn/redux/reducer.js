@@ -1,4 +1,6 @@
+import i18n from 'ultis/i18n'
 import {
+  ChangeLanguage,
   ChangePassword,
   ChangePasswordFailed,
   ChangePasswordSuccess,
@@ -18,7 +20,8 @@ const initialState = {
   user: null,
   isLoading: false,
   isLoadingProfile: false,
-  prevLogin: null
+  prevLogin: null,
+  language: i18n.language
 }
 
 export function authReducer(state = initialState, action) {
@@ -52,6 +55,8 @@ export function authReducer(state = initialState, action) {
       return { ...state, isLoading: false }
     case ChangePasswordFailed.type:
       return { ...state, isLoading: false }
+    case ChangeLanguage.type:
+      return { ...state, language: action.payload }
     case SignOut.type:
       return initialState
     case ResetReducer.type:

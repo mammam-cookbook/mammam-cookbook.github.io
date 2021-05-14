@@ -5,7 +5,6 @@ function ButtonBase({ children, style = {}, onClick = () => {} }) {
   return (
     <div
       style={{
-        width: '100%',
         display: 'flex',
         borderRadius: 10,
         padding: 8,

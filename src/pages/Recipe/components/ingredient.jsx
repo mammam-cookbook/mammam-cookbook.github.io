@@ -3,6 +3,7 @@ import 'pages/CreateRecipe/create.css'
 import 'pages/SignIn/signin.css'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { COLOR } from 'ultis/functions'
 
 const { Text } = Typography
 
@@ -13,46 +14,45 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
     <div
       className="ingredient-recipe"
       style={{
-        ...style
+        ...style,
+        textAlign: 'center'
       }}
       key={item.id}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          paddingRight: 12
-        }}
-      >
-        <div
-          style={{
-            position: 'relative',
-            borderRadius: 10,
-            height: 100,
-            width: 100
-          }}
-        >
+      <div className="imgSquare">
+        {item.img ? (
           <span
             className="imgSrc"
             style={{ backgroundImage: `url("${item.img}")` }}
           />
-          <div className="bgName">
-            <Text>{item.name}</Text>
-          </div>
-        </div>
+        ) : (
+          <span className="imgSrcDefault" />
+        )}
       </div>
-      <div
+      <Text
         style={{
-          display: 'flex',
-          flex: 1,
-          flexDirection: 'column'
+          fontWeight: 600,
+          fontSize: 18,
+          marginTop: 16,
+          textAlign: 'center'
         }}
       >
-        <Text>
-          {item.amount} {item?.unit?.measurement_description}
-        </Text>
-        <Text>{item?.calories} calo</Text>
-      </div>
+        {item.name}
+      </Text>
+
+      <Text
+        style={{
+          fontWeight: 600,
+          fontSize: 14,
+          color: COLOR.grayText,
+          textAlign: 'center'
+        }}
+      >
+        {item.amount} {item?.unit?.measurement_description}
+      </Text>
+      <Text style={{ fontWeight: 600, fontSize: 14, color: COLOR.grayText }}>
+        {item?.calories} calo
+      </Text>
     </div>
   )
 }

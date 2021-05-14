@@ -14,19 +14,16 @@ import reportWebVitals from './reportWebVitals'
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConfigProvider>
-        <PersistGate loading={null} persistor={persistor}>
-          <IconContext.Provider
-            value={{
-              className: 'react-icon-clasname',
-              style: { verticalAlign: 'middle' }
-            }}
-          >
-            <App />
-            <GlobalModal />
-          </IconContext.Provider>
-        </PersistGate>
-      </ConfigProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <IconContext.Provider
+          value={{
+            className: 'react-icon-clasname',
+            style: { verticalAlign: 'middle' }
+          }}
+        >
+          <App />
+        </IconContext.Provider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

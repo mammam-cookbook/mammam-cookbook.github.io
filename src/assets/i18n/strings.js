@@ -1,3 +1,5 @@
+import { MAX_COOKING_TIME } from 'pages/CreateRecipe/constants'
+
 export const en = {
   common: {
     information: 'Information',
@@ -152,6 +154,22 @@ export const en = {
     morning: 'Breakfast',
     lunch: 'Lunch',
     dinner: 'Dinner'
+  },
+  validation: {
+    contentRequired: '* Enter direction',
+    cookingTime: '> 0 min',
+    massRequired: 'Mass > 0',
+    titleRequired: '* Enter title',
+    titleMaxLength: 'Title is no longer than 255 letters',
+    rationRequired: '* Enter ration',
+    rationMin: 'At least 1 person',
+    cookingTimeRequired: '* Enter cooking time',
+    cookingTimeMin: '> 0 min',
+    cookingTimeMax: `< ${MAX_COOKING_TIME} min`,
+    levelChoose: 'Select level',
+    ingredientRequired: 'Add at least 1 ingredient',
+    stepRequired: 'Add at least 1 step',
+    thumbnailRequired: 'Select recipe thumbnail'
   }
 }
 
@@ -309,5 +327,21 @@ export const vi = {
     morning: 'Bữa sáng',
     lunch: 'Bữa trưa',
     dinner: 'Bữa tối'
+  },
+  validation: {
+    contentRequired: '* Nhập bước thực hiện',
+    cookingTime: '> 0 phút',
+    massRequired: 'Khối lượng > 0',
+    titleRequired: '* Nhập tiêu đề',
+    titleMaxLength: 'Tiêu đề không quá 255 kí tự',
+    rationRequired: '* Nhập khẩu phần',
+    rationMin: 'Ít nhất 1 người ăn',
+    cookingTimeRequired: '* Nhập thời gian thực hiện',
+    cookingTimeMin: '> 0 phút',
+    cookingTimeMax: `< ${MAX_COOKING_TIME} phút`,
+    levelChoose: 'Chọn độ khó',
+    ingredientRequired: 'Thêm ít nhất 1 nguyên liệu',
+    stepRequired: 'Thêm ít nhất 1 bước thực hiện',
+    thumbnailRequired: 'Chọn hình đại diện cho công thức'
   }
 }

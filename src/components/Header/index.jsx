@@ -10,7 +10,7 @@ import {
   Popover,
   Select
 } from 'antd'
-import { SignOut } from 'pages/SignIn/redux/actions'
+import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -36,7 +36,10 @@ function AppHeader(props) {
       <Menu.Item>
         <Button
           type="text"
-          onClick={() => i18n.changeLanguage('vi')}
+          onClick={() => {
+            i18n.changeLanguage('vi')
+            dispatch(ChangeLanguage.get('vi'))
+          }}
           style={{ fontSize: 12 }}
         >
           VI
@@ -45,7 +48,10 @@ function AppHeader(props) {
       <Menu.Item>
         <Button
           type="text"
-          onClick={() => i18n.changeLanguage('en')}
+          onClick={() => {
+            i18n.changeLanguage('en')
+            dispatch(ChangeLanguage.get('en'))
+          }}
           style={{ fontSize: 12 }}
         >
           EN
