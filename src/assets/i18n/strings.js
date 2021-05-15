@@ -12,9 +12,13 @@ export const en = {
     updatePassSuccess: 'Success updating password. Please login.',
     confirm: 'Confirm',
     create: 'Create',
+    update: 'Update',
     add: 'Add',
     en: 'English',
-    vi: 'Vietnamese'
+    vi: 'Vietnamese',
+    action: 'Action',
+    find: 'Find',
+    reset: 'Reset'
   },
   auth: {
     login: 'Sign In',
@@ -169,7 +173,19 @@ export const en = {
     levelChoose: 'Select level',
     ingredientRequired: 'Add at least 1 ingredient',
     stepRequired: 'Add at least 1 step',
-    thumbnailRequired: 'Select recipe thumbnail'
+    thumbnailRequired: 'Select recipe thumbnail',
+    categoryRule: 'Category name cannot contain special characters',
+    categoryRequired: '* Enter category name'
+  },
+  dashboard: {
+    addNewCategory: 'Add new category',
+    updateCategory: 'Update category',
+    parentCategory: 'Parent category',
+    notSelectParentId: 'Do not select to create parent category',
+    confirmToDeleteCategory: 'Do you confirm to delete this category?',
+    enterTitleToFind: 'Enter title to find',
+    parentCategoryVi: 'Vietnamese parent category',
+    parentCategoryEn: 'English parent category'
   }
 }
 
@@ -186,8 +202,12 @@ export const vi = {
     confirm: 'Xác nhận',
     create: 'Tạo',
     add: 'Thêm',
+    update: 'Cập nhật',
     en: 'Tiếng Anh',
-    vi: 'Tiếng Việt'
+    vi: 'Tiếng Việt',
+    action: 'Tác vụ',
+    find: 'Tìm',
+    reset: 'Đặt lại'
   },
   auth: {
     login: 'Đăng nhập',
@@ -259,7 +279,7 @@ export const vi = {
     level: 'Cấp độ',
     summary: 'Mô tả',
     summaryPlaceholder: 'Nhập mô tả cho công thức',
-    categories: 'PHÂN LOẠI',
+    categories: 'Phân loại',
     edit: 'Sửa',
     ingredients: 'Nguyên liệu',
     otherIngredients: 'Nguyên liệu khác',
@@ -342,6 +362,18 @@ export const vi = {
     levelChoose: 'Chọn độ khó',
     ingredientRequired: 'Thêm ít nhất 1 nguyên liệu',
     stepRequired: 'Thêm ít nhất 1 bước thực hiện',
-    thumbnailRequired: 'Chọn hình đại diện cho công thức'
+    thumbnailRequired: 'Chọn hình đại diện cho công thức',
+    categoryRule: 'Tên phân loại không chứa kí tự đặc biệt',
+    categoryRequired: '* Nhập tên phân loại'
+  },
+  dashboard: {
+    addNewCategory: 'Thêm phân loại',
+    updateCategory: 'Cập nhật phân loại',
+    parentCategory: 'Phân loại cha',
+    notSelectParentId: 'Không chọn để tạo phân loại cha',
+    confirmToDeleteCategory: 'Xác nhận xóa phân loại này?',
+    enterTitleToFind: 'Nhập tên để tìm',
+    parentCategoryVi: 'Phân loại cha tiếng việt',
+    parentCategoryEn: 'Phân loại cha tiếng anh'
   }
 }

@@ -5,7 +5,7 @@ export const history = createHashHistory({ forceRefresh: true })
 
 export const DOMAIN = 'http://174.138.19.44:3000/api'
 // export const DOMAIN = 'http://localhost:3001/api'
-export const __DEV__ = true
+export const __DEV__ = false
 
 export const LIMIT_ITEMS = 12
 export const COLOR = {
@@ -16,7 +16,8 @@ export const COLOR = {
   grayText: '#828282'
 }
 
-export const NAME_REGEX = /^[A-Z0-9a-z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*$/
+export const NAME_REGEX =
+  /^[A-Z0-9a-z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*$/
 
 export const MODAL_TYPE = {
   NORMAL: 'NORMAL',

@@ -39,29 +39,6 @@ const searchIngredientEpic$ = action$ =>
     })
   )
 
-const getCategoriesEpic$ = action$ =>
-  action$.pipe(
-    ofType(GetCategories.type),
-    exhaustMap(action => {
-      return request({
-        method: 'GET',
-        url: 'category'
-      }).pipe(
-        map(result => {
-          if (result.status === 200) {
-            return GetCategoriesSuccess.get(
-              result?.data?.categories?.categoriesResult
-            )
-          }
-          return GetCategoriesFailed.get(result)
-        }),
-        catchError(error => {
-          return GetCategoriesFailed.get(error)
-        })
-      )
-    })
-  )
-
 const createRecipeEpic$ = action$ =>
   action$.pipe(
     ofType(CreateRecipe.type),
@@ -94,6 +71,5 @@ const createRecipeEpic$ = action$ =>
 
 export const createEpics = combineEpics(
   searchIngredientEpic$,
-  getCategoriesEpic$,
   createRecipeEpic$
 )

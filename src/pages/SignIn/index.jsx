@@ -22,7 +22,7 @@ function SignIn() {
 
   useEffect(() => {
     if (user) {
-      if (user.role === ROLES.ADMIN) {
+      if (user.role === ROLES.ADMIN || user.role === ROLES.MOD) {
         history.replace('/admin')
       } else {
         if (history.location.state) {
@@ -45,9 +45,9 @@ function SignIn() {
     password: yup
       .string()
       .required(t('signin.passRequired'))
-      .min(8, t('signin.passMin'))
+      .min(5, t('signin.passMin'))
       .max(48, t('signin.passMax'))
-      .matches(/(?=.{8,})/, {
+      .matches(/(?=.{5,})/, {
         message: t('signin.passMin')
       })
   })

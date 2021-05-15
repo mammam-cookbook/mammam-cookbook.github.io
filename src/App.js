@@ -17,10 +17,10 @@ import { history } from 'ultis/functions'
 import './App.less'
 import enUS from 'antd/lib/locale/en_US'
 import viVN from 'antd/lib/locale/vi_VN'
+import Dashboard from 'pages/Dashboard'
 
 function App() {
   const language = useSelector(state => state.Auth.language)
-  console.log('language', language)
   return (
     <ConfigProvider locale={language && language === 'en' ? enUS : viVN}>
       <Router history={history}>
@@ -32,6 +32,7 @@ function App() {
         <Route path="/create" component={CreateRecipe} />
         <Route path="/recipe/search" component={SearchRecipe} />
         <Route path="/recipe/:id" component={RecipeDetail} />
+        <Route path="/admin" component={Dashboard} />
       </Router>
       <GlobalModal />
     </ConfigProvider>

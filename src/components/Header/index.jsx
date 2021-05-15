@@ -306,6 +306,7 @@ function AppHeader(props) {
               ) : (
                 <Button
                   type="primary"
+                  style={{ marginTop: 24 }}
                   onClick={() =>
                     history.push({
                       pathname: '/signin',

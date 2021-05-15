@@ -45,10 +45,6 @@ export default function ModalAddCollection({
   }
 
   const handleOk = () => {
-    console.log('click ne', {
-      recipeId,
-      collectionId: collections[selected].id
-    })
     dispatch(
       AddRecipeToCollection.get({
         recipeId,

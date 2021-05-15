@@ -1,0 +1,299 @@
+#dashboardBg {
+  background: white;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+#empty {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#errorWrap {
+  width: 20vmax;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#menuContainer {
+  display: flex;
+  flex: 0;
+  width: auto;
+  flex-direction: column;
+  background-color: #f6a13a;
+  align-items: center;
+  padding-top: calc(40px + 1vmin);
+}
+
+#adminName {
+  font-size: calc(18px + 1vmin);
+  color: white;
+  text-align: center;
+  font-weight: 500;
+  font-family: 'Source Sans Pro';
+  margin-top: calc(8px + 1vmin);
+  margin-bottom: calc(20px + 1vmin);
+}
+
+.titleTopic {
+  font-size: calc(18px + 1vmin);
+  color: black;
+  font-weight: 500;
+  font-family: 'Source Sans Pro';
+  margin-bottom: calc(10px + 1vmin);
+}
+
+.chooseContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: calc(28px + 1vmin);
+}
+
+#infoCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(270px + 1vmin);
+  min-width: calc(250px + 1vmin);
+  margin-right: calc(48px + 1vmin);
+}
+
+#infoBigCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(320px + 1vmin);
+  min-width: calc(300px + 1vmin);
+  margin-right: calc(48px + 1vmin);
+}
+
+#infoPromotion {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: calc(320px + 1vmin);
+  min-width: calc(300px + 1vmin);
+  margin-right: calc(48px + 1vmin);
+}
+
+.titleInfo {
+  color: black;
+  font-size: calc(10px + 1vmin);
+  font-weight: 600;
+  font-family: 'Source Sans Pro';
+  margin-bottom: calc(4px + 1vmin);
+  margin-top: calc(16px + 1vmin);
+}
+
+.infoTitle {
+  color: #828282;
+  font-size: calc(8px + 1vmin);
+  font-weight: 500;
+  font-family: 'Source Sans Pro';
+}
+
+.infoContent {
+  color: black;
+  font-size: calc(8px + 1vmin);
+  font-weight: 500;
+  font-family: 'Source Sans Pro';
+}
+
+.btnStyle {
+  font-family: 'Source Sans Pro';
+  width: calc(170px + 1vmin);
+  min-width: calc(150px + 1vmin);
+  height: calc(40px + 1vmin);
+  margin-right: calc(32px + 1vmin);
+  margin-top: calc(40px + 1vmin);
+  border-radius: 4px;
+}
+
+#dropdown {
+  width: calc(150px + 1vmin);
+  min-width: calc(100px + 1vmin);
+  font-family: 'Source Sans Pro';
+}
+
+.smallSquare {
+  width: calc(20px + 0.5vmin);
+  height: calc(20px + 0.5vmin);
+  border-radius: 4px;
+  margin-right: calc(12px + 0.5vmin);
+}
+
+.seatStyle {
+  display: flex;
+  flex: 1;
+  width: calc(90px + 0.5vmin);
+  min-width: calc(70px + 0.5vmin);
+  height: calc(90px + 0.5vmin);
+  min-height: calc(70px + 0.5vmin);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#statisticWrap {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.boxStyle {
+  border: 1px solid #2e4170;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  min-width: calc(150px + 0.5vmin);
+  margin-right: 12px;
+  margin-bottom: 24px;
+}
+
+.titleBox {
+  font-family: 'Source Sans Pro';
+  font-weight: 600;
+  font-size: calc(12px + 0.5vmin);
+  line-height: calc(24px + 0.5vmin);
+  text-align: center;
+  color: #2e4170;
+}
+
+.amountStyle {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(30px + 0.5vmin);
+  line-height: 44px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #252733;
+}
+
+.boxCloneStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 240px;
+  min-width: calc(150px + 0.5vmin);
+  margin-bottom: 24px;
+}
+
+#boxStatistic {
+  border: 1px solid #2e4170;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  flex: 1;
+  width: calc(990px + 0.5vmin);
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.rowAdd {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: calc(4px + 0.5vmin);
+  margin-top: calc(16px + 0.5vmin);
+}
+
+.addTitle {
+  color: black;
+  font-size: calc(8px + 1vmin);
+  font-weight: 600;
+  font-family: 'Source Sans Pro';
+  width: calc(140px + 0.5vmin);
+}
+
+.addInput {
+  height: 40px;
+  width: calc(450px + 0.5vmin);
+  background: #ffffff;
+  border-radius: calc(4px + 1vmin);
+  border: 1px solid #d9d9d9;
+  font-family: 'Source Sans Pro';
+  font-size: calc(8px + 1vmin);
+}
+
+.errorAdd {
+  font-family: 'Source Sans Pro';
+  font-size: calc(6px + 1vmin);
+  color: red;
+  margin-bottom: calc(8px + 1vmin);
+  margin-left: calc(140px + 0.5vmin);
+}
+
+.dropdownCity {
+  height: 40px;
+  width: calc(450px + 1vmin);
+  min-width: calc(100px + 1vmin);
+  font-family: 'Source Sans Pro';
+  /* border: 1px solid #d9d9d9; */
+  /* border-radius: calc(4px + 1vmin); */
+  font-size: calc(8px + 1vmin);
+  margin-right: 8px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdownNormal {
+  height: 40px;
+  width: calc(212px + 1vmin);
+  min-width: calc(100px + 1vmin);
+  font-family: 'Source Sans Pro';
+  /* border: 1px solid #d9d9d9; */
+  /* border-radius: calc(4px + 1vmin); */
+  font-size: calc(8px + 1vmin);
+  margin-right: 8px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timePicker {
+  height: 40px;
+  width: calc(212px + 1vmin);
+  min-width: calc(100px + 1vmin);
+  font-family: 'Source Sans Pro';
+  border-color: #d9d9d9;
+  font-size: calc(8px + 1vmin);
+  margin-right: 8px;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#rowDis {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: calc(4px + 0.5vmin);
+  margin-top: calc(4px + 0.5vmin);
+}
+
+.ant-menu.ant-menu-light .ant-menu-item-selected.customItem {
+  background-color: #ffc000;
+}

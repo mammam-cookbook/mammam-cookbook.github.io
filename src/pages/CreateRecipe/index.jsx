@@ -13,9 +13,10 @@ import { COLOR, RECIPE_STATUS } from 'ultis/functions'
 import ImageUpload from './components/imageUpload'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
-import { CreateRecipe, GetCategories, SearchIngredient } from './redux/actions'
+import { CreateRecipe, SearchIngredient } from './redux/actions'
 import * as yup from 'yup'
 import { MAX_COOKING_TIME } from './constants'
+import { GetAllCategories } from 'pages/Dashboard/redux/actions'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -86,7 +87,7 @@ export default props => {
   })
 
   useEffect(() => {
-    dispatch(GetCategories.get())
+    dispatch(GetAllCategories.get())
   }, [])
 
   const searchIngres = (text, values, setFieldValue) => {
@@ -228,7 +229,6 @@ export default props => {
           setFieldTouched,
           setFieldValue
         }) => {
-          console.log(errors)
           return (
             <div className="body-container">
               <Title level={2}>{t('home.createRecipe')}</Title>
@@ -477,13 +477,13 @@ export default props => {
                       index={index}
                       onChangeImage={data => {
                         let steps = values.steps
-                        console.log('steps', steps)
+                        // console.log('steps', steps)
                         steps[index].images = data
                         setFieldValue('steps', steps)
                       }}
                       onChangeMaking={data => {
                         let steps = values.steps
-                        console.log('steps2', steps)
+                        // console.log('steps2', steps)
                         steps[index].content = data
                         setFieldValue('steps', steps)
                       }}
