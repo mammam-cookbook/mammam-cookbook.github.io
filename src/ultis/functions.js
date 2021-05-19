@@ -7,7 +7,7 @@ export const DOMAIN = 'http://174.138.19.44:3000/api'
 // export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = false
 
-export const LIMIT_ITEMS = 12
+export const LIMIT_ITEMS = 16
 export const COLOR = {
   primary1: '#F6A13A',
   primary2: '#F38B12',
@@ -41,6 +41,9 @@ export const DEFAULT_PASSWORD = '12345678'
 
 export const getCurrentLng = () =>
   i18n.language || window.localStorage.i18nextLng || ''
+
+export const calcCalories = (accumulator, currentValue) =>
+  accumulator + currentValue.calories
 
 export function log(...arg) {
   if (__DEV__) {

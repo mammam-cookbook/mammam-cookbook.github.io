@@ -222,7 +222,7 @@ function AppHeader(props) {
           <Button
             type="link"
             style={{ marginRight: 24 }}
-            onClick={() => history.push('/recipes')}
+            onClick={() => history.push('/recipe/search')}
             icon={<FiSearch size={20} color={COLOR.primary1} />}
           />
           {user && (

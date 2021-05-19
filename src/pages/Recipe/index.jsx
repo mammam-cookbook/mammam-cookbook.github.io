@@ -30,7 +30,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-import { COLOR, MODAL_TYPE, REACTION } from 'ultis/functions'
+import { calcCalories, COLOR, MODAL_TYPE, REACTION } from 'ultis/functions'
 import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
 import RecipeComments from './components/comment'
@@ -119,20 +119,11 @@ export default function RecipeDetail(props) {
 
   let timeLeft = 0
 
-  const LEVEL = [
-    {
-      code: 'easy',
-      title: t('create.easy')
-    },
-    {
-      code: 'medium',
-      title: t('create.medium')
-    },
-    {
-      code: 'hard',
-      title: t('create.hard')
-    }
-  ]
+  const LEVEL = {
+    easy: t('create.easy'),
+    medium: t('create.medium'),
+    hard: t('create.hard')
+  }
 
   // console.log('post', post)
 
@@ -222,10 +213,6 @@ export default function RecipeDetail(props) {
       </Menu.Item>
     </Menu>
   )
-
-  const calcCalories = (accumulator, currentValue) =>
-    accumulator + currentValue.calories
-
   if (!post || id !== post.id) {
     return (
       <>
@@ -308,9 +295,7 @@ export default function RecipeDetail(props) {
                     {t('create.level').toLocaleUpperCase()}
                   </Text>
                   <Text style={styles.orangeInfo}>
-                    {LEVEL.filter(
-                      item => item.code === post.level
-                    )[0].title.toLocaleUpperCase()}
+                    {LEVEL[post.level].toLocaleUpperCase()}
                   </Text>
                 </div>
                 <div style={styles.info}>
@@ -552,9 +537,7 @@ export default function RecipeDetail(props) {
                     {t('create.level').toLocaleUpperCase()}
                   </Text>
                   <Text style={styles.orangeInfo}>
-                    {LEVEL.filter(
-                      item => item.code === post.level
-                    )[0].title.toLocaleUpperCase()}
+                    {LEVEL[post.level].toLocaleUpperCase()}
                   </Text>
                 </div>
                 <div style={styles.info}>
