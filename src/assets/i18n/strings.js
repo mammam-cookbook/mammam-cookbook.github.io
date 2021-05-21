@@ -67,7 +67,7 @@ export const en = {
     title2: 'Feel good',
     tryItOut: 'Try it out',
     browse: 'BROWSE',
-    recipes: 'RECIPES',
+    recipes: 'Recipes',
     mealPlanner: 'MEAL PLANNERS',
     createRecipe: 'CREATE MY RECIPE',
     searchHere: 'Search here',
@@ -186,6 +186,20 @@ export const en = {
     enterTitleToFind: 'Enter title to find',
     parentCategoryVi: 'Vietnamese parent category',
     parentCategoryEn: 'English parent category'
+  },
+  search: {
+    user: 'Users',
+    filter: 'Filter',
+    sortBy: 'Sort by',
+    relevance: 'Relevance',
+    newest: 'Newest',
+    popular: 'Popular',
+    inputIngre: 'With Ingredients',
+    inputWithoutIngre: 'Without Ingredients',
+    hour: 'hour',
+    cookingTimeLessThan: 'Cooking time is less than',
+    with: 'With',
+    without: 'Without'
   }
 }
 
@@ -256,7 +270,7 @@ export const vi = {
     title2: 'Feel good',
     tryItOut: 'Thử ngay',
     browse: 'KHÁM PHÁ',
-    recipes: 'CÔNG THỨC',
+    recipes: 'Công thức',
     mealPlanner: 'TẠO THỰC ĐƠN',
     createRecipe: 'ĐĂNG CÔNG THỨC',
     searchHere: 'Tìm kiếm',
@@ -375,5 +389,19 @@ export const vi = {
     enterTitleToFind: 'Nhập tên để tìm',
     parentCategoryVi: 'Phân loại cha tiếng việt',
     parentCategoryEn: 'Phân loại cha tiếng anh'
+  },
+  search: {
+    user: 'Mọi người',
+    filter: 'Bộ lọc',
+    sortBy: 'Sắp theo',
+    relevance: 'Liên quan',
+    newest: 'Mới nhất',
+    popular: 'Phổ biến',
+    inputIngre: 'Có nguyên liệu này',
+    inputWithoutIngre: 'Không có nguyên liệu này',
+    hour: 'giờ',
+    cookingTimeLessThan: 'Thời gian nấu ít hơn',
+    with: 'Có',
+    without: 'Không có'
   }
 }

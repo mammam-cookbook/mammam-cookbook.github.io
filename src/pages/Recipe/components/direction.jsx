@@ -1,4 +1,4 @@
-import { Typography } from 'antd'
+import { Image, Typography } from 'antd'
 import ButtonBase from 'components/ButtonBase'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -50,22 +50,23 @@ export default function Direction({ item, index }) {
         {item.content}
       </Title>
       <div style={{ display: 'flex' }}>
-        {item.images.map((img, index) => (
-          <div
-            className="imgIngreSquareDiv"
-            style={{
-              marginRight: index < item.images.length - 1 ? 16 : 0
-            }}
-          >
-            <ButtonBase
+        <Image.PreviewGroup>
+          {item.images.map((img, index) => (
+            <div
               style={{
-                padding: 0
+                width: '32%',
+                marginRight: index < item.images.length - 1 ? 16 : 0
               }}
             >
-              <img className="imgIngreSquare" src={img} alt="" />
-            </ButtonBase>
-          </div>
-        ))}
+              <Image
+                src={img}
+                style={{
+                  borderRadius: 10
+                }}
+              />
+            </div>
+          ))}
+        </Image.PreviewGroup>
       </div>
     </div>
   )

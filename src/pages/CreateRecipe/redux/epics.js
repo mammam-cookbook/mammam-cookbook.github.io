@@ -8,9 +8,6 @@ import {
   CreateRecipe,
   CreateRecipeFailed,
   CreateRecipeSuccess,
-  GetCategories,
-  GetCategoriesFailed,
-  GetCategoriesSuccess,
   SearchIngredient,
   SearchIngredientFailed,
   SearchIngredientSuccess
