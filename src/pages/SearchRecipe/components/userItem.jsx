@@ -2,11 +2,12 @@ import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import 'pages/Home/home.css'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { COLOR } from 'ultis/functions'
+import { history } from 'ultis/functions'
 
 function UserItem(props) {
   const { user } = props
@@ -58,11 +59,17 @@ function UserItem(props) {
             marginRight: 8
           }}
         >
-          <Text
-            style={{ fontSize: 18, fontWeight: 700, color: COLOR.primary1 }}
+          <Button
+            type="link"
+            onClick={() =>
+              history.push(
+                `/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`
+              )
+            }
+            style={{ fontSize: 18, fontWeight: 700, padding: 0 }}
           >
             {user.name}
-          </Text>
+          </Button>
           <Text style={{ fontSize: 16, fontWeight: 500 }}>
             10 {t('home.recipes').toLocaleLowerCase()}
           </Text>

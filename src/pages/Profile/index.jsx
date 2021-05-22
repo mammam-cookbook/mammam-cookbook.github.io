@@ -8,6 +8,7 @@ import {
   Pagination,
   Row,
   Select,
+  Spin,
   Tabs
 } from 'antd'
 import Text from 'antd/lib/typography/Text'
@@ -43,9 +44,20 @@ import RecipeListProfile from './component/recipeList'
 import FollowingListProfile from './component/followingList'
 import FollowerListProfile from './component/followerList'
 import CollectionListProfile from './component/collectionList'
+import { GetProfile } from 'pages/SignIn/redux/actions'
+import {
+  DeleteOutlined,
+  EditOutlined,
+  LoadingOutlined,
+  PlusCircleOutlined
+} from '@ant-design/icons'
 
 const { TabPane } = Tabs
 const { Option } = Select
+
+const loadingIcon = (
+  <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
+)
 
 export default function ProfilePage() {
   const dispatch = useDispatch()
@@ -70,7 +82,9 @@ export default function ProfilePage() {
     following,
     recipes,
     isLoadingCollections,
-    isLoadingCollectionDetail
+    isLoadingCollectionDetail,
+    isLoadingProfile,
+    userProfile
   } = useSelector(state => state.Profile)
 
   const useQuery = () => {
@@ -78,18 +92,32 @@ export default function ProfilePage() {
   }
   const query = useQuery()
   const currentPage = query.get('page')
+  const otherUser = query.get('user')
+  const currentUser = otherUser ? otherUser : user.id
+
+  console.log(user, otherUser)
 
   useEffect(() => {
-    if (!user) {
-      history.replace('/')
-    }
-    dispatch(GetRecipeOfUser.get(user.id))
-    dispatch(GetFollower.get(user.id))
-    dispatch(GetFollowing.get(user.id))
+    dispatch(GetRecipeOfUser.get(currentUser))
+    dispatch(GetFollower.get(currentUser))
+    dispatch(GetFollowing.get(currentUser))
   }, [currentPage])
 
+  useEffect(() => {
+    if (!user && !otherUser) {
+      history.replace('/')
+    } else if (user.id === otherUser) {
+      history.replace(`/profile?page=${PROFILE_PAGE.RECIPE}`)
+    }
+    dispatch(GetProfile.get(currentUser))
+  }, [user, otherUser])
+
   const onMenuSelect = e => {
-    history.push(`/profile?page=${e.key}`)
+    if (otherUser) {
+      history.push(`/profile?page=${e.key}&user=${otherUser}`)
+    } else {
+      history.push(`/profile?page=${e.key}`)
+    }
   }
 
   const renderRightDashboard = () => {
@@ -105,6 +133,25 @@ export default function ProfilePage() {
       default:
         return <RecipeListProfile />
     }
+  }
+
+  if (isLoadingProfile || !userProfile) {
+    return (
+      <>
+        <AppHeader />
+        <div
+          className="body-container"
+          style={{
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'center',
+            paddingTop: 48
+          }}
+        >
+          <Spin indicator={loadingIcon} />
+        </div>
+      </>
+    )
   }
 
   return (
@@ -123,16 +170,16 @@ export default function ProfilePage() {
               padding: 16
             }}
           >
-            {user?.avatar_url ? (
-              <Avatar size={80} src={user?.avatar_url} />
+            {userProfile?.avatar_url ? (
+              <Avatar size={80} src={userProfile?.avatar_url} />
             ) : (
               <Avatar size={80} icon={<UserOutlined />} />
             )}
             <Text style={{ fontSize: 18, fontWeight: 700, marginTop: 24 }}>
-              {user?.name}
+              {userProfile?.name}
             </Text>
             <Text style={{ fontSize: 14, color: COLOR.grayText }}>
-              {user?.email}
+              {userProfile?.email}
             </Text>
           </div>
           <Menu
@@ -166,30 +213,36 @@ export default function ProfilePage() {
             >
               {t('profile.followers')}
             </Menu.Item>
-            <Menu.Item
-              style={{ color: 'white' }}
-              className="customItem"
-              key={PROFILE_PAGE.COLLECTION}
-              icon={<FiBookmark size={16} style={styles.icon} />}
-            >
-              {t('profile.collection')}
-            </Menu.Item>
-            <Menu.Item
-              style={{ color: 'white' }}
-              className="customItem"
-              key={PROFILE_PAGE.SHOPPING_LIST}
-              icon={<FiShoppingCart size={16} style={styles.icon} />}
-            >
-              Danh sách mua
-            </Menu.Item>
-            <Menu.Item
-              style={{ color: 'white' }}
-              className="customItem"
-              key={PROFILE_PAGE.INFO}
-              icon={<FiUser size={16} style={styles.icon} />}
-            >
-              Thông tin tài khoản
-            </Menu.Item>
+            {!otherUser && (
+              <Menu.Item
+                style={{ color: 'white' }}
+                className="customItem"
+                key={PROFILE_PAGE.COLLECTION}
+                icon={<FiBookmark size={16} style={styles.icon} />}
+              >
+                {t('profile.collection')}
+              </Menu.Item>
+            )}
+            {!otherUser && (
+              <Menu.Item
+                style={{ color: 'white' }}
+                className="customItem"
+                key={PROFILE_PAGE.SHOPPING_LIST}
+                icon={<FiShoppingCart size={16} style={styles.icon} />}
+              >
+                Danh sách mua
+              </Menu.Item>
+            )}
+            {!otherUser && (
+              <Menu.Item
+                style={{ color: 'white' }}
+                className="customItem"
+                key={PROFILE_PAGE.INFO}
+                icon={<FiUser size={16} style={styles.icon} />}
+              >
+                Thông tin tài khoản
+              </Menu.Item>
+            )}
           </Menu>
         </div>
         {renderRightDashboard()}

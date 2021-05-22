@@ -43,6 +43,7 @@ import {
 } from './redux/actions'
 import { FacebookShareButton } from 'react-share'
 import ButtonBase from 'components/ButtonBase'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -254,10 +255,26 @@ export default function RecipeDetail(props) {
           <div style={styles.spaceBetween} className="info-container">
             <div style={{ display: 'flex', flexDirection: 'column', flex: 4 }}>
               <Title level={2}>{post.title}</Title>
-              <Text style={{ color: COLOR.grayText }}>
-                {t('recipe.updatedBy')} {post?.author?.name} |{' '}
-                {moment(post.updatedAt).format('DD-MM-YYYY')}
-              </Text>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Text style={{ color: COLOR.grayText }}>
+                  {t('recipe.updatedBy')}
+                </Text>
+                <Button
+                  type="link"
+                  onClick={() =>
+                    history.push(
+                      `/profile?page=${PROFILE_PAGE.RECIPE}&user=${post?.author?.id}`
+                    )
+                  }
+                  style={{ fontWeight: 700, paddingLeft: 2, paddingRight: 2 }}
+                >
+                  {post?.author?.name}
+                </Button>
+                <Text style={{ color: COLOR.grayText }}>
+                  | {moment(post.updatedAt).format('DD-MM-YYYY')}
+                </Text>
+              </div>
+
               {post.categories && post.categories.length > 0 && (
                 <div
                   style={{ display: 'flex', flexWrap: 'wrap', marginTop: 24 }}

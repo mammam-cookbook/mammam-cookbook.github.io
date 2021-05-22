@@ -72,14 +72,14 @@ function AppHeader(props) {
       >
         {t('auth.profile')}
       </Menu.Item>
-      <Menu.Item
+      {/* <Menu.Item
         key={'course'}
         onClick={() => {
           history.push(`/my-courses`)
         }}
       >
         {t('auth.settings')}
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item
         key={'logout'}
         onClick={() => {
@@ -93,14 +93,14 @@ function AppHeader(props) {
 
   const adminPopover = (
     <Menu style={{ width: 200 }}>
-      <Menu.Item
+      {/* <Menu.Item
         key={'profile'}
         onClick={() => {
           history.push(`/profile`)
         }}
       >
         {t('auth.profile')}
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item
         key={'dashboard'}
         onClick={() => {

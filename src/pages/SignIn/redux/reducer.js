@@ -4,9 +4,6 @@ import {
   ChangePassword,
   ChangePasswordFailed,
   ChangePasswordSuccess,
-  GetProfile,
-  GetProfileFailed,
-  GetProfileSuccess,
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
@@ -19,7 +16,6 @@ const initialState = {
   refreshToken: null,
   user: null,
   isLoading: false,
-  isLoadingProfile: false,
   prevLogin: null,
   language: i18n.language
 }
@@ -39,16 +35,6 @@ export function authReducer(state = initialState, action) {
       return { ...state, isLoading: false }
     case UpdateProfileFailed.type:
       return { ...state, isLoading: false }
-    case GetProfile.type:
-      return { ...state, isLoadingProfile: true }
-    case GetProfileSuccess.type:
-      return {
-        ...state,
-        user: { ...state.user, ...action.payload },
-        isLoadingProfile: false
-      }
-    case GetProfileFailed.type:
-      return { ...state, isLoadingProfile: false }
     case ChangePassword.type:
       return { ...state, isLoading: true }
     case ChangePasswordSuccess.type:

@@ -141,7 +141,7 @@ const getProfileEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetProfileSuccess.get(result.data)
+            return GetProfileSuccess.get(result.data?.user)
           }
           return GetProfileFailed.get(result)
         }),

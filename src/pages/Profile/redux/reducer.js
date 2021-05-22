@@ -1,4 +1,9 @@
-import { ResetReducer } from 'pages/SignIn/redux/actions'
+import {
+  GetProfile,
+  GetProfileFailed,
+  GetProfileSuccess,
+  ResetReducer
+} from 'pages/SignIn/redux/actions'
 import {
   GetCollectionDetail,
   GetCollectionDetailFailed,
@@ -20,7 +25,9 @@ const initialState = {
   following: [],
   isLoadingCollections: false,
   isLoadingCollectionDetail: false,
-  isLoadingRecipe: false
+  isLoadingRecipe: false,
+  userProfile: null,
+  isLoadingProfile: false
 }
 
 export function profileReducer(state = initialState, action) {
@@ -85,6 +92,16 @@ export function profileReducer(state = initialState, action) {
         ...state,
         isLoadingRecipe: false
       }
+    case GetProfile.type:
+      return { ...state, isLoadingProfile: true }
+    case GetProfileSuccess.type:
+      return {
+        ...state,
+        userProfile: action.payload,
+        isLoadingProfile: false
+      }
+    case GetProfileFailed.type:
+      return { ...state, isLoadingProfile: false }
     case ResetReducer.type:
       return initialState
     default:
