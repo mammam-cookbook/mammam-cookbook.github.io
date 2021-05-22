@@ -206,7 +206,14 @@ export const en = {
     follow: 'Follow',
     following: 'Following',
     followers: 'Followers',
-    followings: 'Followings'
+    followings: 'Followings',
+    collection: 'Collections',
+    changeCollectionName: 'Change collection name',
+    changeCollectionNamePlaceholder: 'Enter new name of collection',
+    changeName: 'Change',
+    noRecipeInCollection: 'There is no recipe in this collection',
+    noCollections: 'There is no collection',
+    confirmToDeleteCollection: 'Are you sure to delete this collection?'
   }
 }
 
@@ -362,7 +369,7 @@ export const vi = {
     noCollection: 'Chưa có bộ sưu tập',
     collectionNamePlaceholder: 'Nhập tên bộ sưu tập',
     collectionNameError: 'Tên bộ sưu tập không hợp lệ',
-    addNewCollection: 'Thêm bộ sưu tập mới',
+    addNewCollection: 'Tạo bộ sưu tập mới',
     chooseDate: 'Chọn ngày',
     chooseSession: 'Chọn bữa',
     morning: 'Bữa sáng',
@@ -416,6 +423,13 @@ export const vi = {
     follow: 'Theo dõi',
     following: 'Bỏ theo dõi',
     followers: 'Người theo dõi',
-    followings: 'Đang theo dõi'
+    followings: 'Đang theo dõi',
+    collection: 'Bộ sưu tập',
+    changeCollectionName: 'Đổi tên bộ sưu tập',
+    changeCollectionNamePlaceholder: 'Nhập tên mới cho bộ sưu tập',
+    changeName: 'Đổi tên',
+    noRecipeInCollection: 'Chưa có công thức trong bộ sưu tập này',
+    noCollections: 'Chưa có bộ sưu tập nào',
+    confirmToDeleteCollection: 'Bạn chắc chắn muốn xóa bộ sưu tập này?'
   }
 }

@@ -22,11 +22,14 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  FiBookmark,
   FiCheck,
+  FiFileText,
   FiFilter,
   FiSearch,
   FiShoppingCart,
   FiUser,
+  FiUserCheck,
   FiX
 } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,6 +42,7 @@ import { PROFILE_PAGE } from './constant'
 import RecipeListProfile from './component/recipeList'
 import FollowingListProfile from './component/followingList'
 import FollowerListProfile from './component/followerList'
+import CollectionListProfile from './component/collectionList'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -96,8 +100,8 @@ export default function ProfilePage() {
         return <FollowingListProfile />
       case PROFILE_PAGE.FOLLOWER:
         return <FollowerListProfile />
-      // case PAGE.STUDENT:
-      //   return <StudentList />
+      case PROFILE_PAGE.COLLECTION:
+        return <CollectionListProfile />
       default:
         return <RecipeListProfile />
     }
@@ -142,7 +146,7 @@ export default function ProfilePage() {
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.RECIPE}
-              icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
+              icon={<FiFileText size={16} style={styles.icon} />}
             >
               {t('home.recipes')}
             </Menu.Item>
@@ -150,7 +154,7 @@ export default function ProfilePage() {
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.FOLLOWING}
-              icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
+              icon={<FiUserCheck size={16} style={styles.icon} />}
             >
               {t('profile.followings')}
             </Menu.Item>
@@ -158,7 +162,7 @@ export default function ProfilePage() {
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.FOLLOWER}
-              icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
+              icon={<FiUsers size={16} style={styles.icon} />}
             >
               {t('profile.followers')}
             </Menu.Item>
@@ -166,15 +170,15 @@ export default function ProfilePage() {
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.COLLECTION}
-              icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
+              icon={<FiBookmark size={16} style={styles.icon} />}
             >
-              Bộ sưu tập
+              {t('profile.collection')}
             </Menu.Item>
             <Menu.Item
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.SHOPPING_LIST}
-              icon={<FiShoppingCart size={16} style={{ marginRight: 8 }} />}
+              icon={<FiShoppingCart size={16} style={styles.icon} />}
             >
               Danh sách mua
             </Menu.Item>
@@ -182,7 +186,7 @@ export default function ProfilePage() {
               style={{ color: 'white' }}
               className="customItem"
               key={PROFILE_PAGE.INFO}
-              icon={<FiUser size={16} style={{ marginRight: 8 }} />}
+              icon={<FiUser size={16} style={styles.icon} />}
             >
               Thông tin tài khoản
             </Menu.Item>
@@ -192,4 +196,11 @@ export default function ProfilePage() {
       </div>
     </>
   )
+}
+
+const styles = {
+  icon: {
+    marginRight: 8,
+    marginTop: -4
+  }
 }

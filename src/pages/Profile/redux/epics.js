@@ -97,7 +97,7 @@ const getCollectionDetailEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetCollectionDetailSuccess.get(result?.data?.data)
+            return GetCollectionDetailSuccess.get(result?.data?.collection)
           }
           return GetCollectionDetailFailed.get(result)
         }),
