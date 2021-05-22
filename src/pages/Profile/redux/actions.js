@@ -41,3 +41,19 @@ export const DeleteCollectionFailed = defineAction('DELETE_COLLECTION_FAILED')
 export const UpdateCollection = defineAction('UPDATE_COLLECTION')
 export const UpdateCollectionSuccess = defineAction('UPDATE_COLLECTION_SUCCESS')
 export const UpdateCollectionFailed = defineAction('UPDATE_COLLECTION_FAILED')
+
+export const GetFollower = defineAction('GET_FOLLOWER_REQUEST')
+export const GetFollowerSuccess = defineAction('GET_FOLLOWER_SUCCESS')
+export const GetFollowerFailed = defineAction('GET_FOLLOWER_FAILED')
+
+export const GetFollowing = defineAction('GET_FOLLOWING_REQUEST')
+export const GetFollowingSuccess = defineAction('GET_FOLLOWING_SUCCESS')
+export const GetFollowingFailed = defineAction('GET_FOLLOWING_FAILED')
+
+export const FollowUser = defineAction('FOLLOW_USER_REQUEST')
+export const FollowUserSuccess = defineAction('FOLLOW_USER_SUCCESS')
+export const FollowUserFailed = defineAction('FOLLOW_USER_FAILED')
+
+export const UnFollowUser = defineAction('UN_FOLLOW_USER_REQUEST')
+export const UnFollowUserSuccess = defineAction('UN_FOLLOW_USER_SUCCESS')
+export const UnFollowUserFailed = defineAction('UN_FOLLOW_USER_FAILED')

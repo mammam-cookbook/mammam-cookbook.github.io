@@ -4,6 +4,7 @@ import Title from 'antd/lib/typography/Title'
 import AppHeader from 'components/Header'
 import RecipeItem from 'components/RecipeItem'
 import { GetAllCategories } from 'pages/Dashboard/redux/actions'
+import { GetFollower, GetFollowing } from 'pages/Profile/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiCheck, FiFilter, FiSearch, FiX } from 'react-icons/fi'
@@ -11,8 +12,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { COLOR, LIMIT_ITEMS } from 'ultis/functions'
 import i18n from 'ultis/i18n'
+import UserItem from './components/userItem'
 import './index.css'
-import { SearchRecipes } from './redux/actions'
+import { SearchRecipes, SearchUsers } from './redux/actions'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -34,15 +36,13 @@ export default function SearchPage() {
   const [timeFilter, setTimeFilter] = useState(-1)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [sortOrder, setSortOrder] = useState(null)
-  const { isLoading, result, currentPage, totalItems } = useSelector(
-    state => state.Search
-  )
+  const { isLoading, result, currentPage, totalItems, resultUser } =
+    useSelector(state => state.Search)
   const useQuery = () => {
     return new URLSearchParams(useLocation().search)
   }
   const query = useQuery()
   const searchText = query.get('search')
-  console.log(isLoading, result, currentPage, totalItems, categoryList)
 
   const SORT_BY = [
     { title: t('search.relevance'), value: null },
@@ -56,8 +56,10 @@ export default function SearchPage() {
       dispatch(
         SearchRecipes.get({ search: searchText, limit: LIMIT_ITEMS, offset: 0 })
       )
+      dispatch(SearchUsers.get({ keyword: searchText, limit: 3, offset: 0 }))
+      dispatch(GetFollowing.get(user.id))
     }
-  }, [])
+  }, [searchText])
 
   const onSearch = (page, pageSize) => {
     let values = {
@@ -526,23 +528,38 @@ export default function SearchPage() {
           {searchText ? t('home.result') : 'BROWSE'}
         </Title>
 
-        <Title level={5} style={{ marginTop: 24 }}>
-          {t('search.user')}
-        </Title>
+        {resultUser && resultUser?.length > 0 && (
+          <>
+            <Title level={5} style={{ marginTop: 32 }}>
+              {t('search.user')}
+            </Title>
+            <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
+              {resultUser.map(user => (
+                <Col md={12} lg={8} sm={24}>
+                  <UserItem user={user} />
+                </Col>
+              ))}
+            </Row>
+          </>
+        )}
 
-        <Title level={5} style={{ marginTop: 48 }}>
+        <Title level={5} style={{ marginTop: 32, marginBottom: 16 }}>
           {t('home.recipes')}
         </Title>
-        {renderFilterBtn()}
+        {result && result?.length > 0 && renderFilterBtn()}
         {isShowFilter && renderFilter()}
 
-        <Row gutter={[16, 24]}>
-          {result.map(recipe => (
-            <Col md={12} lg={8} sm={24}>
-              <RecipeItem recipe={recipe} />
-            </Col>
-          ))}
-        </Row>
+        {result && result?.length > 0 ? (
+          <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
+            {result.map(recipe => (
+              <Col md={12} lg={8} sm={24}>
+                <RecipeItem recipe={recipe} />
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Text>{t('search.noResult')}</Text>
+        )}
         {totalItems > 0 && (
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <Pagination

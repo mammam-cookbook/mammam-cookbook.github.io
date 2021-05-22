@@ -199,7 +199,12 @@ export const en = {
     hour: 'hour',
     cookingTimeLessThan: 'Cooking time is less than',
     with: 'With',
-    without: 'Without'
+    without: 'Without',
+    noResult: 'There is no result'
+  },
+  profile: {
+    follow: 'Follow',
+    following: 'Following'
   }
 }
 
@@ -402,6 +407,11 @@ export const vi = {
     hour: 'giờ',
     cookingTimeLessThan: 'Thời gian nấu ít hơn',
     with: 'Có',
-    without: 'Không có'
+    without: 'Không có',
+    noResult: 'Không tìm thấy công thức phù hợp'
+  },
+  profile: {
+    follow: 'Theo dõi',
+    following: 'Đang theo dõi'
   }
 }

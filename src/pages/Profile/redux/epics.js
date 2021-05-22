@@ -16,12 +16,24 @@ import {
   DeleteRecipeInCollection,
   DeleteRecipeInCollectionFailed,
   DeleteRecipeInCollectionSuccess,
+  FollowUser,
+  FollowUserFailed,
+  FollowUserSuccess,
   GetCollectionDetail,
   GetCollectionDetailFailed,
   GetCollectionDetailSuccess,
   GetCollections,
   GetCollectionsFailed,
   GetCollectionsSuccess,
+  GetFollower,
+  GetFollowerFailed,
+  GetFollowerSuccess,
+  GetFollowing,
+  GetFollowingFailed,
+  GetFollowingSuccess,
+  UnFollowUser,
+  UnFollowUserFailed,
+  UnFollowUserSuccess,
   UpdateCollection,
   UpdateCollectionFailed,
   UpdateCollectionSuccess
@@ -189,6 +201,94 @@ const updateCollectionEpic$ = action$ =>
     })
   )
 
+const getFollowingEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetFollowing.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: `user/${action.payload}/following`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetFollowingSuccess.get(result?.data?.followings)
+          }
+          return GetFollowingFailed.get(result)
+        }),
+        catchError(error => {
+          return GetFollowingFailed.get(error)
+        })
+      )
+    })
+  )
+
+const getFollowerEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetFollower.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: `user/${action.payload}/follower`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetFollowerSuccess.get(result?.data?.followers)
+          }
+          return GetFollowerFailed.get(result)
+        }),
+        catchError(error => {
+          return GetFollowerFailed.get(error)
+        })
+      )
+    })
+  )
+
+const followUserEpic$ = action$ =>
+  action$.pipe(
+    ofType(FollowUser.type),
+    exhaustMap(action => {
+      const user = store.getState().Auth.user
+      return request({
+        method: 'POST',
+        url: `user/${user.id}/follow/${action.payload}`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetFollowing.get(user.id))
+            return FollowUserSuccess.get(result?.data)
+          }
+          return FollowUserFailed.get(result)
+        }),
+        catchError(error => {
+          return FollowUserFailed.get(error)
+        })
+      )
+    })
+  )
+
+const unFollowUserEpic$ = action$ =>
+  action$.pipe(
+    ofType(UnFollowUser.type),
+    exhaustMap(action => {
+      const user = store.getState().Auth.user
+      return request({
+        method: 'POST',
+        url: `user/${user.id}/unfollow/${action.payload}`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetFollowing.get(user.id))
+            return UnFollowUserSuccess.get(result?.data)
+          }
+          return UnFollowUserFailed.get(result)
+        }),
+        catchError(error => {
+          return UnFollowUserFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const profileEpics = combineEpics(
   getCollectionsEpic$,
   createCollectionsEpic$,
@@ -196,5 +296,9 @@ export const profileEpics = combineEpics(
   addRecipeToCollectionEpic$,
   deleteRecipeInCollectionEpic$,
   deleteCollectionEpic$,
-  updateCollectionEpic$
+  updateCollectionEpic$,
+  getFollowerEpic$,
+  getFollowingEpic$,
+  unFollowUserEpic$,
+  followUserEpic$
 )

@@ -1,26 +1,13 @@
-import { MenuOutlined, UserOutlined } from '@ant-design/icons'
-import {
-  Anchor,
-  Avatar,
-  Button,
-  Drawer,
-  Dropdown,
-  Input,
-  Menu,
-  Popover,
-  Select
-} from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
 import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FiBell, FiMenu, FiSearch, FiUser, FiX } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { COLOR, ROLES, getCurrentLng } from 'ultis/functions'
-import { useTranslation } from 'react-i18next'
-import { FiUser, FiBell, FiSearch, FiMenu, FiX } from 'react-icons/fi'
+import { COLOR, getCurrentLng, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
-
-const { Search } = Input
-const { Link } = Anchor
 
 function AppHeader(props) {
   const [visible, setVisible] = useState(false)
