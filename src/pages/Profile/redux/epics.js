@@ -31,6 +31,9 @@ import {
   GetFollowing,
   GetFollowingFailed,
   GetFollowingSuccess,
+  GetRecipeOfUser,
+  GetRecipeOfUserFailed,
+  GetRecipeOfUserSuccess,
   UnFollowUser,
   UnFollowUserFailed,
   UnFollowUserSuccess,
@@ -255,6 +258,7 @@ const followUserEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             store.dispatch(GetFollowing.get(user.id))
+            store.dispatch(GetFollower.get(user.id))
             return FollowUserSuccess.get(result?.data)
           }
           return FollowUserFailed.get(result)
@@ -278,12 +282,34 @@ const unFollowUserEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             store.dispatch(GetFollowing.get(user.id))
+            store.dispatch(GetFollower.get(user.id))
             return UnFollowUserSuccess.get(result?.data)
           }
           return UnFollowUserFailed.get(result)
         }),
         catchError(error => {
           return UnFollowUserFailed.get(error)
+        })
+      )
+    })
+  )
+
+const getRecipeUserEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetRecipeOfUser.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: `user/${action.payload}/recipe`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetRecipeOfUserSuccess.get(result?.data?.recipes)
+          }
+          return GetRecipeOfUserFailed.get(result)
+        }),
+        catchError(error => {
+          return GetRecipeOfUserFailed.get(error)
         })
       )
     })
@@ -300,5 +326,6 @@ export const profileEpics = combineEpics(
   getFollowerEpic$,
   getFollowingEpic$,
   unFollowUserEpic$,
-  followUserEpic$
+  followUserEpic$,
+  getRecipeUserEpic$
 )

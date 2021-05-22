@@ -18,6 +18,7 @@ import './App.less'
 import enUS from 'antd/lib/locale/en_US'
 import viVN from 'antd/lib/locale/vi_VN'
 import Dashboard from 'pages/Dashboard'
+import ProfilePage from 'pages/Profile'
 
 function App() {
   const language = useSelector(state => state.Auth.language)
@@ -33,6 +34,7 @@ function App() {
         <Route path="/recipe/search" component={SearchRecipe} />
         <Route path="/recipes" component={SearchRecipe} />
         <Route path="/recipe/:id" component={RecipeDetail} />
+        <Route path="/profile" component={ProfilePage} />
         <Route path="/admin" component={Dashboard} />
       </Router>
       <GlobalModal />

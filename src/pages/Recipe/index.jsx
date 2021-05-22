@@ -309,10 +309,7 @@ export default function RecipeDetail(props) {
                     {t('recipe.energy').toLocaleUpperCase()}
                   </Text>
                   <Text style={styles.orangeInfo}>
-                    {(
-                      post?.ingredients?.reduce(calcCalories, 0) / 1000
-                    ).toFixed(0)}{' '}
-                    KCAL
+                    {post?.ingredients?.reduce(calcCalories, 0).toFixed(0)} KCAL
                   </Text>
                 </div>
               </div>
@@ -358,7 +355,43 @@ export default function RecipeDetail(props) {
           </div>
 
           <div style={{ marginTop: 24 }}>
-            <Text style={{ textAlign: 'justify' }}>{post.description}</Text>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                marginBottom: 24
+              }}
+            >
+              <div
+                style={{
+                  width: 120,
+                  height: 50,
+                  backgroundColor: COLOR.primary1,
+                  borderTopRightRadius: 10
+                }}
+              />
+              <div>
+                <Title level={4} style={{ margin: 8 }}>
+                  {t('create.summary').toLocaleUpperCase()}
+                </Title>
+                <div
+                  style={{
+                    height: 4,
+                    width: '100%',
+                    backgroundColor: COLOR.primary1
+                  }}
+                />
+              </div>
+            </div>
+            <Text
+              style={{
+                textAlign: 'justify',
+                fontSize: 18,
+                fontWeight: 500
+              }}
+            >
+              {post.description}
+            </Text>
           </div>
 
           <div style={{ marginTop: 24 }} className="row-container">
@@ -551,10 +584,7 @@ export default function RecipeDetail(props) {
                     {t('recipe.energy').toLocaleUpperCase()}
                   </Text>
                   <Text style={styles.orangeInfo}>
-                    {(
-                      post?.ingredients?.reduce(calcCalories, 0) / 1000
-                    ).toFixed(0)}{' '}
-                    KCAL
+                    {post?.ingredients?.reduce(calcCalories, 0).toFixed(0)} KCAL
                   </Text>
                 </div>
               </div>

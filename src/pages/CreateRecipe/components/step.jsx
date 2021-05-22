@@ -1,7 +1,8 @@
-import { Input, Typography } from 'antd'
+import { Button, Input, Typography } from 'antd'
 import 'pages/SignIn/signin.css'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { FiX } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
 import { COLOR } from 'ultis/functions'
 import ImageUpload from './imageUpload'
@@ -16,6 +17,7 @@ function Step({
   onChangeImage,
   onChangeMaking,
   onChangeTime,
+  onDeleteItem,
   error
 }) {
   const { t } = useTranslation()
@@ -27,7 +29,7 @@ function Step({
         ...style,
         display: 'flex',
         flexDirection: isDesktopOrLaptop ? 'row' : 'column',
-        marginTop: 16
+        marginTop: 32
       }}
     >
       <div
@@ -73,19 +75,33 @@ function Step({
               />
             </div>
           </div>
+          <Button
+            type="text"
+            shape="circle"
+            onClick={() => onDeleteItem(index)}
+            icon={<FiX size={28} color={COLOR.gray} />}
+          />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: 16
+          }}
+        >
+          <Title level={5} style={{ marginRight: 12, marginTop: 8 }}>
+            {t('create.time')}
+          </Title>
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end'
+              alignItems: 'center'
             }}
           >
-            <Title level={5} style={{ marginRight: 12, marginTop: 8 }}>
-              {t('create.time')}
-            </Title>
             <Input
               style={{
-                width: isDesktopOrLaptop ? 80 : 56,
+                width: isDesktopOrLaptop ? 160 : 120,
                 borderColor: COLOR.primary1
               }}
               onChange={event => onChangeTime(event.target.value)}

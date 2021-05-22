@@ -50,6 +50,10 @@ export const GetFollowing = defineAction('GET_FOLLOWING_REQUEST')
 export const GetFollowingSuccess = defineAction('GET_FOLLOWING_SUCCESS')
 export const GetFollowingFailed = defineAction('GET_FOLLOWING_FAILED')
 
+export const GetRecipeOfUser = defineAction('GET_RECIPE_USER_REQUEST')
+export const GetRecipeOfUserSuccess = defineAction('GET_RECIPE_USER_SUCCESS')
+export const GetRecipeOfUserFailed = defineAction('GET_RECIPE_USER_FAILED')
+
 export const FollowUser = defineAction('FOLLOW_USER_REQUEST')
 export const FollowUserSuccess = defineAction('FOLLOW_USER_SUCCESS')
 export const FollowUserFailed = defineAction('FOLLOW_USER_FAILED')

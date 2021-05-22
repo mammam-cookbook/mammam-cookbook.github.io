@@ -1,10 +1,11 @@
 import { Badge, Button, Col, Input, Pagination, Row, Select, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
+import ButtonBase from 'components/ButtonBase'
 import AppHeader from 'components/Header'
 import RecipeItem from 'components/RecipeItem'
 import { GetAllCategories } from 'pages/Dashboard/redux/actions'
-import { GetFollower, GetFollowing } from 'pages/Profile/redux/actions'
+import { GetFollowing } from 'pages/Profile/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiCheck, FiFilter, FiSearch, FiX } from 'react-icons/fi'
@@ -134,15 +135,26 @@ export default function SearchPage() {
       }
     }
     return (
-      <Col md={6} lg={6} sm={8}>
-        <Button
-          type={isCheck ? 'link' : 'text'}
-          onClick={() => onClick()}
-          style={{ fontSize: 14 }}
-        >
-          {item[i18n.language]}
-        </Button>
-        {isCheck && <FiCheck size={20} color={COLOR.primary1} />}
+      <Col md={6} lg={4} sm={8}>
+        <ButtonBase onClick={() => onClick()} style={styles.categoryBtn}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: isCheck ? COLOR.primary1 : COLOR.mainBlack,
+              fontWeight: 700,
+              textAlign: 'center'
+            }}
+          >
+            {item[i18n.language]}
+          </Text>
+          {isCheck && (
+            <FiCheck
+              size={20}
+              color={COLOR.primary1}
+              style={{ marginLeft: 8 }}
+            />
+          )}
+        </ButtonBase>
       </Col>
     )
   }
@@ -191,32 +203,22 @@ export default function SearchPage() {
     setNoIngredientsFilter(temp)
   }
 
-  function IngredientFilter(props) {
-    const { title, index, onClick } = props
-    return (
-      <div
-        style={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 4
-        }}
-      >
-        <Text>{title}</Text>
-        <Button
-          type="link"
-          onClick={() => onClick(index)}
-          icon={<FiX size={20} color={COLOR.gray} />}
-        />
-      </div>
-    )
-  }
-
   const renderIngredientFilter = () => {
     return (
-      <Row gutter={[16, 24]} style={{ width: '100%' }}>
-        <Col md={12} lg={12} sm={24} style={styles.ingreCol}>
+      <Row
+        gutter={[16, 24]}
+        style={{
+          width: '100%',
+          marginBottom: 24,
+          margin: 0
+        }}
+      >
+        <Col
+          md={12}
+          lg={12}
+          sm={24}
+          style={{ paddingRight: 24, paddingLeft: 0 }}
+        >
           <Input
             value={ingredientsText}
             onChange={event => setIngredientsText(event.target.value)}
@@ -225,17 +227,24 @@ export default function SearchPage() {
             placeholder={t('search.inputIngre')}
             suffix={<FiSearch size={20} color={COLOR.primary1} />}
           />
-          {ingredientsFilter &&
-            ingredientsFilter?.length > 0 &&
-            ingredientsFilter.map((item, index) => (
-              <IngredientFilter
-                title={item}
-                index={index}
-                onClick={onRemoveIngreFilter}
-              />
-            ))}
+          <div style={styles.ingreCol}>
+            {ingredientsFilter &&
+              ingredientsFilter?.length > 0 &&
+              ingredientsFilter.map((item, index) => (
+                <FilterItem
+                  title={item}
+                  index={index}
+                  onClick={onRemoveIngreFilter}
+                />
+              ))}
+          </div>
         </Col>
-        <Col md={12} lg={12} sm={24} style={styles.ingreCol}>
+        <Col
+          md={12}
+          lg={12}
+          sm={24}
+          style={{ paddingLeft: 24, paddingRight: 0 }}
+        >
           <Input
             value={noIngredientsText}
             onChange={event => setNoIngredientsText(event.target.value)}
@@ -244,15 +253,17 @@ export default function SearchPage() {
             placeholder={t('search.inputWithoutIngre')}
             suffix={<FiSearch size={20} color={COLOR.primary1} />}
           />
-          {noIngredientsFilter &&
-            noIngredientsFilter?.length > 0 &&
-            noIngredientsFilter.map((item, index) => (
-              <IngredientFilter
-                title={item}
-                index={index}
-                onClick={onRemoveNoIngreFilter}
-              />
-            ))}
+          <div style={styles.ingreCol}>
+            {noIngredientsFilter &&
+              noIngredientsFilter?.length > 0 &&
+              noIngredientsFilter.map((item, index) => (
+                <FilterItem
+                  title={item}
+                  index={index}
+                  onClick={onRemoveNoIngreFilter}
+                />
+              ))}
+          </div>
         </Col>
       </Row>
     )
@@ -261,21 +272,12 @@ export default function SearchPage() {
   function FilterItem(props) {
     const { title, index, onClick } = props
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          paddingLeft: 4,
-          paddingRight: 4,
-          paddingBottom: 4
-        }}
-      >
+      <div style={styles.filterBtn}>
         <Text>{title}</Text>
         <Button
-          style={{ marginLeft: 4 }}
           type="link"
           onClick={() => onClick(index)}
-          icon={<FiX size={20} color={COLOR.gray} />}
+          icon={<FiX size={16} color={'black'} />}
         />
       </div>
     )
@@ -289,6 +291,7 @@ export default function SearchPage() {
             display: 'flex',
             width: '100%',
             justifyContent: 'space-between',
+            alignItems: 'center',
             marginBottom: 8
           }}
         >
@@ -297,16 +300,19 @@ export default function SearchPage() {
               icon={
                 <FiFilter
                   size={20}
+                  style={{ marginRight: 8 }}
                   color={isShowFilter ? COLOR.primary1 : 'black'}
                 />
               }
-              type="text"
+              style={{ marginTop: 8 }}
+              type={isShowFilter ? 'link' : 'text'}
               onClick={() => setIsShowFilter(!isShowFilter)}
             >
               {t('search.filter')}
             </Button>
             <Button
               type="link"
+              style={{ marginTop: 8 }}
               onClick={() => {
                 setIngredientsFilter([])
                 setNoIngredientsFilter([])
@@ -321,8 +327,7 @@ export default function SearchPage() {
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                alignItems: 'flex-start',
-                width: '100%'
+                alignItems: 'flex-start'
               }}
             >
               {ingredientsFilter.map((item, index) => (
@@ -395,7 +400,7 @@ export default function SearchPage() {
   const renderFilter = () => {
     return (
       <Tabs
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginBottom: 40, paddingBottom: 12 }}
         size="large"
         activeKey={currentTab}
         onChange={key => setCurrentTab(key)}
@@ -463,15 +468,15 @@ export default function SearchPage() {
             </Badge>
           }
           key="time"
-          style={{ padding: 24 }}
+          // style={{ padding: 24 }}
         >
-          <Text>{t('search.cookingTimeLessThan')}</Text>
+          {/* <Text>{t('search.cookingTimeLessThan')}</Text> */}
           <div
             style={{
               display: 'flex',
               width: '100%',
               flexWrap: 'wrap',
-              marginTop: 24
+              marginTop: 8
             }}
           >
             {COOKING_FILTER.map(item => (
@@ -479,7 +484,7 @@ export default function SearchPage() {
                 type="default"
                 style={{
                   ...styles.cookingBtn,
-                  color: item === timeFilter ? COLOR.primary1 : null
+                  color: item === timeFilter ? COLOR.primary1 : COLOR.mainBlack
                 }}
                 onClick={() => {
                   if (item === timeFilter) {
@@ -530,7 +535,7 @@ export default function SearchPage() {
 
         {resultUser && resultUser?.length > 0 && (
           <>
-            <Title level={5} style={{ marginTop: 32 }}>
+            <Title level={4} style={{ marginTop: 32 }}>
               {t('search.user')}
             </Title>
             <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
@@ -543,14 +548,14 @@ export default function SearchPage() {
           </>
         )}
 
-        <Title level={5} style={{ marginTop: 32, marginBottom: 16 }}>
+        <Title level={4} style={{ marginTop: 32, marginBottom: 16 }}>
           {t('home.recipes')}
         </Title>
-        {result && result?.length > 0 && renderFilterBtn()}
+        {renderFilterBtn()}
         {isShowFilter && renderFilter()}
 
         {result && result?.length > 0 ? (
-          <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
+          <Row gutter={[16, 24]} style={{ marginTop: 52 }}>
             {result.map(recipe => (
               <Col md={12} lg={8} sm={24}>
                 <RecipeItem recipe={recipe} />
@@ -583,12 +588,33 @@ const styles = {
     borderColor: COLOR.primary1,
     marginBottom: 24
   },
-  ingreCol: { paddingLeft: 48, paddingRight: 48 },
+  ingreCol: { display: 'flex', flexWrap: 'wrap' },
   cookingBtn: {
     marginRight: 16,
     boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)',
     borderRadius: 50,
     borderColor: 'transparent',
     marginBottom: 4
+  },
+  filterBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    paddingLeft: 12,
+    paddingRight: 4,
+    marginRight: 12,
+    boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)',
+    marginTop: 8
+  },
+  categoryBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    paddingLeft: 8,
+    paddingRight: 8,
+    boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)'
+    // marginTop: 8
   }
 }

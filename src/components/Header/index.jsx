@@ -1,5 +1,6 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -66,7 +67,7 @@ function AppHeader(props) {
       <Menu.Item
         key={'profile'}
         onClick={() => {
-          history.push(`/profile`)
+          history.push(`/profile?page=${PROFILE_PAGE.RECIPE}`)
         }}
       >
         {t('auth.profile')}

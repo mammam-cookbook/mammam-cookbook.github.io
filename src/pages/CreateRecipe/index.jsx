@@ -293,8 +293,27 @@ export default props => {
                         error={errors.title}
                       />
                     </div>
-
                     <div style={{ ...style.spaceBetween, marginTop: 16 }}>
+                      <Title level={4}>
+                        {t('create.categories').toLocaleUpperCase()}
+                      </Title>
+                    </div>
+                    <Select
+                      mode="multiple"
+                      allowClear
+                      style={{ width: '100%', height: 48 }}
+                      placeholder={t('create.categoriesPlaceholder')}
+                      defaultValue={values.categories}
+                      onChange={value => setFieldValue('categories', value)}
+                    >
+                      {listCategories.map((item, index) => (
+                        <Option value={item.id} key={`category${index}`}>
+                          {item.vi}
+                        </Option>
+                      ))}
+                    </Select>
+
+                    <div style={{ ...style.spaceBetween, marginTop: 24 }}>
                       <div style={{ flex: 1.5 }}>
                         <Title level={4}>
                           {t('create.ration').toLocaleUpperCase()}
@@ -374,25 +393,6 @@ export default props => {
                       placeholder={t('create.summaryPlaceholder')}
                       error={errors.description}
                     />
-                    <div style={{ ...style.spaceBetween, marginTop: 24 }}>
-                      <Title level={4}>
-                        {t('create.categories').toLocaleUpperCase()}
-                      </Title>
-                    </div>
-                    <Select
-                      mode="multiple"
-                      allowClear
-                      style={{ width: '100%', height: 48 }}
-                      placeholder={t('create.categoriesPlaceholder')}
-                      defaultValue={values.categories}
-                      onChange={value => setFieldValue('categories', value)}
-                    >
-                      {listCategories.map((item, index) => (
-                        <Option value={item.id} key={`category${index}`}>
-                          {item.vi}
-                        </Option>
-                      ))}
-                    </Select>
                   </div>
                   <ImageUpload
                     style={{ flex: 1, padding: 24 }}
@@ -490,6 +490,11 @@ export default props => {
                       onChangeTime={data => {
                         let steps = values.steps
                         steps[index].time = data
+                        setFieldValue('steps', steps)
+                      }}
+                      onDeleteItem={index => {
+                        let steps = values.steps
+                        steps.splice(index, 1)
                         setFieldValue('steps', steps)
                       }}
                       error={

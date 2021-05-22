@@ -1,6 +1,7 @@
 import GlobalModal from 'components/GlobalModal'
 import { replace } from 'connected-react-router'
 import { store } from 'core/store'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
@@ -111,7 +112,7 @@ const changePassEpic$ = action$ =>
                 store.dispatch(SignOut.get())
                 history.push({
                   pathname: '/signin',
-                  state: { from: `/profile` }
+                  state: { from: `/profile?page=${PROFILE_PAGE.INFO}` }
                 })
               }
             )

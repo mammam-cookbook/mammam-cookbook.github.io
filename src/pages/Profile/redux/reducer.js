@@ -7,15 +7,20 @@ import {
   GetCollectionsFailed,
   GetCollectionsSuccess,
   GetFollowerSuccess,
-  GetFollowingSuccess
+  GetFollowingSuccess,
+  GetRecipeOfUser,
+  GetRecipeOfUserFailed,
+  GetRecipeOfUserSuccess
 } from './actions'
 const initialState = {
   collections: [],
   collectionDetail: {},
+  recipes: [],
   followers: [],
   following: [],
   isLoadingCollections: false,
-  isLoadingCollectionDetail: false
+  isLoadingCollectionDetail: false,
+  isLoadingRecipe: false
 }
 
 export function profileReducer(state = initialState, action) {
@@ -63,6 +68,22 @@ export function profileReducer(state = initialState, action) {
         ...state,
         followers:
           action.payload && action.payload?.length > 0 ? action.payload : []
+      }
+    case GetRecipeOfUser.type:
+      return {
+        ...state,
+        isLoadingRecipe: true
+      }
+    case GetRecipeOfUserSuccess.type:
+      return {
+        ...state,
+        recipes: action.payload,
+        isLoadingRecipe: false
+      }
+    case GetRecipeOfUserFailed.type:
+      return {
+        ...state,
+        isLoadingRecipe: false
       }
     case ResetReducer.type:
       return initialState

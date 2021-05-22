@@ -204,7 +204,9 @@ export const en = {
   },
   profile: {
     follow: 'Follow',
-    following: 'Following'
+    following: 'Following',
+    followers: 'Followers',
+    followings: 'Followings'
   }
 }
 
@@ -412,6 +414,8 @@ export const vi = {
   },
   profile: {
     follow: 'Theo dõi',
-    following: 'Đang theo dõi'
+    following: 'Bỏ theo dõi',
+    followers: 'Người theo dõi',
+    followings: 'Đang theo dõi'
   }
 }
