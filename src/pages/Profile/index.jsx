@@ -27,8 +27,10 @@ import {
   FiCheck,
   FiFileText,
   FiFilter,
+  FiLock,
   FiSearch,
   FiShoppingCart,
+  FiSliders,
   FiUser,
   FiUserCheck,
   FiX
@@ -51,6 +53,7 @@ import {
   LoadingOutlined,
   PlusCircleOutlined
 } from '@ant-design/icons'
+import ChangePasswordTab from './component/changePassTab'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -95,8 +98,6 @@ export default function ProfilePage() {
   const otherUser = query.get('user')
   const currentUser = otherUser ? otherUser : user.id
 
-  console.log(user, otherUser)
-
   useEffect(() => {
     dispatch(GetRecipeOfUser.get(currentUser))
     dispatch(GetFollower.get(currentUser))
@@ -130,6 +131,8 @@ export default function ProfilePage() {
         return <FollowerListProfile />
       case PROFILE_PAGE.COLLECTION:
         return <CollectionListProfile />
+      case PROFILE_PAGE.CHANGE_PASSWORD:
+        return <ChangePasswordTab />
       default:
         return <RecipeListProfile />
     }
@@ -230,7 +233,7 @@ export default function ProfilePage() {
                 key={PROFILE_PAGE.SHOPPING_LIST}
                 icon={<FiShoppingCart size={16} style={styles.icon} />}
               >
-                Danh sách mua
+                {t('profile.shoppingList')}
               </Menu.Item>
             )}
             {!otherUser && (
@@ -240,7 +243,27 @@ export default function ProfilePage() {
                 key={PROFILE_PAGE.INFO}
                 icon={<FiUser size={16} style={styles.icon} />}
               >
-                Thông tin tài khoản
+                {t('profile.userInfo')}
+              </Menu.Item>
+            )}
+            {!otherUser && (
+              <Menu.Item
+                style={{ color: 'white' }}
+                className="customItem"
+                key={PROFILE_PAGE.CHANGE_PASSWORD}
+                icon={<FiLock size={16} style={styles.icon} />}
+              >
+                {t('profile.changePassword')}
+              </Menu.Item>
+            )}
+            {!otherUser && (
+              <Menu.Item
+                style={{ color: 'white' }}
+                className="customItem"
+                key={PROFILE_PAGE.CUSTOMIZE}
+                icon={<FiSliders size={16} style={styles.icon} />}
+              >
+                {t('profile.customize')}
               </Menu.Item>
             )}
           </Menu>
