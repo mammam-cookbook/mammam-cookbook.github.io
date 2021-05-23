@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.1430b6a4.chunk.css",
-    "main.js": "/static/js/main.9abb6f9a.chunk.js",
-    "main.js.map": "/static/js/main.9abb6f9a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d0908d6c.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d0908d6c.js.map",
-    "static/css/2.687044bd.chunk.css": "/static/css/2.687044bd.chunk.css",
-    "static/js/2.0c7ee180.chunk.js": "/static/js/2.0c7ee180.chunk.js",
-    "static/js/2.0c7ee180.chunk.js.map": "/static/js/2.0c7ee180.chunk.js.map",
-    "static/js/3.a1423116.chunk.js": "/static/js/3.a1423116.chunk.js",
-    "static/js/3.a1423116.chunk.js.map": "/static/js/3.a1423116.chunk.js.map",
+    "main.css": "/static/css/main.c32e8de8.chunk.css",
+    "main.js": "/static/js/main.471baaf5.chunk.js",
+    "main.js.map": "/static/js/main.471baaf5.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.8a7df164.js",
+    "runtime-main.js.map": "/static/js/runtime-main.8a7df164.js.map",
+    "static/css/2.0a701c28.chunk.css": "/static/css/2.0a701c28.chunk.css",
+    "static/js/2.ef4ce2e6.chunk.js": "/static/js/2.ef4ce2e6.chunk.js",
+    "static/js/2.ef4ce2e6.chunk.js.map": "/static/js/2.ef4ce2e6.chunk.js.map",
+    "static/js/3.daff3139.chunk.js": "/static/js/3.daff3139.chunk.js",
+    "static/js/3.daff3139.chunk.js.map": "/static/js/3.daff3139.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/2.687044bd.chunk.css.map": "/static/css/2.687044bd.chunk.css.map",
-    "static/css/main.1430b6a4.chunk.css.map": "/static/css/main.1430b6a4.chunk.css.map",
-    "static/js/2.0c7ee180.chunk.js.LICENSE.txt": "/static/js/2.0c7ee180.chunk.js.LICENSE.txt",
+    "static/css/2.0a701c28.chunk.css.map": "/static/css/2.0a701c28.chunk.css.map",
+    "static/css/main.c32e8de8.chunk.css.map": "/static/css/main.c32e8de8.chunk.css.map",
+    "static/js/2.ef4ce2e6.chunk.js.LICENSE.txt": "/static/js/2.ef4ce2e6.chunk.js.LICENSE.txt",
     "static/media/forgot_password.88496ed7.jpg": "/static/media/forgot_password.88496ed7.jpg",
     "static/media/logo.d3845182.svg": "/static/media/logo.d3845182.svg",
     "static/media/index.css": "/static/media/search-banner.13897e41.png",
@@ -22,10 +22,10 @@
     "static/media/slick-theme.css": "/static/media/slick.c94f7671.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.d0908d6c.js",
-    "static/css/2.687044bd.chunk.css",
-    "static/js/2.0c7ee180.chunk.js",
-    "static/css/main.1430b6a4.chunk.css",
-    "static/js/main.9abb6f9a.chunk.js"
+    "static/js/runtime-main.8a7df164.js",
+    "static/css/2.0a701c28.chunk.css",
+    "static/js/2.ef4ce2e6.chunk.js",
+    "static/css/main.c32e8de8.chunk.css",
+    "static/js/main.471baaf5.chunk.js"
   ]
 }
