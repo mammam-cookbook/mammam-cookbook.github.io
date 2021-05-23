@@ -9,7 +9,8 @@ function CInput(props) {
         width: '100%',
         marginBottom: 12,
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        ...props?.style
       }}
     >
       <Input {...props} />

@@ -35,7 +35,7 @@
     "react-html-parser": "^2.0.2",
     "react-i18next": "^11.8.8",
     "react-icons": "^3.11.0",
-    "react-image-crop": "^8.6.6",
+    "react-image-crop": "^8.6.9",
     "react-lottie": "^1.2.3",
     "react-meta-tags": "^0.7.4",
     "react-player": "^2.7.2",

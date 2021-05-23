@@ -7,7 +7,7 @@ import { DOMAIN, log as SysLog } from 'ultis/functions'
 export function request(param) {
   let url = `${DOMAIN}/${param.url}`
 
-  const language = 'vi'
+  const language = store.getState().Auth.language || 'vi'
   const parameters = param.param
   const { token } = store.getState().Auth
   const headers = token

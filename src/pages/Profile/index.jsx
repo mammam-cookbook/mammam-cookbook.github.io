@@ -54,6 +54,7 @@ import {
   PlusCircleOutlined
 } from '@ant-design/icons'
 import ChangePasswordTab from './component/changePassTab'
+import UserInfoTab from './component/userInfoTab'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -105,12 +106,15 @@ export default function ProfilePage() {
   }, [currentPage])
 
   useEffect(() => {
+    dispatch(GetProfile.get(currentUser))
+  }, [currentUser])
+
+  useEffect(() => {
     if (!user && !otherUser) {
       history.replace('/')
     } else if (user.id === otherUser) {
       history.replace(`/profile?page=${PROFILE_PAGE.RECIPE}`)
     }
-    dispatch(GetProfile.get(currentUser))
   }, [user, otherUser])
 
   const onMenuSelect = e => {
@@ -131,6 +135,8 @@ export default function ProfilePage() {
         return <FollowerListProfile />
       case PROFILE_PAGE.COLLECTION:
         return <CollectionListProfile />
+      case PROFILE_PAGE.INFO:
+        return <UserInfoTab />
       case PROFILE_PAGE.CHANGE_PASSWORD:
         return <ChangePasswordTab />
       default:
@@ -178,10 +184,23 @@ export default function ProfilePage() {
             ) : (
               <Avatar size={80} icon={<UserOutlined />} />
             )}
-            <Text style={{ fontSize: 18, fontWeight: 700, marginTop: 24 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: 700,
+                marginTop: 24,
+                textAlign: 'center'
+              }}
+            >
               {userProfile?.name}
             </Text>
-            <Text style={{ fontSize: 14, color: COLOR.grayText }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: COLOR.grayText,
+                textAlign: 'center'
+              }}
+            >
               {userProfile?.email}
             </Text>
           </div>

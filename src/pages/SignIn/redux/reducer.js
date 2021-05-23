@@ -4,6 +4,7 @@ import {
   ChangePassword,
   ChangePasswordFailed,
   ChangePasswordSuccess,
+  GetProfileSuccess,
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
@@ -43,6 +44,14 @@ export function authReducer(state = initialState, action) {
       return { ...state, isLoading: false }
     case ChangeLanguage.type:
       return { ...state, language: action.payload }
+    case GetProfileSuccess.type:
+      return {
+        ...state,
+        user:
+          state.user != null && state.user?.id === action.payload?.id
+            ? { ...state.user, ...action.payload }
+            : state.user
+      }
     case SignOut.type:
       return initialState
     case ResetReducer.type:

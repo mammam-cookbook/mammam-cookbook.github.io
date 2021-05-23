@@ -166,7 +166,7 @@ const updateUserProfileEpic$ = action$ =>
             store.dispatch(GetProfile.get(action.payload.id))
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Update profile succeed.'
+              i18n.t('profile.updateProfileSucceed')
             )
             return UpdateProfileSuccess.get(result.data)
           }

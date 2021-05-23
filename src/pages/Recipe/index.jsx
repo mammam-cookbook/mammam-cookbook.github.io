@@ -372,34 +372,36 @@ export default function RecipeDetail(props) {
           </div>
 
           <div style={{ marginTop: 24 }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'flex-end',
-                marginBottom: 24
-              }}
-            >
+            {post.description && post.description?.length > 0 && (
               <div
                 style={{
-                  width: 120,
-                  height: 50,
-                  backgroundColor: COLOR.primary1,
-                  borderTopRightRadius: 10
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  marginBottom: 24
                 }}
-              />
-              <div>
-                <Title level={4} style={{ margin: 8 }}>
-                  {t('create.summary').toLocaleUpperCase()}
-                </Title>
+              >
                 <div
                   style={{
-                    height: 4,
-                    width: '100%',
-                    backgroundColor: COLOR.primary1
+                    width: 120,
+                    height: 50,
+                    backgroundColor: COLOR.primary1,
+                    borderTopRightRadius: 10
                   }}
                 />
+                <div>
+                  <Title level={4} style={{ margin: 8 }}>
+                    {t('create.summary').toLocaleUpperCase()}
+                  </Title>
+                  <div
+                    style={{
+                      height: 4,
+                      width: '100%',
+                      backgroundColor: COLOR.primary1
+                    }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
             <Text
               style={{
                 textAlign: 'justify',

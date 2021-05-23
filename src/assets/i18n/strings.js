@@ -219,7 +219,9 @@ export const en = {
     userInfo: 'Personal information',
     shoppingList: 'Shopping list',
     changePassword: 'Modify password',
-    changePassFrequently: 'Change password frequently to secure your account'
+    changePassFrequently: 'Change password frequently to secure your account',
+    updateProfileSucceed: 'Update profile succeed.',
+    updateAvatar: 'Update avatar'
   }
 }
 
@@ -443,6 +445,8 @@ export const vi = {
     shoppingList: 'Danh sách mua',
     changePassword: 'Đổi mật khẩu',
     changePassFrequently:
-      'Đổi mật khẩu thường xuyên để bảo vệ tài khoản của bạn'
+      'Đổi mật khẩu thường xuyên để bảo vệ tài khoản của bạn',
+    updateProfileSucceed: 'Cập nhật thông tin thành công',
+    updateAvatar: 'Cập nhật hình đại diện'
   }
 }
