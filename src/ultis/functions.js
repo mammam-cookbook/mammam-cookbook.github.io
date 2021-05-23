@@ -11,6 +11,7 @@ export const LIMIT_ITEMS = 16
 export const COLOR = {
   primary1: '#F6A13A',
   primary2: '#F38B12',
+  primary3: '#ffc000',
   mainBlack: '#5C5C5C',
   gray: '#C4C4C4',
   grayText: '#828282'
