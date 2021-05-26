@@ -97,25 +97,22 @@ export default function ProfilePage() {
   const query = useQuery()
   const currentPage = query.get('page')
   const otherUser = query.get('user')
-  const currentUser = otherUser ? otherUser : user.id
-
-  useEffect(() => {
-    dispatch(GetRecipeOfUser.get(currentUser))
-    dispatch(GetFollower.get(currentUser))
-    dispatch(GetFollowing.get(currentUser))
-  }, [currentPage])
-
-  useEffect(() => {
-    dispatch(GetProfile.get(currentUser))
-  }, [currentUser])
 
   useEffect(() => {
     if (!user && !otherUser) {
       history.replace('/')
-    } else if (user.id === otherUser) {
+    } else if (user?.id === otherUser) {
       history.replace(`/profile?page=${PROFILE_PAGE.RECIPE}`)
     }
   }, [user, otherUser])
+
+  const currentUser = otherUser ? otherUser : user?.id
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(GetProfile.get(currentUser))
+    }
+  }, [currentUser])
 
   const onMenuSelect = e => {
     if (otherUser) {
@@ -128,11 +125,11 @@ export default function ProfilePage() {
   const renderRightDashboard = () => {
     switch (currentPage) {
       case PROFILE_PAGE.RECIPE:
-        return <RecipeListProfile />
+        return <RecipeListProfile userId={currentUser} />
       case PROFILE_PAGE.FOLLOWING:
-        return <FollowingListProfile />
+        return <FollowingListProfile userId={currentUser} />
       case PROFILE_PAGE.FOLLOWER:
-        return <FollowerListProfile />
+        return <FollowerListProfile userId={currentUser} />
       case PROFILE_PAGE.COLLECTION:
         return <CollectionListProfile />
       case PROFILE_PAGE.INFO:
@@ -140,7 +137,7 @@ export default function ProfilePage() {
       case PROFILE_PAGE.CHANGE_PASSWORD:
         return <ChangePasswordTab />
       default:
-        return <RecipeListProfile />
+        return <RecipeListProfile userId={currentUser} />
     }
   }
 

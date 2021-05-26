@@ -3,20 +3,25 @@ import { Col, Row } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import UserItem from 'pages/SearchRecipe/components/userItem'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR } from 'ultis/functions'
+import { GetFollowing } from '../redux/actions'
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
 )
 
-function FollowingListProfile() {
+function FollowingListProfile(props) {
   const { following, isLoadingRecipe } = useSelector(state => state.Profile)
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const followingList = following?.map(item => item.following)
+
+  useEffect(() => {
+    dispatch(GetFollowing.get(props?.userId))
+  }, [])
 
   return (
     <div className="chooseContainer" style={{ paddingTop: 0 }}>
@@ -30,7 +35,7 @@ function FollowingListProfile() {
           ))}
         </Row>
       ) : (
-        <Text>Chưa theo dõi người nào</Text>
+        <Text>{t('profile.noFollowing')}</Text>
       )}
     </div>
   )

@@ -221,7 +221,9 @@ export const en = {
     changePassword: 'Modify password',
     changePassFrequently: 'Change password frequently to secure your account',
     updateProfileSucceed: 'Update profile succeed.',
-    updateAvatar: 'Update avatar'
+    updateAvatar: 'Update avatar',
+    noFollowing: 'Not followings',
+    noFollower: 'No followers'
   }
 }
 
@@ -447,6 +449,8 @@ export const vi = {
     changePassFrequently:
       'Đổi mật khẩu thường xuyên để bảo vệ tài khoản của bạn',
     updateProfileSucceed: 'Cập nhật thông tin thành công',
-    updateAvatar: 'Cập nhật hình đại diện'
+    updateAvatar: 'Cập nhật hình đại diện',
+    noFollowing: 'Chưa theo dõi người nào',
+    noFollower: 'Chưa có người theo dõi'
   }
 }

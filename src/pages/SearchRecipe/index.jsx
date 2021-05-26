@@ -58,7 +58,9 @@ export default function SearchPage() {
         SearchRecipes.get({ search: searchText, limit: LIMIT_ITEMS, offset: 0 })
       )
       dispatch(SearchUsers.get({ keyword: searchText, limit: 3, offset: 0 }))
-      dispatch(GetFollowing.get(user.id))
+      if (user) {
+        dispatch(GetFollowing.get(user.id))
+      }
     }
   }, [searchText])
 
@@ -563,7 +565,9 @@ export default function SearchPage() {
             ))}
           </Row>
         ) : (
-          <Text>{t('search.noResult')}</Text>
+          <div style={{ marginTop: 48 }}>
+            <Text style={{ fontSize: 16 }}>{t('search.noResult')}</Text>
+          </div>
         )}
         {totalItems > 0 && (
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>

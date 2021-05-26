@@ -35,6 +35,40 @@ function CollectionListProfile() {
     <>
       <div className="chooseContainer" style={{ paddingTop: 0 }}>
         <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}>
+            {collections && collections?.length > 0 ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <Title level={4}>{collectionDetail?.name}</Title>
+                <Button
+                  onClick={() => setIsShowEdit(true)}
+                  shape="circle"
+                  type="text"
+                  style={{ marginTop: -16 }}
+                  icon={<FiEdit size={24} color={COLOR.primary1} />}
+                />
+              </div>
+            ) : (
+              <Title level={4}>{t('profile.noCollections')}</Title>
+            )}
+            {collectionDetail?.recipes &&
+            collectionDetail?.recipes?.length > 0 ? (
+              <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
+                {collectionDetail?.recipes?.map(item => (
+                  <Col md={24} lg={12} sm={24}>
+                    <RecipeItem recipe={item?.recipe} />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <Text>{t('profile.noRecipeInCollection')}</Text>
+            )}
+          </div>
           <div
             style={{
               display: 'flex',
@@ -90,40 +124,6 @@ function CollectionListProfile() {
             >
               {t('recipe.addNewCollection')}
             </Button>
-          </div>
-          <div style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}>
-            {collections && collections?.length > 0 ? (
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
-                <Title level={4}>{collectionDetail?.name}</Title>
-                <Button
-                  onClick={() => setIsShowEdit(true)}
-                  shape="circle"
-                  type="text"
-                  style={{ marginTop: -16 }}
-                  icon={<FiEdit size={24} color={COLOR.primary1} />}
-                />
-              </div>
-            ) : (
-              <Title level={4}>{t('profile.noCollections')}</Title>
-            )}
-            {collectionDetail?.recipes &&
-            collectionDetail?.recipes?.length > 0 ? (
-              <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
-                {collectionDetail?.recipes?.map(item => (
-                  <Col md={24} lg={12} sm={24}>
-                    <RecipeItem recipe={item?.recipe} />
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Text>{t('profile.noRecipeInCollection')}</Text>
-            )}
           </div>
         </div>
       </div>

@@ -1,23 +1,27 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { Col, Row, Spin } from 'antd'
+import { Col, Row } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
-import RecipeItem from 'components/RecipeItem'
 import UserItem from 'pages/SearchRecipe/components/userItem'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR } from 'ultis/functions'
+import { GetFollower } from '../redux/actions'
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
 )
 
-function FollowerListProfile() {
+function FollowerListProfile(props) {
   const { followers, isLoadingRecipe } = useSelector(state => state.Profile)
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const followerList = followers?.map(item => item.user)
+
+  useEffect(() => {
+    dispatch(GetFollower.get(props?.userId))
+  }, [])
 
   return (
     <div className="chooseContainer" style={{ paddingTop: 0 }}>
@@ -31,7 +35,7 @@ function FollowerListProfile() {
           ))}
         </Row>
       ) : (
-        <Text>Chưa có người theo dõi</Text>
+        <Text>{t('profile.noFollower')}</Text>
       )}
     </div>
   )

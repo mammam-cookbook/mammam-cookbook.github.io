@@ -1,22 +1,28 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import GlobalModal from 'components/GlobalModal'
 import 'pages/Home/home.css'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { history } from 'ultis/functions'
+import { useHistory, useLocation } from 'react-router'
+import { MODAL_TYPE } from 'ultis/functions'
 
 function UserItem(props) {
   const { user } = props
   const { t } = useTranslation()
+  const history = useHistory()
   const dispatch = useDispatch()
   const following = useSelector(state => state.Profile.following)
   const mainUser = useSelector(state => state.Auth.user)
-  const isFollow =
-    following?.findIndex(item => item.following_id === user.id) > -1
+  const isFollow = mainUser
+    ? following?.findIndex(item => item.following_id === user.id) > -1
+    : false
+
+  const location = useLocation()
 
   const onClickFollow = () => {
     if (isFollow) {
@@ -32,59 +38,68 @@ function UserItem(props) {
         display: 'flex',
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         border: `1px solid #828282`,
         borderRadius: 10,
         padding: 16
       }}
     >
+      {user.avatar_url ? (
+        <Avatar size={100} src={user.avatar_url} />
+      ) : (
+        <Avatar size={100} icon={<UserOutlined />} />
+      )}
       <div
         style={{
           display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'flex-start'
+          flexDirection: 'column',
+          marginLeft: 12,
+          marginRight: 8
         }}
       >
-        {user.avatar_url ? (
-          <Avatar size={60} src={user.avatar_url} />
-        ) : (
-          <Avatar size={60} icon={<UserOutlined />} />
-        )}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginLeft: 12,
-            marginRight: 8
-          }}
-        >
-          <Button
-            type="link"
-            onClick={() =>
-              history.push(
-                `/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`
-              )
-            }
-            style={{ fontSize: 18, fontWeight: 700, padding: 0 }}
-          >
-            {user.name}
-          </Button>
-          <Text style={{ fontSize: 16, fontWeight: 500 }}>
-            10 {t('home.recipes').toLocaleLowerCase()}
-          </Text>
-        </div>
-      </div>
-
-      {mainUser.id !== user.id && (
         <Button
-          style={{ justifySelf: 'flex-end' }}
-          type={isFollow ? 'default' : 'primary'}
-          onClick={onClickFollow}
+          type="link"
+          onClick={() =>
+            history.push(`/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`)
+          }
+          style={{ fontSize: 18, fontWeight: 700, padding: 0 }}
         >
-          {isFollow ? t('profile.following') : t('profile.follow')}
+          {user.name}
         </Button>
-      )}
+        <Text style={{ fontSize: 16, fontWeight: 500, marginBottom: 8 }}>
+          10 {t('home.recipes').toLocaleLowerCase()}
+        </Text>
+        {mainUser ? (
+          mainUser?.id !== user.id ? (
+            <Button
+              style={{ justifySelf: 'flex-end' }}
+              type={isFollow ? 'default' : 'primary'}
+              onClick={onClickFollow}
+            >
+              {isFollow ? t('profile.following') : t('profile.follow')}
+            </Button>
+          ) : null
+        ) : (
+          <Button
+            style={{ justifySelf: 'flex-end' }}
+            type={isFollow ? 'default' : 'primary'}
+            onClick={() => {
+              GlobalModal.alertMessage(
+                null,
+                t('signin.title'),
+                MODAL_TYPE.CHOICE,
+                () =>
+                  history.push({
+                    pathname: '/signin',
+                    state: { from: `${location.pathname}${location.search}` }
+                  })
+              )
+            }}
+          >
+            {t('profile.following')}
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

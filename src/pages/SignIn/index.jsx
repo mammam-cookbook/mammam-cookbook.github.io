@@ -25,8 +25,8 @@ function SignIn() {
       if (user.role === ROLES.ADMIN || user.role === ROLES.MOD) {
         history.replace('/admin')
       } else {
-        if (history.location.state) {
-          history.goBack()
+        if (history.location.state?.from) {
+          history.replace(history.location.state?.from)
         } else {
           history.replace('/')
         }

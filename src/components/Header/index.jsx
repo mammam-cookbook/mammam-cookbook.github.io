@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiBell, FiMenu, FiSearch, FiUser, FiX } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { COLOR, getCurrentLng, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 
@@ -14,6 +14,7 @@ function AppHeader(props) {
   const [visible, setVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
   const history = useHistory()
+  const location = useLocation()
   const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
@@ -193,7 +194,7 @@ function AppHeader(props) {
               onClick={() =>
                 history.push({
                   pathname: '/signin',
-                  state: { from: `/` }
+                  state: { from: `${location.pathname}${location.search}` }
                 })
               }
             >
@@ -298,7 +299,7 @@ function AppHeader(props) {
                   onClick={() =>
                     history.push({
                       pathname: '/signin',
-                      state: { from: `/` }
+                      state: { from: `${location.pathname}${location.search}` }
                     })
                   }
                 >

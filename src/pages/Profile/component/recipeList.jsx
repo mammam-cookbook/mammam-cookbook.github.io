@@ -3,19 +3,24 @@ import { Col, Row, Spin } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import RecipeItem from 'components/RecipeItem'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR } from 'ultis/functions'
+import { GetRecipeOfUser } from '../redux/actions'
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
 )
 
-function RecipeListProfile() {
+function RecipeListProfile(props) {
   const { recipes, isLoadingRecipe } = useSelector(state => state.Profile)
   const dispatch = useDispatch()
   const { t } = useTranslation()
+
+  useEffect(() => {
+    dispatch(GetRecipeOfUser.get(props?.userId))
+  }, [])
 
   if (isLoadingRecipe) {
     return (
