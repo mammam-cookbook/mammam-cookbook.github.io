@@ -68,13 +68,17 @@ export function profileReducer(state = initialState, action) {
       return {
         ...state,
         following:
-          action.payload && action.payload?.length > 0 ? action.payload : []
+          action.payload?.data && action.payload?.data?.length > 0
+            ? action.payload?.data
+            : []
       }
     case GetFollowerSuccess.type:
       return {
         ...state,
         followers:
-          action.payload && action.payload?.length > 0 ? action.payload : []
+          action.payload?.data && action.payload?.data?.length > 0
+            ? action.payload?.data
+            : []
       }
     case GetRecipeOfUser.type:
       return {

@@ -29,7 +29,7 @@ function FollowerListProfile(props) {
       {followerList && followerList?.length > 0 ? (
         <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
           {followerList.map(item => (
-            <Col md={12} lg={8} sm={24}>
+            <Col md={12} lg={12} sm={24}>
               <UserItem user={item} />
             </Col>
           ))}

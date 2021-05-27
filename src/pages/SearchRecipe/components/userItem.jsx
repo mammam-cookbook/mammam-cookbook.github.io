@@ -16,10 +16,9 @@ function UserItem(props) {
   const { t } = useTranslation()
   const history = useHistory()
   const dispatch = useDispatch()
-  const following = useSelector(state => state.Profile.following)
   const mainUser = useSelector(state => state.Auth.user)
   const isFollow = mainUser
-    ? following?.findIndex(item => item.following_id === user.id) > -1
+    ? mainUser?.following?.findIndex(item => item.following_id === user.id) > -1
     : false
 
   const location = useLocation()
@@ -38,7 +37,6 @@ function UserItem(props) {
         display: 'flex',
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
         border: `1px solid #828282`,
         borderRadius: 10,
         padding: 16
@@ -62,11 +60,17 @@ function UserItem(props) {
           onClick={() =>
             history.push(`/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`)
           }
-          style={{ fontSize: 18, fontWeight: 700, padding: 0 }}
+          style={{ fontSize: 18, fontWeight: 700, paddingLeft: 0 }}
         >
           {user.name}
         </Button>
-        <Text style={{ fontSize: 16, fontWeight: 500, marginBottom: 8 }}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 500,
+            marginBottom: 8
+          }}
+        >
           10 {t('home.recipes').toLocaleLowerCase()}
         </Text>
         {mainUser ? (

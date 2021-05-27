@@ -24,13 +24,16 @@ export default function ModalAddCollection({
   const [collectionName, setCollectionName] = useState('')
   const [selected, setSelected] = useState(0)
   const collections = useSelector(state => state.Profile.collections)
+  const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const validateName =
     collectionName.length > 0 && NAME_REGEX.test(collectionName)
 
   useEffect(() => {
-    dispatch(GetCollections.get())
+    if (user) {
+      dispatch(GetCollections.get())
+    }
   }, [])
 
   const handleKeyPress = event => {

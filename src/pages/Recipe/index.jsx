@@ -2,6 +2,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import {
   Affix,
   Button,
+  Image,
   Menu,
   Popover,
   Progress,
@@ -20,6 +21,7 @@ import {
   FiFacebook,
   FiPrinter,
   FiSmile,
+  FiUserCheck,
   FiUserPlus,
   FiX
 } from 'react-icons/fi'
@@ -30,7 +32,13 @@ import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
-import { calcCalories, COLOR, MODAL_TYPE, REACTION } from 'ultis/functions'
+import {
+  calcCalories,
+  COLOR,
+  MODAL_TYPE,
+  REACTION,
+  REACTION_IMG
+} from 'ultis/functions'
 import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
 import RecipeComments from './components/comment'
@@ -44,6 +52,7 @@ import {
 import { FacebookShareButton } from 'react-share'
 import ButtonBase from 'components/ButtonBase'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
+import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -117,6 +126,12 @@ export default function RecipeDetail(props) {
   const [isCountdown, setIsCountdown] = useState(false)
   const [timerTime, setTimerTime] = useState('00:00')
   const [timer, setTimer] = useState(null)
+  const isFollow = user
+    ? user?.following?.findIndex(item => item.following_id === user.id) > -1
+    : false
+  const reaction = user
+    ? post?.reactions?.find(item => item.author?.id === user?.id)
+    : null
 
   let timeLeft = 0
 
@@ -126,7 +141,7 @@ export default function RecipeDetail(props) {
     hard: t('create.hard')
   }
 
-  // console.log('post', post)
+  console.log('post', post, reaction)
 
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
@@ -144,6 +159,11 @@ export default function RecipeDetail(props) {
 
   const onClickFollow = () => {
     if (user) {
+      if (isFollow) {
+        dispatch(UnFollowUser.get(user.id))
+      } else {
+        dispatch(FollowUser.get(user.id))
+      }
     } else {
       GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
         history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
@@ -173,7 +193,13 @@ export default function RecipeDetail(props) {
   }
 
   const reactToRecipe = react => {
-    dispatch(ReactRecipe.get({ recipe_id: id, react }))
+    if (user) {
+      dispatch(ReactRecipe.get({ recipe_id: id, react }))
+    } else {
+      GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
+        history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
+      )
+    }
   }
 
   const reactContent = (
@@ -424,10 +450,36 @@ export default function RecipeDetail(props) {
                   style={styles.iconButton}
                   shape="circle"
                   type="text"
-                  icon={<FiSmile size={24} color={COLOR.primary2} />}
+                  icon={
+                    reaction ? (
+                      <img
+                        src={REACTION_IMG[reaction?.react]}
+                        alt=""
+                        width={28}
+                        height={28}
+                      />
+                    ) : (
+                      <FiSmile size={24} color={COLOR.primary2} />
+                    )
+                  }
                 />
               </Popover>
 
+              {(!user || user?.id !== post?.user_id) && (
+                <Button
+                  style={styles.iconButton}
+                  shape="circle"
+                  type="text"
+                  onClick={onClickFollow}
+                  icon={
+                    isFollow ? (
+                      <FiUserCheck size={24} color={COLOR.primary2} />
+                    ) : (
+                      <FiUserPlus size={24} color={COLOR.primary2} />
+                    )
+                  }
+                />
+              )}
               <Popover
                 content={saveContent}
                 placement="topLeft"
@@ -442,13 +494,7 @@ export default function RecipeDetail(props) {
                   icon={<FiBookmark size={24} color={COLOR.primary2} />}
                 />
               </Popover>
-              <Button
-                style={styles.iconButton}
-                shape="circle"
-                type="text"
-                onClick={onClickFollow}
-                icon={<FiUserPlus size={24} color={COLOR.primary2} />}
-              />
+
               <FacebookShareButton
                 style={{
                   ...styles.iconButton,
@@ -477,9 +523,35 @@ export default function RecipeDetail(props) {
                     style={styles.iconButton}
                     shape="circle"
                     type="text"
-                    icon={<FiSmile size={24} color={COLOR.primary2} />}
+                    icon={
+                      reaction ? (
+                        <img
+                          src={REACTION_IMG[reaction?.react]}
+                          alt=""
+                          width={28}
+                          height={28}
+                        />
+                      ) : (
+                        <FiSmile size={24} color={COLOR.primary2} />
+                      )
+                    }
                   />
                 </Popover>
+                {(!user || user?.id !== post?.user_id) && (
+                  <Button
+                    style={styles.iconButton}
+                    shape="circle"
+                    type="text"
+                    onClick={onClickFollow}
+                    icon={
+                      isFollow ? (
+                        <FiUserCheck size={24} color={COLOR.primary2} />
+                      ) : (
+                        <FiUserPlus size={24} color={COLOR.primary2} />
+                      )
+                    }
+                  />
+                )}
                 <Popover
                   content={saveContent}
                   placement="right"
@@ -495,13 +567,6 @@ export default function RecipeDetail(props) {
                   />
                 </Popover>
 
-                <Button
-                  style={styles.iconButton}
-                  shape="circle"
-                  type="text"
-                  onClick={onClickFollow}
-                  icon={<FiUserPlus size={24} color={COLOR.primary2} />}
-                />
                 <FacebookShareButton
                   style={{
                     ...styles.iconButton,

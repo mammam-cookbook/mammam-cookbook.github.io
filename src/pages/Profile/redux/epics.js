@@ -214,7 +214,10 @@ const getFollowingEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetFollowingSuccess.get(result?.data?.followings)
+            return GetFollowingSuccess.get({
+              userId: action.payload,
+              data: result?.data?.followings
+            })
           }
           return GetFollowingFailed.get(result)
         }),
@@ -235,7 +238,10 @@ const getFollowerEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetFollowerSuccess.get(result?.data?.followers)
+            return GetFollowerSuccess.get({
+              userId: action.payload,
+              data: result?.data?.followers
+            })
           }
           return GetFollowerFailed.get(result)
         }),

@@ -1,5 +1,9 @@
 import { createHashHistory } from 'history'
 import i18n from './i18n'
+import easy from 'assets/images/easy peasy.png'
+import yum from 'assets/images/yum.png'
+import yuck from 'assets/images/yuck.png'
+import tough from 'assets/images/tough nut.png'
 
 export const history = createHashHistory({ forceRefresh: true })
 
@@ -37,6 +41,12 @@ export const RECIPE_STATUS = Object.freeze({
 })
 
 export const REACTION = ['easy peasy', 'yum', 'yuck', 'tough nut']
+export const REACTION_IMG = {
+  'easy peasy': easy,
+  yum: yum,
+  yuck: yuck,
+  'tough nut': tough
+}
 
 export const DEFAULT_PASSWORD = '12345678'
 

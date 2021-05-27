@@ -1,3 +1,7 @@
+import {
+  GetFollowerSuccess,
+  GetFollowingSuccess
+} from 'pages/Profile/redux/actions'
 import i18n from 'ultis/i18n'
 import {
   ChangeLanguage,
@@ -50,6 +54,22 @@ export function authReducer(state = initialState, action) {
         user:
           state.user != null && state.user?.id === action.payload?.id
             ? { ...state.user, ...action.payload }
+            : state.user
+      }
+    case GetFollowingSuccess.type:
+      return {
+        ...state,
+        user:
+          state.user != null && state.user?.id === action.payload?.userId
+            ? { ...state.user, following: [...action.payload?.data] }
+            : state.user
+      }
+    case GetFollowerSuccess.type:
+      return {
+        ...state,
+        user:
+          state.user != null && state.user?.id === action.payload?.userId
+            ? { ...state.user, follower: [...action.payload?.data] }
             : state.user
       }
     case SignOut.type:

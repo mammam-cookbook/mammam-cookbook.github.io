@@ -2,6 +2,7 @@ import GlobalModal from 'components/GlobalModal'
 import { replace } from 'connected-react-router'
 import { store } from 'core/store'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
+import { GetFollowing } from 'pages/Profile/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
@@ -43,6 +44,9 @@ const signinEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
+            if (result.data?.user) {
+              store.dispatch(GetFollowing.get(result.data?.user?.id))
+            }
             return SignInRequestSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
