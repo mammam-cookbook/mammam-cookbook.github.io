@@ -223,7 +223,10 @@ export const en = {
     updateProfileSucceed: 'Update profile succeed.',
     updateAvatar: 'Update avatar',
     noFollowing: 'Not followings',
-    noFollower: 'No followers'
+    noFollower: 'No followers',
+    deleteRecipeInCollection: 'Remove recipe',
+    confirmToDeleteRecipeInCollection:
+      'Do you confirm to remove this recipe out of collection?'
   }
 }
 
@@ -451,6 +454,9 @@ export const vi = {
     updateProfileSucceed: 'Cập nhật thông tin thành công',
     updateAvatar: 'Cập nhật hình đại diện',
     noFollowing: 'Chưa theo dõi người nào',
-    noFollower: 'Chưa có người theo dõi'
+    noFollower: 'Chưa có người theo dõi',
+    deleteRecipeInCollection: 'Xóa khỏi bộ sưu tập',
+    confirmToDeleteRecipeInCollection:
+      'Xác nhận xóa công thức này khỏi bộ sưu tập?'
   }
 }

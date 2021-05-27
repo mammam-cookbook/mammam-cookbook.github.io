@@ -141,8 +141,6 @@ export default function RecipeDetail(props) {
     hard: t('create.hard')
   }
 
-  console.log('post', post, reaction)
-
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
   }, [])

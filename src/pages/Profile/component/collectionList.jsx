@@ -61,7 +61,11 @@ function CollectionListProfile() {
               <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
                 {collectionDetail?.recipes?.map(item => (
                   <Col md={24} lg={12} sm={24}>
-                    <RecipeItem recipe={item?.recipe} />
+                    <RecipeItem
+                      recipe={item?.recipe}
+                      collectionId={collectionDetail?.id}
+                      showMoreBtn={true}
+                    />
                   </Col>
                 ))}
               </Row>
@@ -76,7 +80,7 @@ function CollectionListProfile() {
               flex: 1,
               backgroundColor: '#EEE',
               borderRadius: 10,
-              marginRight: 'calc(28px + 1vmin)',
+              marginLeft: 'calc(28px + 1vmin)',
               padding: 8
             }}
           >
