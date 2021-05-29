@@ -61,7 +61,11 @@ export const en = {
     confirmSameAsNew: 'Confirm password must be the same as password',
     confirmPass: 'Confirm password',
     resetPass: 'Reset password',
-    newPass: 'New password'
+    newPass: 'New password',
+    oldPass: 'Old password',
+    newSameAsOld: 'New password must be different from the old one',
+    changePassSuccess: 'Change password succeed. Please sign in to continue.',
+    wrongOldPass: 'Old password is incorrect'
   },
   home: {
     title1: 'Eat good',
@@ -291,7 +295,11 @@ export const vi = {
     confirmSameAsNew: 'Mật khẩu nhập lại phải giống với mật khẩu mới',
     confirmPass: 'Nhập lại mật khẩu',
     resetPass: 'Tạo mật khẩu',
-    newPass: 'Mật khẩu mới'
+    newPass: 'Mật khẩu mới',
+    oldPass: 'Mật khẩu cũ',
+    newSameAsOld: 'Mật khẩu mới phải khác mật khẩu cũ',
+    changePassSuccess: 'Đổi mật khẩu thành công. Đăng nhập lại để tiếp tục',
+    wrongOldPass: 'Sai mật khẩu cũ'
   },
   home: {
     title1: 'Eat good',

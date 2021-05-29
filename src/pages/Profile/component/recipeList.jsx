@@ -19,7 +19,9 @@ function RecipeListProfile(props) {
   const { t } = useTranslation()
 
   useEffect(() => {
-    dispatch(GetRecipeOfUser.get(props?.userId))
+    if (props?.userId) {
+      dispatch(GetRecipeOfUser.get(props?.userId))
+    }
   }, [])
 
   if (isLoadingRecipe) {

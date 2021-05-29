@@ -20,7 +20,9 @@ function FollowerListProfile(props) {
   const followerList = followers?.map(item => item.user)
 
   useEffect(() => {
-    dispatch(GetFollower.get(props?.userId))
+    if (props?.userId) {
+      dispatch(GetFollower.get(props?.userId))
+    }
   }, [])
 
   return (

@@ -68,17 +68,6 @@ export default function ProfilePage() {
   const history = useHistory()
   const { t } = useTranslation()
   const user = useSelector(state => state.Auth.user)
-  const categoryList = useSelector(state => state.Dashboard.categoryList)
-  const [currentTab, setCurrentTab] = useState('ingredients')
-  const [categoriesFilter, setCategoriesFilter] = useState([])
-  const [categoriesFilterItem, setCategoriesFilterItem] = useState([])
-  const [ingredientsFilter, setIngredientsFilter] = useState([])
-  const [ingredientsText, setIngredientsText] = useState('')
-  const [noIngredientsFilter, setNoIngredientsFilter] = useState([])
-  const [noIngredientsText, setNoIngredientsText] = useState('')
-  const [timeFilter, setTimeFilter] = useState(-1)
-  const [isShowFilter, setIsShowFilter] = useState(false)
-  const [sortOrder, setSortOrder] = useState(null)
   const {
     collections,
     collectionDetail,
@@ -100,7 +89,14 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!user && !otherUser) {
-      history.replace('/')
+      if (currentPage === PROFILE_PAGE.CHANGE_PASSWORD) {
+        history.push({
+          pathname: '/signin',
+          state: { from: `/profile?page=${PROFILE_PAGE.RECIPE}` }
+        })
+      } else {
+        history.replace('/')
+      }
     } else if (user?.id === otherUser) {
       history.replace(`/profile?page=${PROFILE_PAGE.RECIPE}`)
     }

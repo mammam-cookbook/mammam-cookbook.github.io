@@ -103,24 +103,26 @@ const changePassEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: `user/${action.payload.id}/changePassword`,
-        param: action.payload.data
+        url: `auth/change-password`,
+        param: action.payload
       }).pipe(
         map(result => {
           if (result.status === 200) {
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Change password succeed. Please sign in to continue.',
+              i18n.t('createPass.changePassSuccess'),
               MODAL_TYPE.NORMAL,
               () => {
                 store.dispatch(SignOut.get())
-                history.push({
-                  pathname: '/signin',
-                  state: { from: `/profile?page=${PROFILE_PAGE.INFO}` }
-                })
               }
             )
             return ChangePasswordSuccess.get(result.data)
+          } else if (result.status === 400) {
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              i18n.t('createPass.wrongOldPass')
+            )
+            return ChangePasswordFailed.get(result.data)
           }
           GlobalModal.alertMessage(
             i18n.t('common.information'),

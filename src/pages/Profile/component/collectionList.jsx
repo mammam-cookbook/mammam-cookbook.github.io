@@ -10,7 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { FiEdit, FiPlus, FiX } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR, MODAL_TYPE } from 'ultis/functions'
-import { DeleteCollection, GetCollectionDetail } from '../redux/actions'
+import {
+  DeleteCollection,
+  GetCollectionDetail,
+  GetCollections
+} from '../redux/actions'
 import ModalAddNewCollection from './addCollectionModal'
 
 const loadingIcon = (
@@ -19,11 +23,18 @@ const loadingIcon = (
 
 function CollectionListProfile() {
   const { collections, collectionDetail } = useSelector(state => state.Profile)
+  const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const [chosenIndex, setChosenIndex] = useState(0)
   const [isShow, setIsShow] = useState(false)
   const [isShowEdit, setIsShowEdit] = useState(false)
+
+  useEffect(() => {
+    if (user) {
+      dispatch(GetCollections.get())
+    }
+  }, [])
 
   useEffect(() => {
     if (collections && collections?.length > 0) {
