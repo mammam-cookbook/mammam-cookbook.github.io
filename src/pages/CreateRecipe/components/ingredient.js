@@ -99,10 +99,12 @@ function Ingredient({
         item?.unit?.length > 0 &&
         item.unit[unitSelected]?.calories ? (
           <Text style={{ fontWeight: 600, color: COLOR.grayText }}>
-            {Number(item.unit[unitSelected].calories) * amount} calo
+            {Number(item.unit[unitSelected].calories) *
+              (amount / Number(item.unit[unitSelected].number_of_units))}{' '}
+            kcal
           </Text>
         ) : (
-          <Text style={{ fontWeight: 600, color: COLOR.grayText }}>0 calo</Text>
+          <Text style={{ fontWeight: 600, color: COLOR.grayText }}>0 kcal</Text>
         )}
       </div>
       <div

@@ -149,7 +149,9 @@ export default props => {
         unit: item.unit[item.selectUnit],
         amount: item.selectAmount,
         calories: item.unit[item.selectUnit]?.calories
-          ? Number(item.unit[item.selectUnit].calories) * item.selectAmount
+          ? Number(item.unit[item.selectUnit].calories) *
+            (item.selectAmount /
+              Number(item.unit[item.selectUnit].number_of_units))
           : 0
       }
       return tmp

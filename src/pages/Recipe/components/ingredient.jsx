@@ -51,7 +51,7 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
         {item.amount} {item?.unit?.measurement_description}
       </Text>
       <Text style={{ fontWeight: 600, fontSize: 14, color: COLOR.grayText }}>
-        {item?.calories} calo
+        {item?.calories} kcal
       </Text>
     </div>
   )
