@@ -6,7 +6,7 @@ import 'pages/SignIn/signin.css'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { COLOR } from 'ultis/functions'
+import { capitalizeFirstLetter, COLOR } from 'ultis/functions'
 
 const { Text, Title } = Typography
 const { TextArea } = Input
@@ -90,7 +90,9 @@ function Ingredient({
             <span className="imgSrcDefault" />
           )}
           <div className="bgName">
-            <Text style={{ fontWeight: 600 }}>{item.name}</Text>
+            <Text style={{ fontWeight: 600 }}>
+              {capitalizeFirstLetter(item.name)}
+            </Text>
           </div>
         </div>
         {item?.unit &&

@@ -93,7 +93,7 @@ export default props => {
   const searchIngres = (text, values, setFieldValue) => {
     dispatch(
       SearchIngredient.get({
-        search: text,
+        search: text?.toLocaleLowerCase(),
         onSuccess: data => {
           setOtherIngre('')
           if (data && data.length > 0) {

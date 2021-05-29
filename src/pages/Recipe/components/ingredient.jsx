@@ -1,9 +1,9 @@
-import { Button, Input, Select, Typography } from 'antd'
+import { Typography } from 'antd'
 import 'pages/CreateRecipe/create.css'
 import 'pages/SignIn/signin.css'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { COLOR } from 'ultis/functions'
+import { capitalizeFirstLetter, COLOR } from 'ultis/functions'
 
 const { Text } = Typography
 
@@ -37,7 +37,7 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
           textAlign: 'center'
         }}
       >
-        {item.name}
+        {capitalizeFirstLetter(item.name)}
       </Text>
 
       <Text

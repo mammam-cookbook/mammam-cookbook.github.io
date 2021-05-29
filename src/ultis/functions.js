@@ -56,6 +56,10 @@ export const getCurrentLng = () =>
 export const calcCalories = (accumulator, currentValue) =>
   accumulator + currentValue.calories
 
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toLocaleUpperCase() + string.slice(1)
+}
+
 export function log(...arg) {
   if (__DEV__) {
     console.info(
