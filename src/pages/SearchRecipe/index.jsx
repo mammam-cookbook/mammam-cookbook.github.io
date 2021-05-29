@@ -95,12 +95,18 @@ export default function SearchPage() {
     //  else if (categoriesFilter && categoriesFilter?.length > 0) {
     //   values['categories'] = categoriesFilter
     // }
+    if (noIngredient && noIngredient?.length > 0) {
+      values['excludeIngredients'] = noIngredient
+    }
     if (ingredient && ingredient?.length > 0) {
       values['ingredients'] = ingredient
     }
     // else if (ingredientsFilter && ingredientsFilter?.length > 0) {
     //   values['ingredients'] = ingredientsFilter
     // }
+    if (cookingTime) {
+      values['toCookingTime'] = cookingTime
+    }
     if (sort) {
       values[sort] = 'DESC'
     } else if (sortOrder) {
@@ -498,8 +504,22 @@ export default function SearchPage() {
                 onClick={() => {
                   if (item === timeFilter) {
                     setTimeFilter(-1)
+                    onFilter(
+                      categoriesFilter,
+                      ingredientsFilter,
+                      noIngredientsFilter,
+                      null,
+                      sortOrder
+                    )
                   } else {
                     setTimeFilter(item)
+                    onFilter(
+                      categoriesFilter,
+                      ingredientsFilter,
+                      noIngredientsFilter,
+                      item,
+                      sortOrder
+                    )
                   }
                 }}
               >
