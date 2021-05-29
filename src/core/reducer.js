@@ -1,6 +1,7 @@
 import { connectRouter } from 'connected-react-router'
 import { createReducer } from 'pages/CreateRecipe/redux/reducer'
 import { dashboardReducer } from 'pages/Dashboard/redux/reducer'
+import { homeReducer } from 'pages/Home/redux/reducer'
 import { profileReducer } from 'pages/Profile/redux/reducer'
 import { recipeReducer } from 'pages/Recipe/redux/reducer'
 import { searchReducer } from 'pages/SearchRecipe/redux/reducer'
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
   Profile: profileReducer,
   Dashboard: dashboardReducer,
   Search: searchReducer,
+  Home: homeReducer,
   router: connectRouter(history)
 })

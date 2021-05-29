@@ -1,47 +1,28 @@
-import { SignOut } from 'pages/SignIn/redux/actions'
 import {
-  GetHomeCourse,
-  GetHomeCourseFailed,
-  GetHomeCourseSuccess,
-  SearchCourse,
-  SearchCourseFailed,
-  SearchCourseSuccess
+  GetHomeRecipe,
+  GetHomeRecipeFailed,
+  GetHomeRecipeSuccess
 } from './actions'
 const initialState = {
   isLoading: false,
-  trending: [],
-  mostBuy: [],
-  newest: [],
-  trendCategory: [],
-  searchCourses: [],
-  totalItems: 0
+  recommend: [],
+  highlight: []
 }
 
 export function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case GetHomeCourse.type:
+    case GetHomeRecipe.type:
       return { ...state, isLoading: true }
-    case GetHomeCourseSuccess.type:
+    case GetHomeRecipeSuccess.type:
       return {
         ...state,
-        trending: action.payload.treding.results,
-        mostBuy: action.payload.mostBuy,
-        newest: action.payload.newest,
-        trendCategory: action.payload.trendCategory,
+        recommend:
+          action.payload?.type === 1 ? action.payload?.data : state.recommend,
+        highlight:
+          action.payload?.type === 2 ? action.payload?.data : state.highlight,
         isLoading: false
       }
-    case GetHomeCourseFailed.type:
-      return { ...state, isLoading: false }
-    case SearchCourse.type:
-      return { ...state, isLoading: true }
-    case SearchCourseSuccess.type:
-      return {
-        ...state,
-        searchCourses: action.payload.results,
-        totalItems: action.payload.total,
-        isLoading: false
-      }
-    case SearchCourseFailed.type:
+    case GetHomeRecipeFailed.type:
       return { ...state, isLoading: false }
     default:
       return state
