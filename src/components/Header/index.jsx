@@ -2,7 +2,7 @@ import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiBell, FiMenu, FiSearch, FiUser, FiX } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +19,11 @@ function AppHeader(props) {
   const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const currentLng = getCurrentLng().toLocaleUpperCase()
+  const currentLng = getCurrentLng().substring(0, 2).toUpperCase()
+
+  useEffect(() => {
+    dispatch(ChangeLanguage.get(currentLng.toLowerCase()))
+  }, [])
 
   const menu = (
     <Menu>
