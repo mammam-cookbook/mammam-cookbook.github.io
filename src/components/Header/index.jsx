@@ -13,6 +13,7 @@ import i18n from 'ultis/i18n'
 function AppHeader(props) {
   const [visible, setVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
+  const [showSearchBar, setShowSearchBar] = useState(false)
   const history = useHistory()
   const location = useLocation()
   const user = useSelector(state => state.Auth.user)
@@ -140,7 +141,11 @@ function AppHeader(props) {
           </div>
         </div>
         <div className="mobileHidden">
-          <Button type="link" style={{ marginRight: 16 }}>
+          <Button
+            type="link"
+            style={{ marginRight: 16 }}
+            onClick={() => history.push('/recipes')}
+          >
             {t('home.browse')}
           </Button>
           <Button type="link" style={{ marginRight: 16 }}>
@@ -160,13 +165,23 @@ function AppHeader(props) {
               {t('home.createRecipe')}
             </Button>
           )}
-          <Input
-            style={styles.inputStyle}
-            onChange={event => setSearchText(event.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder={t('home.searchPlaceholder')}
-            suffix={<FiSearch size={20} color={COLOR.primary1} />}
-          />
+          {showSearchBar && (
+            <Input
+              style={styles.inputStyle}
+              onChange={event => setSearchText(event.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder={t('home.searchPlaceholder')}
+              suffix={<FiSearch size={20} color={COLOR.primary1} />}
+            />
+          )}
+          {!showSearchBar && (
+            <Button
+              type="link"
+              style={{ marginRight: 16 }}
+              onClick={() => setShowSearchBar(!showSearchBar)}
+              icon={<FiSearch size={20} color={COLOR.primary1} />}
+            />
+          )}
           {user && (
             <Button
               type="link"
@@ -211,7 +226,7 @@ function AppHeader(props) {
           <Button
             type="link"
             style={{ marginRight: 24 }}
-            onClick={() => history.push('/recipe/search')}
+            onClick={() => history.push('/recipes')}
             icon={<FiSearch size={20} color={COLOR.primary1} />}
           />
           {user && (
@@ -255,7 +270,11 @@ function AppHeader(props) {
                   icon={<FiX size={20} color={COLOR.gray} />}
                 />
               </div>
-              <Button type="link" style={{ marginTop: 24, padding: 0 }}>
+              <Button
+                type="link"
+                style={{ marginTop: 24, padding: 0 }}
+                onClick={() => history.push('/recipes')}
+              >
                 {t('home.browse')}
               </Button>
               <Button type="link" style={{ marginTop: 12, padding: 0 }}>

@@ -37,6 +37,7 @@ export default function SearchPage() {
   const [timeFilter, setTimeFilter] = useState(-1)
   const [isShowFilter, setIsShowFilter] = useState(false)
   const [sortOrder, setSortOrder] = useState(null)
+  const [searchTextInput, setSearchTextInput] = useState('')
   const { isLoading, result, currentPage, totalItems, resultUser } =
     useSelector(state => state.Search)
   const useQuery = () => {
@@ -61,19 +62,15 @@ export default function SearchPage() {
       if (user) {
         dispatch(GetFollowing.get(user.id))
       }
+    } else {
+      dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
     }
   }, [searchText])
 
-  const onSearch = (page, pageSize) => {
-    let values = {
-      search: searchText,
-      limit: LIMIT_ITEMS,
-      offset: (page - 1) * pageSize
+  const handleKeyPress = event => {
+    if (searchTextInput.trim().length > 0 && event.key === 'Enter') {
+      history.push(`/recipes?search=${searchTextInput}`)
     }
-    if (categoriesFilter && categoriesFilter?.length > 0) {
-      values['categories'] = categoriesFilter
-    }
-    dispatch(SearchRecipes.get(values))
   }
 
   const onFilter = (
@@ -81,19 +78,29 @@ export default function SearchPage() {
     ingredient = [],
     noIngredient = [],
     cookingTime,
-    sort
+    sort,
+    page = 0,
+    pageSize
   ) => {
     let values = {
-      search: searchText,
       limit: LIMIT_ITEMS,
-      offset: 0
+      offset: page === 0 ? page : (page - 1) * pageSize
+    }
+    if (searchText) {
+      values['search'] = searchText
     }
     if (categories && categories?.length > 0) {
       values['categories'] = categories
     }
+    //  else if (categoriesFilter && categoriesFilter?.length > 0) {
+    //   values['categories'] = categoriesFilter
+    // }
     if (ingredient && ingredient?.length > 0) {
       values['ingredients'] = ingredient
     }
+    // else if (ingredientsFilter && ingredientsFilter?.length > 0) {
+    //   values['ingredients'] = ingredientsFilter
+    // }
     if (sort) {
       values[sort] = 'DESC'
     } else if (sortOrder) {
@@ -531,11 +538,23 @@ export default function SearchPage() {
         </div>
       </div>
       <div className="body-container" style={{ paddingBottom: 64 }}>
+        {!searchText && (
+          <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
+            <Input
+              style={styles.inputSearchStyle}
+              onChange={event => setSearchTextInput(event.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder={t('home.searchPlaceholder')}
+              suffix={<FiSearch size={20} color={COLOR.primary1} />}
+            />
+          </div>
+        )}
+
         <Title level={3} style={{ marginTop: 48 }}>
-          {searchText ? t('home.result') : 'BROWSE'}
+          {searchText ? t('home.result') : t('home.browse')}
         </Title>
 
-        {resultUser && resultUser?.length > 0 && (
+        {resultUser && resultUser?.length > 0 && searchText && (
           <>
             <Title level={4} style={{ marginTop: 32 }}>
               {t('search.user')}
@@ -576,7 +595,17 @@ export default function SearchPage() {
               defaultCurrent={currentPage}
               defaultPageSize={LIMIT_ITEMS}
               total={totalItems}
-              onChange={onSearch}
+              onChange={(page, pageSize) =>
+                onFilter(
+                  categoriesFilter,
+                  ingredientsFilter,
+                  noIngredientsFilter,
+                  timeFilter,
+                  sortOrder,
+                  page,
+                  pageSize
+                )
+              }
             />
           </div>
         )}
@@ -620,5 +649,13 @@ const styles = {
     paddingRight: 8,
     boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)'
     // marginTop: 8
+  },
+  inputSearchStyle: {
+    width: '80%',
+    // marginLeft: 64,
+    boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)',
+    borderRadius: 10,
+    borderColor: 'transparent',
+    marginTop: 48
   }
 }

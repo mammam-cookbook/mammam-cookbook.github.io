@@ -31,7 +31,6 @@ function App() {
         <Route path="/forgot" component={ForgotPassword} />
         <Route path="/reset/:token" component={CreatePasswordPage} />
         <Route path="/create" component={CreateRecipe} />
-        <Route path="/recipe/search" component={SearchRecipe} />
         <Route path="/recipes" component={SearchRecipe} />
         <Route path="/recipe/:id" component={RecipeDetail} />
         <Route path="/profile" component={ProfilePage} />

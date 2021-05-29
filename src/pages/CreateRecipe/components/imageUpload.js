@@ -85,19 +85,25 @@ function ImageUpload(props) {
       >
         {!isUploading && <FiUpload size={48} color={COLOR.primary1} />}
         {!isUploading && (
-          <Text style={{ color: COLOR.primary1 }}>
+          <Text style={{ color: COLOR.primary1, textAlign: 'center' }}>
             {t('create.uploadThumbnail')}
           </Text>
         )}
         {!isUploading && canUpload && (
-          <Text style={{ color: COLOR.primary1 }}>{t('create.maxImg')}</Text>
+          <Text style={{ color: COLOR.primary1, textAlign: 'center' }}>
+            {t('create.maxImg')}
+          </Text>
         )}
         {!isUploading && !canUpload && (
-          <Text style={{ color: COLOR.primary1 }}>{t('create.maxReach')}</Text>
+          <Text style={{ color: COLOR.primary1, textAlign: 'center' }}>
+            {t('create.maxReach')}
+          </Text>
         )}
         {isUploading && <Spin indicator={loadingIcon} />}
         {isUploading && (
-          <Text style={{ color: COLOR.primary1 }}>{t('create.uploading')}</Text>
+          <Text style={{ color: COLOR.primary1, textAlign: 'center' }}>
+            {t('create.uploading')}
+          </Text>
         )}
       </div>
       <div
