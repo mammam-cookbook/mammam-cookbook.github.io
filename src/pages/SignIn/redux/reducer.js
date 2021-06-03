@@ -8,6 +8,9 @@ import {
   ChangePassword,
   ChangePasswordFailed,
   ChangePasswordSuccess,
+  GetMenu,
+  GetMenuFailed,
+  GetMenuSuccess,
   GetProfileSuccess,
   ResetReducer,
   SignInRequestSuccess,
@@ -22,6 +25,8 @@ const initialState = {
   user: null,
   isLoading: false,
   prevLogin: null,
+  isLoadingMenu: false,
+  menu: [],
   language: i18n.language
 }
 
@@ -72,6 +77,12 @@ export function authReducer(state = initialState, action) {
             ? { ...state.user, follower: [...action.payload?.data] }
             : state.user
       }
+    case GetMenu.type:
+      return { ...state, isLoadingMenu: true }
+    case GetMenuSuccess.type:
+      return { ...state, isLoadingMenu: false, menu: action.payload }
+    case GetMenuFailed.type:
+      return { ...state, isLoadingMenu: false }
     case SignOut.type:
       return initialState
     case ResetReducer.type:

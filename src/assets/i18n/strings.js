@@ -230,7 +230,15 @@ export const en = {
     noFollower: 'No followers',
     deleteRecipeInCollection: 'Remove recipe',
     confirmToDeleteRecipeInCollection:
-      'Do you confirm to remove this recipe out of collection?'
+      'Do you confirm to remove this recipe out of collection?',
+    deleteRecipe: 'Delete recipe',
+    confirmToDeleteRecipe: 'Do you confirm to remove this recipe?',
+    editRecipe: 'Edit recipe',
+    deleteRecipeInMealPlanner: 'Remove recipe',
+    dish: 'dish',
+    dishes: 'dishes',
+    today: 'Today',
+    recommendPlanner: 'Recommend meal'
   }
 }
 
@@ -465,6 +473,14 @@ export const vi = {
     noFollower: 'Chưa có người theo dõi',
     deleteRecipeInCollection: 'Xóa khỏi bộ sưu tập',
     confirmToDeleteRecipeInCollection:
-      'Xác nhận xóa công thức này khỏi bộ sưu tập?'
+      'Xác nhận xóa công thức này khỏi bộ sưu tập?',
+    deleteRecipe: 'Xóa công thức',
+    confirmToDeleteRecipe: 'Xác nhận xóa công thức này?',
+    editRecipe: 'Sửa công thức',
+    deleteRecipeInMealPlanner: 'Xóa khỏi bữa ăn',
+    dish: 'món',
+    dishes: 'món',
+    today: 'Hôm nay',
+    recommendPlanner: 'Đề xuất thực đơn'
   }
 }

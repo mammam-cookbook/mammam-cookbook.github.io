@@ -1,5 +1,6 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
+import moment from 'moment'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { COLOR, getCurrentLng, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
+import 'moment/locale/vi'
 
 function AppHeader(props) {
   const [visible, setVisible] = useState(false)
@@ -23,6 +25,7 @@ function AppHeader(props) {
 
   useEffect(() => {
     dispatch(ChangeLanguage.get(currentLng.toLowerCase()))
+    moment.locale(currentLng.toLowerCase())
   }, [])
 
   const menu = (
@@ -33,6 +36,7 @@ function AppHeader(props) {
           onClick={() => {
             i18n.changeLanguage('vi')
             dispatch(ChangeLanguage.get('vi'))
+            moment.locale('vi')
           }}
           style={{ fontSize: 12 }}
         >
@@ -45,6 +49,7 @@ function AppHeader(props) {
           onClick={() => {
             i18n.changeLanguage('en')
             dispatch(ChangeLanguage.get('en'))
+            moment.locale('en')
           }}
           style={{ fontSize: 12 }}
         >
@@ -156,7 +161,11 @@ function AppHeader(props) {
             {t('home.recipes').toLocaleUpperCase()}
           </Button>
           {user && (
-            <Button type="link" style={{ marginRight: 16 }}>
+            <Button
+              type="link"
+              style={{ marginRight: 16 }}
+              onClick={() => history.push('/meal-planner')}
+            >
               {t('home.mealPlanner')}
             </Button>
           )}
@@ -288,6 +297,7 @@ function AppHeader(props) {
                 <Button
                   type="link"
                   style={{ marginTop: 12, padding: 0, marginBottom: 24 }}
+                  onClick={() => history.push('/meal-planner')}
                 >
                   {t('home.mealPlanner')}
                 </Button>

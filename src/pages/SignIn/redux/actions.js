@@ -28,6 +28,18 @@ export const UpdateProfile = defineAction('UPDATE_PROFILE_REQUEST')
 export const UpdateProfileSuccess = defineAction('UPDATE_PROFILE_SUCCESS')
 export const UpdateProfileFailed = defineAction('UPDATE_PROFILE_FAILED')
 
+export const GetMenu = defineAction('GET_MENU_REQUEST')
+export const GetMenuSuccess = defineAction('GET_MENU_SUCCESS')
+export const GetMenuFailed = defineAction('GET_MENU_FAILED')
+
+export const DeleteRecipeInMenu = defineAction('DELETE_RECIPE_IN_MENU')
+export const DeleteRecipeInMenuSuccess = defineAction(
+  'DELETE_RECIPE_IN_MENU_SUCCESS'
+)
+export const DeleteRecipeInMenuFailed = defineAction(
+  'DELETE_RECIPE_IN_MENU_FAILED'
+)
+
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')
 

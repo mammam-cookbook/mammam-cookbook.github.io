@@ -13,9 +13,12 @@ import {
   DeleteCollection,
   DeleteCollectionFailed,
   DeleteCollectionSuccess,
+  DeleteRecipe,
+  DeleteRecipeFailed,
   DeleteRecipeInCollection,
   DeleteRecipeInCollectionFailed,
   DeleteRecipeInCollectionSuccess,
+  DeleteRecipeSuccess,
   FollowUser,
   FollowUserFailed,
   FollowUserSuccess,
@@ -321,6 +324,29 @@ const getRecipeUserEpic$ = action$ =>
     })
   )
 
+const deleteRecipeEpic$ = action$ =>
+  action$.pipe(
+    ofType(DeleteRecipe.type),
+    exhaustMap(action => {
+      return request({
+        method: 'DELETE',
+        url: `recipe/${action.payload}`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetRecipeOfUser.get(store.getState().Auth.user?.id))
+            return DeleteRecipeSuccess.get(result?.data)
+          }
+          GlobalModal.alertMessage()
+          return DeleteRecipeFailed.get(result)
+        }),
+        catchError(error => {
+          return DeleteRecipeFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const profileEpics = combineEpics(
   getCollectionsEpic$,
   createCollectionsEpic$,
@@ -333,5 +359,6 @@ export const profileEpics = combineEpics(
   getFollowingEpic$,
   unFollowUserEpic$,
   followUserEpic$,
-  getRecipeUserEpic$
+  getRecipeUserEpic$,
+  deleteRecipeEpic$
 )

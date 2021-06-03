@@ -1,9 +1,14 @@
 import { ConfigProvider } from 'antd'
+import enUS from 'antd/lib/locale/en_US'
+import viVN from 'antd/lib/locale/vi_VN'
 import GlobalModal from 'components/GlobalModal'
 import CreatePasswordPage from 'pages/CreatePassword'
 import CreateRecipe from 'pages/CreateRecipe'
+import Dashboard from 'pages/Dashboard'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
+import MealPlanner from 'pages/MealPlanner'
+import ProfilePage from 'pages/Profile'
 import RecipeDetail from 'pages/Recipe'
 import SearchRecipe from 'pages/SearchRecipe'
 import SignIn from 'pages/SignIn'
@@ -15,10 +20,6 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 import { history } from 'ultis/functions'
 import './App.less'
-import enUS from 'antd/lib/locale/en_US'
-import viVN from 'antd/lib/locale/vi_VN'
-import Dashboard from 'pages/Dashboard'
-import ProfilePage from 'pages/Profile'
 
 function App() {
   const language = useSelector(state => state.Auth.language)
@@ -34,6 +35,7 @@ function App() {
         <Route path="/recipes" component={SearchRecipe} />
         <Route path="/recipe/:id" component={RecipeDetail} />
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/meal-planner" component={MealPlanner} />
         <Route path="/admin" component={Dashboard} />
       </Router>
       <GlobalModal />

@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Menu, Row } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import ButtonBase from 'components/ButtonBase'
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { COLOR, MODAL_TYPE } from 'ultis/functions'
 import {
   DeleteCollection,
+  DeleteRecipeInCollection,
   GetCollectionDetail,
   GetCollections
 } from '../redux/actions'
@@ -74,8 +75,28 @@ function CollectionListProfile() {
                   <Col md={24} lg={12} sm={24}>
                     <RecipeItem
                       recipe={item?.recipe}
-                      collectionId={collectionDetail?.id}
                       showMoreBtn={true}
+                      popoverList={[
+                        {
+                          key: 'delete_from_collection',
+                          title: t('profile.deleteRecipeInCollection'),
+                          onPress: recipeId => {
+                            GlobalModal.alertMessage(
+                              t('common.confirm'),
+                              t('profile.confirmToDeleteRecipeInCollection'),
+                              MODAL_TYPE.CHOICE,
+                              () => {
+                                dispatch(
+                                  DeleteRecipeInCollection.get({
+                                    collectionId: collectionDetail?.id,
+                                    recipeId
+                                  })
+                                )
+                              }
+                            )
+                          }
+                        }
+                      ]}
                     />
                   </Col>
                 ))}

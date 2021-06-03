@@ -5,19 +5,17 @@ import chart from 'assets/images/bar-chart.svg'
 import fire from 'assets/images/fire.svg'
 import hourglass from 'assets/images/hourglass.svg'
 import ButtonBase from 'components/ButtonBase'
-import GlobalModal from 'components/GlobalModal'
-import { DeleteRecipeInCollection } from 'pages/Profile/redux/actions'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
-import { calcCalories, history, MODAL_TYPE } from 'ultis/functions'
+import { calcCalories, history } from 'ultis/functions'
 import './index.css'
 
 export default function RecipeItem({
   recipe,
   showMoreBtn = false,
-  collectionId = null
+  popoverList = null
 }) {
   const { t } = useTranslation()
   const [isShowPopover, setIsShowPopover] = useState(false)
@@ -33,31 +31,21 @@ export default function RecipeItem({
     setIsShowPopover(!isShowPopover)
   }
 
-  const saveContent = (
+  const popoverContent = (
     <Menu style={{ width: 200 }}>
-      <Menu.Item
-        key={'delete_from_collection'}
-        onClick={() => {
-          setIsShowPopover(false)
-          if (collectionId) {
-            GlobalModal.alertMessage(
-              t('common.confirm'),
-              t('profile.confirmToDeleteRecipeInCollection'),
-              MODAL_TYPE.CHOICE,
-              () => {
-                dispatch(
-                  DeleteRecipeInCollection.get({
-                    collectionId,
-                    recipeId: recipe.id
-                  })
-                )
-              }
-            )
-          }
-        }}
-      >
-        {t('profile.deleteRecipeInCollection')}
-      </Menu.Item>
+      {popoverList &&
+        popoverList?.length > 0 &&
+        popoverList?.map(item => (
+          <Menu.Item
+            key={item?.key}
+            onClick={() => {
+              setIsShowPopover(false)
+              item?.onPress(recipe.id)
+            }}
+          >
+            {item?.title}
+          </Menu.Item>
+        ))}
     </Menu>
   )
   return (
@@ -72,9 +60,9 @@ export default function RecipeItem({
       ) : (
         <span className="imgSrcDefault" />
       )}
-      {showMoreBtn && (
+      {showMoreBtn && popoverList && (
         <Popover
-          content={saveContent}
+          content={popoverContent}
           placement="rightBottom"
           trigger="click"
           visible={isShowPopover}
@@ -138,10 +126,7 @@ export default function RecipeItem({
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={fire} width={16} height={16} alt="" />
               <Text style={{ fontSize: 12, color: 'white', marginLeft: 4 }}>
-                {(recipe?.ingredients?.reduce(calcCalories, 0) / 1000).toFixed(
-                  0
-                )}{' '}
-                kcal
+                {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
               </Text>
             </div>
           </div>

@@ -61,3 +61,7 @@ export const FollowUserFailed = defineAction('FOLLOW_USER_FAILED')
 export const UnFollowUser = defineAction('UN_FOLLOW_USER_REQUEST')
 export const UnFollowUserSuccess = defineAction('UN_FOLLOW_USER_SUCCESS')
 export const UnFollowUserFailed = defineAction('UN_FOLLOW_USER_FAILED')
+
+export const DeleteRecipe = defineAction('DELETE_RECIPE')
+export const DeleteRecipeSuccess = defineAction('DELETE_RECIPE_SUCCESS')
+export const DeleteRecipeFailed = defineAction('DELETE_RECIPE_FAILED')

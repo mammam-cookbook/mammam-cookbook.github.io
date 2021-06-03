@@ -1,12 +1,14 @@
 import GlobalModal from 'components/GlobalModal'
 import { replace } from 'connected-react-router'
 import { store } from 'core/store'
-import { PROFILE_PAGE } from 'pages/Profile/constant'
-import { GetFollowing } from 'pages/Profile/redux/actions'
+import {
+  DeleteRecipeInCollectionFailed,
+  GetFollowing
+} from 'pages/Profile/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
-import { history, MODAL_TYPE, ROLES } from 'ultis/functions'
+import { MODAL_TYPE, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import {
   ChangePassword,
@@ -15,6 +17,11 @@ import {
   CreatePassword,
   CreatePasswordFailed,
   CreatePasswordSuccess,
+  DeleteRecipeInMenu,
+  DeleteRecipeInMenuSuccess,
+  GetMenu,
+  GetMenuFailed,
+  GetMenuSuccess,
   GetProfile,
   GetProfileFailed,
   GetProfileSuccess,
@@ -158,6 +165,55 @@ const getProfileEpic$ = action$ =>
     })
   )
 
+const getMenuEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetMenu.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: `menu`,
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetMenuSuccess.get(result.data?.result)
+          }
+          return GetMenuFailed.get(result)
+        }),
+        catchError(error => {
+          return GetMenuFailed.get(error)
+        })
+      )
+    })
+  )
+
+const deleteRecipeInMenuEpic$ = action$ =>
+  action$.pipe(
+    ofType(DeleteRecipeInMenu.type),
+    exhaustMap(action => {
+      return request({
+        method: 'DELETE',
+        url: `menu/${action.payload?.id}`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(
+              GetMenu.get({
+                startDate: action.payload?.start?.format(),
+                endDate: action.payload?.end?.format()
+              })
+            )
+            return DeleteRecipeInMenuSuccess.get(result.data)
+          }
+          return DeleteRecipeInCollectionFailed.get(result)
+        }),
+        catchError(error => {
+          return DeleteRecipeInCollectionFailed.get(error)
+        })
+      )
+    })
+  )
+
 const updateUserProfileEpic$ = action$ =>
   action$.pipe(
     ofType(UpdateProfile.type),
@@ -254,5 +310,7 @@ export const authEpics = combineEpics(
   createPasswordEpic$,
   changePassEpic$,
   updateUserProfileEpic$,
-  getProfileEpic$
+  getProfileEpic$,
+  getMenuEpic$,
+  deleteRecipeInMenuEpic$
 )
