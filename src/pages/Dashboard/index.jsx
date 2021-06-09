@@ -59,8 +59,6 @@ function Dashboard() {
     dispatch(SetCurrentPage.get({ currentPage: e.key }))
   }
 
-  console.log('user', user)
-
   const handleSignOut = () => {
     dispatch(SignOut.get())
     history.replace('/')

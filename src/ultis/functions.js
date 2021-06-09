@@ -6,7 +6,7 @@ import yuck from 'assets/images/yuck.png'
 import tough from 'assets/images/tough nut.png'
 import ReactGA from 'react-ga'
 
-ReactGA.initialize('UA-000000-01')
+ReactGA.initialize('UA-199127755-2')
 export const history = createHashHistory({ forceRefresh: true })
 
 history.listen(window => {
