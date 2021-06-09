@@ -4,10 +4,17 @@ import easy from 'assets/images/easy peasy.png'
 import yum from 'assets/images/yum.png'
 import yuck from 'assets/images/yuck.png'
 import tough from 'assets/images/tough nut.png'
+import ReactGA from 'react-ga'
 
+ReactGA.initialize('UA-000000-01')
 export const history = createHashHistory({ forceRefresh: true })
 
-export const DOMAIN = 'http://174.138.19.44:3000/api'
+history.listen(window => {
+  ReactGA.pageview(window?.pathname + window?.search)
+  console.log('page=>', window?.pathname + window?.search)
+})
+
+export const DOMAIN = 'http://174.138.23.100/api'
 // export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = false
 
