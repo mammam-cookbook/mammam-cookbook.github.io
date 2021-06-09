@@ -10,8 +10,8 @@ ReactGA.initialize('UA-000000-01')
 export const history = createHashHistory({ forceRefresh: true })
 
 history.listen(window => {
+  ReactGA.set({ page: window.pathname })
   ReactGA.pageview(window?.pathname + window?.search)
-  console.log('page=>', window?.pathname + window?.search)
 })
 
 export const DOMAIN = 'http://174.138.23.100/api'
