@@ -12,6 +12,9 @@ import {
   AddToShoppingList,
   AddToShoppingListFailed,
   AddToShoppingListSuccess,
+  CommentChallengeFailed,
+  CommentChallengePost,
+  CommentChallengeSuccess,
   CommentPost,
   CommentPostFailed,
   CommentPostSuccess,
@@ -44,6 +47,32 @@ const commentRecipeEpic$ = action$ =>
         }),
         catchError(error => {
           return CommentPostFailed.get(error)
+        })
+      )
+    })
+  )
+
+const commentChallengeRecipeEpic$ = action$ =>
+  action$.pipe(
+    ofType(CommentChallengePost.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'challenge',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(
+              GetDetailRecipe.get({ recipeId: action.payload.recipe_id })
+            )
+            return CommentChallengeSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(null, result.data.err)
+          return CommentChallengeFailed.get(result)
+        }),
+        catchError(error => {
+          return CommentChallengeFailed.get(error)
         })
       )
     })
@@ -170,5 +199,6 @@ export const recipeEpics = combineEpics(
   commentRecipeEpic$,
   addShoppingListEpic$,
   addMenuEpic$,
-  reactRecipeEpic$
+  reactRecipeEpic$,
+  commentChallengeRecipeEpic$
 )

@@ -55,6 +55,7 @@ import { FacebookShareButton } from 'react-share'
 import ButtonBase from 'components/ButtonBase'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
+import ModalMadeIt from './components/madeItModal'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -111,6 +112,7 @@ export default function RecipeDetail(props) {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const history = useHistory()
   const [isShowSaveMenu, setIsShowSaveMenu] = useState(false)
+  const [isShowMadeIt, setIsShowMadeIt] = useState(false)
   const [isShowSaveCollection, setIsShowSaveCollection] = useState(false)
   const [isShowPopover, setIsShowPopover] = useState(false)
 
@@ -367,7 +369,9 @@ export default function RecipeDetail(props) {
                   size="large"
                   style={{ flex: 1, marginLeft: 24 }}
                   type="primary"
-                  onClick={() => {}}
+                  onClick={() => {
+                    setIsShowMadeIt(true)
+                  }}
                 >
                   {t('recipe.iMadeIt').toLocaleUpperCase()}
                 </Button>
@@ -814,6 +818,11 @@ export default function RecipeDetail(props) {
         recipeId={id}
         isShow={isShowSaveCollection}
         closeModal={() => setIsShowSaveCollection(false)}
+      />
+      <ModalMadeIt
+        recipeId={id}
+        isShow={isShowMadeIt}
+        closeModal={() => setIsShowMadeIt(false)}
       />
     </div>
   )

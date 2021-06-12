@@ -12,6 +12,14 @@ export const CommentPost = defineAction('COMMENT_POST')
 export const CommentPostSuccess = defineAction('COMMENT_POST_SUCCESS')
 export const CommentPostFailed = defineAction('COMMENT_POST_FAILED')
 
+export const CommentChallengePost = defineAction('COMMENT_CHALLENGE_POST')
+export const CommentChallengeSuccess = defineAction(
+  'COMMENT_CHALLENGE_POST_SUCCESS'
+)
+export const CommentChallengeFailed = defineAction(
+  'COMMENT_CHALLENGE_POST_FAILED'
+)
+
 export const DeleteComment = defineAction('DELETE_COMMENT')
 export const DeleteCommentSuccess = defineAction('DELETE_COMMENT_SUCCESS')
 export const DeleteCommentFailed = defineAction('DELETE_COMMENT_FAILED')
