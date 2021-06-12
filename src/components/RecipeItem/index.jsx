@@ -56,7 +56,15 @@ export default function RecipeItem({
       }}
     >
       {recipe?.avatar && recipe?.avatar.length > 0 ? (
-        <Image src={recipe?.avatar[0]} style={{ borderRadius: 10 }} />
+        <div
+          style={{
+            borderRadius: 10,
+            width: '100%',
+            paddingTop: '100%',
+            backgroundImage: `url("${recipe?.avatar[0]}")`
+            // position: 'relative'
+          }}
+        />
       ) : (
         <span className="imgSrcDefault" />
       )}

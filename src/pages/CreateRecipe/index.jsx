@@ -1,22 +1,22 @@
-import { Button, Select, Steps, Switch, Typography } from 'antd'
+import { Button, Select, Steps, Typography } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import CInput from 'components/CInput'
 import AppHeader from 'components/Header'
-import { Formik } from 'formik'
+import { FieldArray, Formik } from 'formik'
 import 'pages/CreateRecipe/create.css'
+import { GetAllCategories } from 'pages/Dashboard/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 import { useHistory } from 'react-router-dom'
 import { COLOR, RECIPE_STATUS } from 'ultis/functions'
+import * as yup from 'yup'
 import ImageUpload from './components/imageUpload'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
-import { CreateRecipe, SearchIngredient } from './redux/actions'
-import * as yup from 'yup'
 import { MAX_COOKING_TIME } from './constants'
-import { GetAllCategories } from 'pages/Dashboard/redux/actions'
+import { CreateRecipe, SearchIngredient } from './redux/actions'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -37,6 +37,8 @@ export default props => {
     categories.forEach(item => {
       listCategories = listCategories.concat(item?.childrenCategories)
     })
+  const [isUploading, setIsUploading] = useState({})
+  // let isUploading = {}
 
   const LEVEL = [
     {
@@ -129,7 +131,7 @@ export default props => {
     }
   }
 
-  const submitRecipe = async values => {
+  const submitRecipe = async (values, type = RECIPE_STATUS.APPROVED) => {
     const avalink = values.avatar.map(item => {
       return item.src.url
     })
@@ -156,6 +158,14 @@ export default props => {
       }
       return tmp
     })
+    console.log({
+      ...values,
+      avatar: avalink,
+      steps,
+      ingredients,
+      ingredients_name,
+      status: type
+    })
     dispatch(
       CreateRecipe.get({
         ...values,
@@ -163,7 +173,7 @@ export default props => {
         steps,
         ingredients,
         ingredients_name,
-        status: RECIPE_STATUS.APPROVED
+        status: type
       })
     )
   }
@@ -271,7 +281,7 @@ export default props => {
               {currentStep === 0 && (
                 <div style={{ display: 'flex' }} className="row-container">
                   <div style={style.leftColumn}>
-                    <div style={{ ...style.spaceBetween, marginBottom: 24 }}>
+                    {/* <div style={{ ...style.spaceBetween, marginBottom: 24 }}>
                       <Text style={{ color: COLOR.primary1, fontWeight: 600 }}>
                         {t('create.contributeToCreate')}
                       </Text>
@@ -279,7 +289,7 @@ export default props => {
                         defaultChecked
                         onChange={data => console.log(data)}
                       />
-                    </div>
+                    </div> */}
                     <div style={{ flex: 1 }}>
                       <Title level={4}>
                         {t('create.title').toLocaleUpperCase()}
@@ -303,7 +313,11 @@ export default props => {
                     <Select
                       mode="multiple"
                       allowClear
-                      style={{ width: '100%', height: 48 }}
+                      style={{
+                        width: '100%',
+                        height: 48,
+                        borderColor: COLOR.primary1
+                      }}
                       placeholder={t('create.categoriesPlaceholder')}
                       defaultValue={values.categories}
                       onChange={value => setFieldValue('categories', value)}
@@ -397,7 +411,12 @@ export default props => {
                     />
                   </div>
                   <ImageUpload
-                    style={{ flex: 1, padding: 24 }}
+                    setIsUploading={isUpload => {
+                      let tmp = isUploading
+                      tmp['avatar'] = isUpload
+                      setIsUploading(tmp)
+                    }}
+                    style={{ flex: 1, paddingTop: 32 }}
                     value={values.avatar}
                     onChange={data => setFieldValue('avatar', data)}
                     error={errors.avatar}
@@ -473,59 +492,58 @@ export default props => {
                   <Title level={4}>
                     {t('create.direction').toLocaleUpperCase()}
                   </Title>
-                  {values.steps.map((item, index) => (
-                    <Step
-                      step={item}
-                      index={index}
-                      onChangeImage={data => {
-                        let steps = values.steps
-                        // console.log('steps', steps)
-                        steps[index].images = data
-                        setFieldValue('steps', steps)
-                      }}
-                      onChangeMaking={data => {
-                        let steps = values.steps
-                        // console.log('steps2', steps)
-                        steps[index].content = data
-                        setFieldValue('steps', steps)
-                      }}
-                      onChangeTime={data => {
-                        let steps = values.steps
-                        steps[index].time = data
-                        setFieldValue('steps', steps)
-                      }}
-                      onDeleteItem={index => {
-                        let steps = values.steps
-                        steps.splice(index, 1)
-                        setFieldValue('steps', steps)
-                      }}
-                      error={
-                        errors.steps &&
-                        typeof errors.steps === 'object' &&
-                        errors.steps[index] &&
-                        errors.steps[index]
-                      }
-                    />
-                  ))}
-                  {errors.steps && typeof errors.steps === 'string' && (
-                    <Text style={{ color: 'red' }}>{errors.steps}</Text>
-                  )}
-                  <Button
-                    style={{ marginTop: 48 }}
-                    type="primary"
-                    onClick={() => {
-                      setFieldValue('steps', [
-                        ...values.steps,
-                        {
-                          content: '',
-                          images: [],
-                          time: null
-                        }
-                      ])
-                    }}
-                  >
-                    {t('create.addNewStep')}
-                  </Button>
+                  <FieldArray
+                    name="steps"
+                    render={arrayHelpers => (
+                      <>
+                        {values.steps.map((item, index) => (
+                          <Step
+                            step={item}
+                            index={index}
+                            setIsUploading={isUpload => {
+                              let tmp = isUploading
+                              tmp[`step-${index}`] = isUpload
+                              setIsUploading(tmp)
+                            }}
+                            onChangeImage={data => {
+                              arrayHelpers.replace(index, data)
+                            }}
+                            onChangeMaking={data => {
+                              arrayHelpers.replace(index, data)
+                            }}
+                            onChangeTime={data => {
+                              arrayHelpers.replace(index, data)
+                            }}
+                            onDeleteItem={index => {
+                              arrayHelpers.remove(index)
+                            }}
+                            error={
+                              errors.steps &&
+                              typeof errors.steps === 'object' &&
+                              errors.steps[index] &&
+                              errors.steps[index]
+                            }
+                          />
+                        ))}
+                        {errors.steps && typeof errors.steps === 'string' && (
+                          <Text style={{ color: 'red' }}>{errors.steps}</Text>
+                        )}
+                        <Button
+                          style={{ marginTop: 48 }}
+                          type="primary"
+                          onClick={() => {
+                            arrayHelpers.push({
+                              content: '',
+                              images: [],
+                              time: null
+                            })
+                          }}
+                        >
+                          {t('create.addNewStep')}
+                        </Button>
+                      </>
+                    )}
+                  />
                 </div>
               )}
               <div
@@ -536,14 +554,29 @@ export default props => {
                   paddingBottom: 64
                 }}
               >
-                <Button size="large" style={{ flex: 1, marginRight: 16 }}>
+                <Button
+                  size="large"
+                  disabled={
+                    !isValid ||
+                    !Object.keys(isUploading).every(
+                      key => isUploading[key] === false
+                    )
+                  }
+                  onClick={() => submitRecipe(values, RECIPE_STATUS.PENDING)}
+                  style={{ flex: 1, marginRight: 16 }}
+                >
                   {t('create.saveDraft')}
                 </Button>
                 <Button
                   type="primary"
                   size="large"
                   style={{ flex: 1, marginLeft: 16 }}
-                  disabled={!isValid}
+                  disabled={
+                    !isValid ||
+                    !Object.keys(isUploading).every(
+                      key => isUploading[key] === false
+                    )
+                  }
                   onClick={handleSubmit}
                 >
                   {t('create.create')}

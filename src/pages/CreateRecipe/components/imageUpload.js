@@ -20,12 +20,14 @@ function ImageUpload(props) {
     const lengthLeft = MAX_IMAGES - newList.length
     const addLength = lengthLeft < list.length ? lengthLeft : list.length
     if (newList.length < 3) {
+      props?.setIsUploading && props?.setIsUploading(true)
       setIsUploading(true)
       for (let i = 0; i < addLength; i++) {
         const link = await addPictureStep(list[i])
         newList.push({ name: list[i].name, src: link })
       }
-      props.onChange(newList)
+      props?.setIsUploading && props?.setIsUploading(true)
+      props?.onChange && props.onChange(newList)
       setIsUploading(false)
     }
   }
@@ -45,8 +47,12 @@ function ImageUpload(props) {
     let tmp = props.value
     const deleteResult = await deleteImg(tmp[index].src.public_id)
     if (deleteResult.result === 'ok') {
-      tmp.splice(index)
-      props.onChange(tmp)
+      tmp.splice(index, 1)
+      if (props?.step) {
+        props.onDelete(tmp)
+      } else {
+        props.onChange(tmp)
+      }
     }
   }
 

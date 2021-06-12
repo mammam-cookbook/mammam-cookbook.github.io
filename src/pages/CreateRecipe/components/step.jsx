@@ -1,6 +1,6 @@
 import { Button, Input, Typography } from 'antd'
 import 'pages/SignIn/signin.css'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiX } from 'react-icons/fi'
 import { useMediaQuery } from 'react-responsive'
@@ -14,30 +14,35 @@ function Step({
   style,
   step,
   index,
-  onChangeImage,
+  onChangeImage = data => {},
   onChangeMaking,
   onChangeTime,
   onDeleteItem,
+  setIsUploading = isUpload => {},
   error
 }) {
   const { t } = useTranslation()
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
+  const [stateStep, setStateStep] = useState(step)
+  const onChangeImg = data => {
+    setStateStep({ ...stateStep, images: data })
+    onChangeImage({ ...stateStep, images: data })
+  }
   return (
     <div
       style={{
         width: '100%',
         ...style,
-        display: 'flex',
-        flexDirection: isDesktopOrLaptop ? 'row' : 'column',
         marginTop: 32
       }}
+      className="row-container"
+      key={`step-${index}`}
     >
       <div
         style={{
           display: 'flex',
           flex: 1,
-          flexDirection: 'column',
-          paddingRight: isDesktopOrLaptop ? 24 : 0
+          flexDirection: 'column'
         }}
       >
         <div
@@ -104,9 +109,12 @@ function Step({
                 width: isDesktopOrLaptop ? 160 : 120,
                 borderColor: COLOR.primary1
               }}
-              onChange={event => onChangeTime(event.target.value)}
+              onChange={event => {
+                setStateStep({ ...stateStep, time: event.target.value })
+                onChangeTime({ ...stateStep, time: event.target.value })
+              }}
               placeholder="5"
-              value={step?.time}
+              value={stateStep?.time}
               type="number"
             />
             <Title level={5} style={{ marginLeft: 8, marginTop: 8 }}>
@@ -115,9 +123,12 @@ function Step({
           </div>
         </div>
         <TextArea
-          onChange={event => onChangeMaking(event.target.value)}
+          onChange={event => {
+            setStateStep({ ...stateStep, content: event.target.value })
+            onChangeMaking({ ...stateStep, content: event.target.value })
+          }}
           rows={5}
-          value={step.content}
+          value={stateStep.content}
           placeholder={t('create.directionPlaceholder')}
         />
         {error?.content && (
@@ -126,12 +137,12 @@ function Step({
       </div>
       <ImageUpload
         style={{
-          flex: 1,
-          marginLeft: isDesktopOrLaptop ? 24 : 0,
-          marginTop: isDesktopOrLaptop ? 0 : 24
+          flex: 1
         }}
-        value={step.images}
-        onChange={data => onChangeImage(data)}
+        setIsUploading={isUpload => setIsUploading(isUpload)}
+        value={stateStep.images}
+        step={step}
+        onDelete={onChangeImg}
       />
     </div>
   )
