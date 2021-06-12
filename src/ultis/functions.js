@@ -49,7 +49,7 @@ export const RECIPE_STATUS = Object.freeze({
 
 export const REACTION = ['easy peasy', 'yum', 'yuck', 'tough nut']
 export const MENU_SESSION = ['morning', 'noon', 'night']
-export const WEEK_COUNT = [1, 2, 3, 4, 5, 6, 7]
+export const WEEK_COUNT = [0, 1, 2, 3, 4, 5, 6]
 export const REACTION_IMG = {
   'easy peasy': easy,
   yum: yum,

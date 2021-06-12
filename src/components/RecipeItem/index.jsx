@@ -14,6 +14,7 @@ import './index.css'
 
 export default function RecipeItem({
   recipe,
+  style = {},
   showMoreBtn = false,
   popoverList = null
 }) {
@@ -52,7 +53,8 @@ export default function RecipeItem({
     <div
       style={{
         position: 'relative',
-        borderRadius: 10
+        borderRadius: 10,
+        ...style
       }}
     >
       {recipe?.avatar && recipe?.avatar.length > 0 ? (

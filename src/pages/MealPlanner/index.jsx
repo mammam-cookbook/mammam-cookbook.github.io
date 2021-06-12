@@ -31,8 +31,8 @@ export default function MealPlanner() {
   const { t } = useTranslation()
   const { isLoadingMenu, menu, user } = useSelector(state => state.Auth)
 
-  const [startDate, setStartDate] = useState(moment().weekday(1))
-  const [endDate, setEndDate] = useState(moment().weekday(7))
+  const [startDate, setStartDate] = useState(moment().weekday(0).utcOffset(0))
+  const [endDate, setEndDate] = useState(moment().weekday(6).utcOffset(0))
 
   useEffect(() => {
     if (!user) {
@@ -101,6 +101,7 @@ export default function MealPlanner() {
         {recipes?.map(item => (
           <RecipeItem
             recipe={item?.recipe}
+            style={{ marginBottom: 8 }}
             showMoreBtn
             popoverList={[
               {
@@ -130,8 +131,8 @@ export default function MealPlanner() {
     return (
       <Col
         sm={24}
-        md={8}
-        lg={6}
+        md={12}
+        lg={8}
         style={{
           padding: 2
         }}
