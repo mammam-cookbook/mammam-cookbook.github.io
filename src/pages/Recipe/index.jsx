@@ -8,7 +8,9 @@ import {
   Progress,
   Spin,
   Tabs,
-  Typography
+  Typography,
+  Row,
+  Col
 } from 'antd'
 import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
@@ -596,18 +598,13 @@ export default function RecipeDetail(props) {
                 key="1"
               >
                 <>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      justifyContent: 'space-between'
-                    }}
-                  >
+                  <Row gutter={[16, 24]} style={{ marginTop: 20 }}>
                     {post.ingredients.map(item => (
-                      <RecipeIngredient item={item} />
+                      <Col md={12} lg={8} sm={24}>
+                        <RecipeIngredient item={item} />
+                      </Col>
                     ))}
-                  </div>
+                  </Row>
                   <Button
                     size="large"
                     style={{ marginTop: 24 }}

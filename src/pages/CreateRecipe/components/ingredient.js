@@ -144,8 +144,8 @@ function Ingredient({
           <CInput
             style={{
               borderColor: COLOR.primary1,
-              width: '100%',
-              maxWidth: 190
+              width: '100%'
+              // maxWidth: 190
             }}
             defaultValue={item.unit[0].measurement_description}
             placeholder={t('create.measurePlaceholder')}

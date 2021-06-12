@@ -57,7 +57,10 @@ function ImageUpload(props) {
   }
 
   return (
-    <div style={{ ...props.style, display: 'flex' }}>
+    <div
+      style={{ ...props.style, display: 'flex', flex: 1 }}
+      className="img-upload-container"
+    >
       <input
         accept="image/*"
         style={{ display: 'none' }}
@@ -72,8 +75,8 @@ function ImageUpload(props) {
       />
       <div
         style={{
-          width: 250,
-          height: 250,
+          width: 200,
+          height: 200,
           backgroundColor: 'rgba(196, 196, 196, 0.4)',
           borderColor: COLOR.primary1,
           borderWidth: 1,
@@ -112,12 +115,10 @@ function ImageUpload(props) {
           </Text>
         )}
       </div>
-      <div
-        style={{
-          width: '100%'
-        }}
-      >
-        {props?.error && <Text style={{ color: 'red' }}>{props.error}</Text>}
+      <div style={{}}>
+        {props?.error && (
+          <Text style={{ color: 'red', paddingLeft: 24 }}>{props.error}</Text>
+        )}
         {props.value &&
           props.value.length > 0 &&
           props.value.map((item, index) => (
@@ -126,21 +127,33 @@ function ImageUpload(props) {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
-                width: '100%',
+                justifyContent: 'space-between',
                 marginBottom: 8,
-                flex: 1
+                flex: 1,
+                width: '100%'
               }}
               key={`upload-${index}`}
             >
-              <span
+              <div
                 style={{
-                  ...style.imageSrc,
-                  backgroundImage: `url("${item.src.url}")`
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center'
                 }}
-              />
-              <Text style={{ display: 'flex', flexGrow: 1, maxWidth: '20vw' }}>
-                {item?.name}
-              </Text>
+              >
+                <span
+                  style={{
+                    ...style.imageSrc,
+                    backgroundImage: `url("${item.src.url}")`
+                  }}
+                />
+                <Text
+                  ellipsis
+                  style={{ display: 'flex', flex: 1, maxWidth: '15vw' }}
+                >
+                  {item?.name}
+                </Text>
+              </div>
               <Button
                 type="link"
                 shape="circle"

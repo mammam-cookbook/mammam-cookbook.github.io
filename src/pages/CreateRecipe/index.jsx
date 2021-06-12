@@ -1,4 +1,4 @@
-import { Button, Select, Steps, Typography } from 'antd'
+import { Button, Select, Steps, Typography, Row, Col } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import CInput from 'components/CInput'
 import AppHeader from 'components/Header'
@@ -556,12 +556,7 @@ export default props => {
               >
                 <Button
                   size="large"
-                  disabled={
-                    !isValid ||
-                    !Object.keys(isUploading).every(
-                      key => isUploading[key] === false
-                    )
-                  }
+                  disabled={!isValid}
                   onClick={() => submitRecipe(values, RECIPE_STATUS.PENDING)}
                   style={{ flex: 1, marginRight: 16 }}
                 >
@@ -571,12 +566,7 @@ export default props => {
                   type="primary"
                   size="large"
                   style={{ flex: 1, marginLeft: 16 }}
-                  disabled={
-                    !isValid ||
-                    !Object.keys(isUploading).every(
-                      key => isUploading[key] === false
-                    )
-                  }
+                  disabled={!isValid}
                   onClick={handleSubmit}
                 >
                   {t('create.create')}

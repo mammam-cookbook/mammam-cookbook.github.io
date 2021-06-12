@@ -12,8 +12,14 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
 
   return (
     <div
-      className="ingredient-recipe"
+      // className="ingredient-recipe"
       style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        border: `solid 1px ${COLOR.primary2}`,
+        borderRadius: 10,
         ...style,
         textAlign: 'center'
       }}
@@ -23,10 +29,10 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
         {item.img ? (
           <span
             className="imgSrc"
-            style={{ backgroundImage: `url("${item.img}")` }}
+            style={{ backgroundImage: `url("${item.img}")`, borderRadius: 10 }}
           />
         ) : (
-          <span className="imgSrcDefault" />
+          <span className="imgSrcDefault" style={{ borderRadius: 10 }} />
         )}
       </div>
       <Text
@@ -34,7 +40,8 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
           fontWeight: 600,
           fontSize: 18,
           marginTop: 16,
-          textAlign: 'center'
+          paddingLeft: 8,
+          paddingRight: 8
         }}
       >
         {capitalizeFirstLetter(item.name)}
@@ -45,12 +52,20 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
           fontWeight: 600,
           fontSize: 14,
           color: COLOR.grayText,
-          textAlign: 'center'
+          paddingLeft: 8,
+          paddingRight: 8
         }}
       >
         {item.amount} {item?.unit?.measurement_description}
       </Text>
-      <Text style={{ fontWeight: 600, fontSize: 14, color: COLOR.grayText }}>
+      <Text
+        style={{
+          fontWeight: 600,
+          fontSize: 14,
+          color: COLOR.grayText,
+          marginBottom: 8
+        }}
+      >
         {item?.calories} kcal
       </Text>
     </div>
