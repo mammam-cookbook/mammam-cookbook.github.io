@@ -23,7 +23,11 @@ const searchRecipeEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             return SearchRecipesSuccess.get({
-              ...result?.data?.result,
+              total: result?.data?.total,
+              rows:
+                result?.data?.result?.length > 0
+                  ? result?.data?.result?.map(item => item?._source)
+                  : [],
               currentPage: action.payload.offset / LIMIT_ITEMS + 1
             })
           }

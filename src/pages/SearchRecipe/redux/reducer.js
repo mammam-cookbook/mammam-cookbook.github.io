@@ -27,7 +27,7 @@ export function searchReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         result: action.payload.rows,
-        totalItems: action.payload.count ? Number(action.payload.count) : 0,
+        totalItems: action.payload.total ? Number(action.payload.total) : 0,
         currentPage: action.payload.currentPage
       }
     case SearchRecipesFailed.type:
