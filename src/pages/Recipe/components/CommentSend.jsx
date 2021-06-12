@@ -44,9 +44,9 @@ export default props => {
     >
       <div style={{ flex: 1 }}>
         {owner.avatar ? (
-          <Avatar size={48} src={owner.avatar} />
+          <Avatar size={'large'} src={owner.avatar} />
         ) : (
-          <Avatar size={48} icon={<UserOutlined />} />
+          <Avatar size={'large'} icon={<UserOutlined />} />
         )}
       </div>
 

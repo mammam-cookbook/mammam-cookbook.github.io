@@ -61,7 +61,9 @@ export default function Direction({ item, index }) {
               <Image
                 src={img}
                 style={{
-                  borderRadius: 10
+                  borderRadius: 10,
+                  height: 220,
+                  objectFit: 'cover'
                 }}
               />
             </div>

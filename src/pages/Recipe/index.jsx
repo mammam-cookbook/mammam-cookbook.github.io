@@ -385,7 +385,12 @@ export default function RecipeDetail(props) {
                   <Carousel infiniteLoop autoPlay interval={3000} swipeable>
                     {post.avatar?.map((item, index) => (
                       <div>
-                        <Image src={item} alt="" />
+                        <Image
+                          src={item}
+                          alt=""
+                          height={300}
+                          style={{ objectFit: 'cover' }}
+                        />
                       </div>
                     ))}
                   </Carousel>

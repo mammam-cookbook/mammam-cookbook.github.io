@@ -51,6 +51,9 @@ export default function CommentView(props) {
           : t('recipe.oneReply')}
       </Button>
     ),
+    <Button size="small" type="link" onClick={() => {}}>
+      {'Upvote'}
+    </Button>,
     user && user.id === comment?.author?.id && (
       <Button
         size="small"
@@ -76,11 +79,13 @@ export default function CommentView(props) {
         avatar={
           comment?.author?.avatar_url ? (
             <Avatar
+              size={'large'}
+              // style={{ backgroundColor: 'red' }}
               src={comment?.author?.avatar_url}
               alt={comment?.author?.name}
             />
           ) : (
-            <Avatar size={48} icon={<UserOutlined />} />
+            <Avatar size={'large'} icon={<UserOutlined />} />
           )
         }
         content={<p>{comment?.content}</p>}
