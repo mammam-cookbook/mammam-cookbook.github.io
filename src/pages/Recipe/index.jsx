@@ -65,11 +65,6 @@ const { TabPane } = Tabs
 const loadingIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />
 const { Text, Title } = Typography
 
-const images = [
-  'https://imgs.vietnamnet.vn/Images/2017/09/27/16/20170927161324-mon-ngon-thit-bo-2.jpg',
-  'https://imgs.vietnamnet.vn/Images/2017/09/27/16/20170927161324-mon-ngon-thit-bo-2.jpg'
-]
-
 const REACT_ARRAY = [
   {
     loop: true,
@@ -386,13 +381,15 @@ export default function RecipeDetail(props) {
               }}
             >
               {post.avatar && post.avatar.length > 0 && (
-                <Carousel>
-                  {images.map((item, index) => (
-                    <div>
-                      <img src={item} alt="" />
-                    </div>
-                  ))}
-                </Carousel>
+                <Image.PreviewGroup>
+                  <Carousel infiniteLoop autoPlay interval={3000} swipeable>
+                    {post.avatar?.map((item, index) => (
+                      <div>
+                        <Image src={item} alt="" />
+                      </div>
+                    ))}
+                  </Carousel>
+                </Image.PreviewGroup>
               )}
             </div>
           </div>
