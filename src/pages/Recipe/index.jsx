@@ -454,7 +454,10 @@ export default function RecipeDetail(props) {
                 trigger="click"
               >
                 <Button
-                  style={styles.iconButton}
+                  style={{
+                    ...styles.iconButton,
+                    backgroundColor: reaction ? COLOR.primary1 : 'white'
+                  }}
                   shape="circle"
                   type="text"
                   icon={
@@ -527,7 +530,10 @@ export default function RecipeDetail(props) {
               >
                 <Popover content={reactContent} placement="topLeft">
                   <Button
-                    style={styles.iconButton}
+                    style={{
+                      ...styles.iconButton,
+                      backgroundColor: reaction ? COLOR.primary1 : 'white'
+                    }}
                     shape="circle"
                     type="text"
                     icon={
