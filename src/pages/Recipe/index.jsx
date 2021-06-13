@@ -143,7 +143,7 @@ export default function RecipeDetail(props) {
 
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
-  }, [])
+  }, [user])
 
   const onClickSave = () => {
     if (user) {

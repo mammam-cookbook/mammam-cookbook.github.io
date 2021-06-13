@@ -23,7 +23,10 @@ import {
   GetDetailRecipeSuccess,
   ReactRecipe,
   ReactRecipeFailed,
-  ReactRecipeSuccess
+  ReactRecipeSuccess,
+  UpvoteComment,
+  UpvoteCommentFailed,
+  UpvoteCommentSuccess
 } from './actions'
 
 const commentRecipeEpic$ = action$ =>
@@ -194,11 +197,38 @@ const reactRecipeEpic$ = action$ =>
     })
   )
 
+const upvoteCommentEpic$ = action$ =>
+  action$.pipe(
+    ofType(UpvoteComment.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'upvote',
+        param: { comment_id: action.payload?.comment_id }
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(
+              GetDetailRecipe.get({ recipeId: action.payload.recipe_id })
+            )
+            return UpvoteCommentSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(null, result.data.err)
+          return UpvoteCommentFailed.get(result)
+        }),
+        catchError(error => {
+          return UpvoteCommentFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const recipeEpics = combineEpics(
   getDetailRecipeEpic$,
   commentRecipeEpic$,
   addShoppingListEpic$,
   addMenuEpic$,
   reactRecipeEpic$,
-  commentChallengeRecipeEpic$
+  commentChallengeRecipeEpic$,
+  upvoteCommentEpic$
 )
