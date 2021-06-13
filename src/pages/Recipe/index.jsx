@@ -56,6 +56,7 @@ import ButtonBase from 'components/ButtonBase'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import ModalMadeIt from './components/madeItModal'
+import Challenge from './components/challengeView'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -631,7 +632,13 @@ export default function RecipeDetail(props) {
                 </div>
               </TabPane>
               <TabPane tab={t('recipe.challenge').toLocaleUpperCase()} key="3">
-                {t('recipe.noChallenges')}
+                {post?.challenges && post?.challenges?.length > 0 ? (
+                  post?.challenges?.map((item, index) => (
+                    <Challenge item={item} />
+                  ))
+                ) : (
+                  <Text>{t('recipe.noChallenges')}</Text>
+                )}
               </TabPane>
             </Tabs>
 
