@@ -31,7 +31,9 @@ export default function ModalMadeIt({
         recipe_id: recipeId,
         content: values.content,
         status: RECIPE_STATUS.APPROVED,
-        images: values.images
+        images: values.images.map(itemImg => {
+          return itemImg.src.url
+        })
       })
     )
     closeModal()
