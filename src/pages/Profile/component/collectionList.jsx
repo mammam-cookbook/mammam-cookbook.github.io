@@ -72,7 +72,7 @@ function CollectionListProfile() {
             collectionDetail?.recipes?.length > 0 ? (
               <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
                 {collectionDetail?.recipes?.map(item => (
-                  <Col md={24} lg={12} sm={24}>
+                  <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} >
                     <RecipeItem
                       recipe={item?.recipe}
                       showMoreBtn={true}

@@ -1,6 +1,6 @@
 .bgRecipe {
-  width: 100%;
-  height: auto;
+  width: 250;
+  min-height: 15vh;
   position: absolute;
   left: 0;
   right: 0;
@@ -10,4 +10,12 @@
   background-color: rgba(196, 196, 196, 0.4);
   border-radius: 10px;
   backdrop-filter: blur(22px);
+}
+
+.txt {
+  height: 5vh;
+}
+
+.imgWrap {
+  height: 25vh;
 }

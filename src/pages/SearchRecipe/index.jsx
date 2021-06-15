@@ -598,7 +598,7 @@ export default function SearchPage() {
         {result && result?.length > 0 ? (
           <Row gutter={[16, 24]} style={{ marginTop: 52 }}>
             {result.map(recipe => (
-              <Col md={12} lg={8} sm={24}>
+              <Col xs={24} md={12} lg={8} sm={24}  xl={6} xxl={4} >
                 <RecipeItem recipe={recipe} />
               </Col>
             ))}

@@ -51,18 +51,20 @@ export default function RecipeItem({
   )
   return (
     <div
+      className="imgWrap"
       style={{
         position: 'relative',
         borderRadius: 10,
+        width: 250,
         ...style
       }}
     >
       {recipe?.avatar && recipe?.avatar.length > 0 ? (
         <div
+          className="imgWrap"
           style={{
+            width: 250,
             borderRadius: 10,
-            width: '100%',
-            paddingTop: '100%',
             backgroundImage: `url("${recipe?.avatar[0]}")`
             // position: 'relative'
           }}
@@ -97,11 +99,13 @@ export default function RecipeItem({
 
       <ButtonBase onClick={() => history.push(`/recipe/${recipe.id}`)}>
         <div className="bgRecipe">
-          <Text
-            style={{ flex: 1, fontWeight: 600, fontSize: 18, color: 'white' }}
+          <div className="txt">
+             <Text
+              style={{ flex: 1, fontWeight: 600, fontSize: 18, color: 'white' }}
           >
             {recipe?.title}
           </Text>
+         </div>
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {recipe?.author?.avatar_url ? (

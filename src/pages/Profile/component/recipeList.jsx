@@ -65,7 +65,7 @@ function RecipeListProfile(props) {
       {recipes && recipes?.length > 0 ? (
         <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
           {recipes.map(recipe => (
-            <Col md={12} lg={8} sm={24}>
+            <Col xs={24} sm={24} md={14} lg={10} xl={8} xxl={5} >
               <RecipeItem
                 recipe={recipe}
                 showMoreBtn={user && user?.id === userProfile.id}
