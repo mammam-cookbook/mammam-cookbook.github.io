@@ -25,8 +25,10 @@ function Home() {
   return (
     <>
       <AppHeader />
+      <div>
       <div className="search-banner">
         <div className="text-banner">
+          <div className="container-fluid">
           <p className="text">Eat good</p>
           <p className="text">Feel good</p>
           {!user && (
@@ -43,9 +45,11 @@ function Home() {
               Try it out
             </Button>
           )}
+          </div>
         </div>
       </div>
-      <div className="body-container" style={{ paddingBottom: 64 }}>
+      </div>
+      <div className="container-fluid">
         <Tabs
           style={{
             flex: 1,
@@ -70,10 +74,12 @@ function Home() {
             key="1"
           >
             {recommend && recommend?.length > 0 ? (
-              <Row gutter={[16, 24]} style={{ marginTop: 20 }}>
+              <Row gutter={[16, 16]} justify="center" style={{ marginTop: 20 }}>
                 {recommend.map(recipe => (
-                  <Col xs={24} md={12} lg={8} sm={24}  xl={6} xxl={4} >
+                  <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
+                    <Row justify="center">
                     <RecipeItem recipe={recipe} />
+                    </Row>
                   </Col>
                 ))}
               </Row>
@@ -97,13 +103,15 @@ function Home() {
             key="2"
           >
             {highlight && highlight?.length > 0 ? (
-              <Row gutter={[16, 24]} style={{ marginTop: 20 }}>
-                {highlight.map(recipe => (
-                  <Col xs={24} md={12} lg={8} sm={24}  xl={6} xxl={4} >
-                    <RecipeItem recipe={recipe} />
-                  </Col>
-                ))}
-              </Row>
+              <Row gutter={[16, 16]} justify="center" style={{ marginTop: 20 }}>
+              {highlight.map(recipe => (
+                <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
+                <Row justify="center">
+                <RecipeItem recipe={recipe} />
+                </Row>
+              </Col>
+              ))}
+            </Row>
             ) : (
               <div style={{ marginTop: 48 }}>
                 <Text style={{ fontSize: 16 }}>{t('search.noResult')}</Text>

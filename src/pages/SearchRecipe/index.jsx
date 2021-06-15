@@ -539,6 +539,7 @@ export default function SearchPage() {
       <AppHeader />
       <div className="search-banner">
         <div className="text-banner">
+        <div className="container-fluid">
           <p className="text">Eat good</p>
           <p className="text">Feel good</p>
           {!user && (
@@ -555,6 +556,7 @@ export default function SearchPage() {
               Try it out
             </Button>
           )}
+          </div>
         </div>
       </div>
       <div className="body-container" style={{ paddingBottom: 64 }}>
@@ -598,11 +600,14 @@ export default function SearchPage() {
         {result && result?.length > 0 ? (
           <Row gutter={[16, 24]} style={{ marginTop: 52 }}>
             {result.map(recipe => (
-              <Col xs={24} md={12} lg={8} sm={24}  xl={6} xxl={4} >
-                <RecipeItem recipe={recipe} />
-              </Col>
+              <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
+              <Row justify="center">
+              <RecipeItem recipe={recipe} />
+              </Row>
+            </Col>
             ))}
           </Row>
+          
         ) : (
           <div style={{ marginTop: 48 }}>
             <Text style={{ fontSize: 16 }}>{t('search.noResult')}</Text>
