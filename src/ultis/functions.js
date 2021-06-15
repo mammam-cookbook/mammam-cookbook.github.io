@@ -1,4 +1,4 @@
-import { createHashHistory } from 'history'
+import { createBrowserHistory } from 'history'
 import i18n from './i18n'
 import easy from 'assets/images/easy peasy.png'
 import yum from 'assets/images/yum.png'
@@ -7,7 +7,7 @@ import tough from 'assets/images/tough nut.png'
 import ReactGA from 'react-ga'
 
 ReactGA.initialize('UA-199127755-2')
-export const history = createHashHistory({ forceRefresh: true })
+export const history = createBrowserHistory({ forceRefresh: true })
 
 history.listen(window => {
   ReactGA.set({ page: window.pathname })

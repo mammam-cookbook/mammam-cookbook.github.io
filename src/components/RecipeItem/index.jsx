@@ -55,18 +55,17 @@ export default function RecipeItem({
       style={{
         position: 'relative',
         borderRadius: 10,
-        width: 250,
         ...style
       }}
     >
       {recipe?.avatar && recipe?.avatar.length > 0 ? (
         <div
-          className="imgWrap"
+          className="imgMode"
           style={{
-            width: 250,
+            width: '100%',
+            height: '100%',
             borderRadius: 10,
             backgroundImage: `url("${recipe?.avatar[0]}")`
-            // position: 'relative'
           }}
         />
       ) : (
@@ -97,23 +96,24 @@ export default function RecipeItem({
         </Popover>
       )}
 
+
       <ButtonBase onClick={() => history.push(`/recipe/${recipe.id}`)}>
         <div className="bgRecipe">
           <div className="txt">
-             <Text
+            <Text
               style={{ flex: 1, fontWeight: 600, fontSize: 18, color: 'white' }}
-          >
-            {recipe?.title}
-          </Text>
-         </div>
+            >
+              {recipe?.title}
+            </Text>
+          </div>
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'relative', alignItems: 'center' }}>
             {recipe?.author?.avatar_url ? (
-              <Avatar size={20} src={recipe?.author?.avatar_url} />
+              <Avatar size={24} src={recipe?.author?.avatar_url} />
             ) : (
-              <Avatar size={20} icon={<UserOutlined />} />
+              <Avatar size={24} icon={<UserOutlined />} />
             )}
-            <Text style={{ fontSize: 16, color: 'white', marginLeft: 8 }}>
+            <Text style={{ fontSize: 16, color: 'white', marginLeft: 8, fontWeight: "bold" }}>
               {recipe?.author?.name}
             </Text>
           </div>
@@ -126,20 +126,20 @@ export default function RecipeItem({
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={hourglass} width={16} height={16} alt="" />
-              <Text style={{ fontSize: 12, color: 'white', marginLeft: 4 }}>
+              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4, fontWeight: "bold" }}>
                 {recipe?.cooking_time} {t('create.min')}
               </Text>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={chart} width={16} height={16} alt="" />
 
-              <Text style={{ fontSize: 12, color: 'white', marginLeft: 4 }}>
+              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4, fontWeight: "bold" }}>
                 {LEVEL[recipe?.level]}
               </Text>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={fire} width={16} height={16} alt="" />
-              <Text style={{ fontSize: 12, color: 'white', marginLeft: 4 }}>
+              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4 , fontWeight: "bold" }}>
                 {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
               </Text>
             </div>
