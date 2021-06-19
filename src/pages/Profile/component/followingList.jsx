@@ -26,7 +26,7 @@ function FollowingListProfile(props) {
   }, [])
 
   return (
-    <div className="chooseContainer" style={{ paddingTop: 0 }}>
+    <div className="chooseContainer">
       <Title level={4}>{t('profile.followings')}</Title>
       {followingList && followingList?.length > 0 ? (
         <Row gutter={[16, 24]} style={{ marginTop: 32 }}>

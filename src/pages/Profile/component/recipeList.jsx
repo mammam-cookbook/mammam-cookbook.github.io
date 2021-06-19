@@ -60,12 +60,12 @@ function RecipeListProfile(props) {
   }
 
   return (
-    <div className="chooseContainer" style={{ paddingTop: 0 }}>
+    <div className="chooseContainer">
       <Title level={4}>{t('home.recipes')}</Title>
       {recipes && recipes?.length > 0 ? (
         <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
           {recipes.map(recipe => (
-            <Col xs={24} sm={24} md={14} lg={10} xl={8} xxl={5} >
+            <Col xs={24} sm={24} md={14} lg={10} xl={8} xxl={5}>
               <RecipeItem
                 recipe={recipe}
                 showMoreBtn={user && user?.id === userProfile.id}

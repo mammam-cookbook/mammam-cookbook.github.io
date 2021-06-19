@@ -1,5 +1,4 @@
 .search-banner {
-  height: 60vh;
   /* background-image: url("../../assets//images/search-banner.png");
     background-repeat: no-repeat, repeat;
     background-color: #cccccc;
@@ -20,8 +19,11 @@
 }
 
 .text-banner {
+  display: flex;
   position: relative;
-  top: 150px;
+  flex-direction: column;
+  height: 40vh;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 1367px) {
@@ -46,8 +48,7 @@
     height: 40vh;
   }
   .text-banner {
-    position: relative;
-    top: 80px;
+    flex: 1;
   }
 }
 
@@ -61,6 +62,7 @@
 
 .text-banner .button {
   margin-top: 20px;
+  margin-bottom: 20px;
   background-color: #f6a13a;
   color: white;
   border-color: #f6a13a;

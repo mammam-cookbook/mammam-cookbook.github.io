@@ -61,7 +61,7 @@ function UserInfoTab() {
   }
 
   return (
-    <div className="chooseContainer" style={{ paddingTop: 0 }}>
+    <div className="chooseContainer">
       <Title level={4}>{t('profile.userInfo')}</Title>
       <Formik
         initialValues={{

@@ -26,28 +26,30 @@ function Home() {
     <>
       <AppHeader />
       <div>
-      <div className="search-banner">
-        <div className="text-banner">
-          <div className="container-fluid">
-          <p className="text">Eat good</p>
-          <p className="text">Feel good</p>
-          {!user && (
-            <Button
-              className="button"
-              onClick={() => {
-                history.push({
-                  pathname: '/signin',
-                  state: { from: `/` }
-                })
-              }}
-            >
-              {' '}
-              Try it out
-            </Button>
-          )}
+        <div className="search-banner">
+          <div className="header-fluid">
+            <div className="text-banner">
+              <p className="text">Eat good</p>
+              <p className="text">Feel good</p>
+              <div>
+                {!user && (
+                  <Button
+                    className="button"
+                    onClick={() => {
+                      history.push({
+                        pathname: '/signin',
+                        state: { from: `/` }
+                      })
+                    }}
+                  >
+                    {' '}
+                    Try it Out
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
       </div>
       <div className="container-fluid">
         <Tabs
@@ -78,7 +80,7 @@ function Home() {
                 {recommend.map(recipe => (
                   <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">
-                    <RecipeItem recipe={recipe} />
+                      <RecipeItem recipe={recipe} />
                     </Row>
                   </Col>
                 ))}
@@ -104,14 +106,14 @@ function Home() {
           >
             {highlight && highlight?.length > 0 ? (
               <Row gutter={[16, 16]} justify="center" style={{ marginTop: 20 }}>
-              {highlight.map(recipe => (
-                <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
-                <Row justify="center">
-                <RecipeItem recipe={recipe} />
-                </Row>
-              </Col>
-              ))}
-            </Row>
+                {highlight.map(recipe => (
+                  <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
+                    <Row justify="center">
+                      <RecipeItem recipe={recipe} />
+                    </Row>
+                  </Col>
+                ))}
+              </Row>
             ) : (
               <div style={{ marginTop: 48 }}>
                 <Text style={{ fontSize: 16 }}>{t('search.noResult')}</Text>

@@ -45,7 +45,7 @@ function CollectionListProfile() {
 
   return (
     <>
-      <div className="chooseContainer" style={{ paddingTop: 0 }}>
+      <div className="chooseContainer">
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}>
             {collections && collections?.length > 0 ? (
@@ -72,7 +72,7 @@ function CollectionListProfile() {
             collectionDetail?.recipes?.length > 0 ? (
               <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
                 {collectionDetail?.recipes?.map(item => (
-                  <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} >
+                  <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
                     <RecipeItem
                       recipe={item?.recipe}
                       showMoreBtn={true}
