@@ -31,8 +31,12 @@ export default function MealPlanner() {
   const { t } = useTranslation()
   const { isLoadingMenu, menu, user } = useSelector(state => state.Auth)
 
-  const [startDate, setStartDate] = useState(moment().weekday(0).utcOffset(0))
-  const [endDate, setEndDate] = useState(moment().weekday(6).utcOffset(0))
+  const [startDate, setStartDate] = useState(
+    moment().weekday(0).utcOffset(0).set({ hour: 0, minute: 0, second: 0 })
+  )
+  const [endDate, setEndDate] = useState(
+    moment().weekday(6).utcOffset(0).set({ hour: 23, minute: 59, second: 59 })
+  )
 
   useEffect(() => {
     if (!user) {
@@ -47,8 +51,8 @@ export default function MealPlanner() {
   const getMenu = (start, end) => {
     dispatch(
       GetMenu.get({
-        startDate: start?.format(),
-        endDate: end?.format()
+        startDate: start?.unix(),
+        endDate: end?.unix()
       })
     )
   }
@@ -211,8 +215,18 @@ export default function MealPlanner() {
             <Button
               style={{ marginRight: 16 }}
               onClick={() => {
-                setStartDate(moment().weekday(1))
-                setEndDate(moment().weekday(7))
+                setStartDate(
+                  moment()
+                    .weekday(0)
+                    .utcOffset(0)
+                    .set({ hour: 0, minute: 0, second: 0 })
+                )
+                setEndDate(
+                  moment()
+                    .weekday(6)
+                    .utcOffset(0)
+                    .set({ hour: 23, minute: 59, second: 59 })
+                )
               }}
             >
               {t('profile.today')}
@@ -258,7 +272,9 @@ export default function MealPlanner() {
             return (
               <OneDayMenu
                 date={date}
-                list={menu.filter(item => date.isSame(item?.date, 'day'))}
+                list={menu.filter(item => {
+                  return date.isSame(item?.timestamp * 1000, 'day')
+                })}
               />
             )
           })}

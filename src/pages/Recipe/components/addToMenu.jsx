@@ -14,13 +14,15 @@ export default function ModalAddMenu({
   closeModal = () => {}
 }) {
   const [session, setSession] = useState('morning')
-  const [date, setDate] = useState(moment().add(1, 'days').format())
+  const [date, setDate] = useState(
+    moment().add(1, 'days').utcOffset(0).set({ hour: 0, minute: 0, second: 0 })
+  )
   const dispatch = useDispatch()
   const handleOk = () => {
     dispatch(
       AddToMenu.get({
         recipe_id: recipeId,
-        date,
+        timestamp: date?.unix(),
         session
       })
     )
@@ -57,10 +59,13 @@ export default function ModalAddMenu({
         </Col>
         <Col className="gutter-row" span={18}>
           <DatePicker
+            allowClear={false}
             style={{ width: '100%' }}
-            value={moment(date)}
+            value={date}
             disabledDate={disabledDate}
-            onChange={value => setDate(value.format())}
+            onChange={value =>
+              setDate(value.utcOffset(0).set({ hour: 0, minute: 0, second: 0 }))
+            }
           />
         </Col>
       </Row>

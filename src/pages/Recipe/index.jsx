@@ -507,8 +507,7 @@ export default function RecipeDetail(props) {
 
               <FacebookShareButton
                 style={{
-                  ...styles.iconButton,
-                  borderRadius: 50
+                  ...styles.iconButton
                 }}
                 url={window.location.href}
               >
@@ -582,8 +581,7 @@ export default function RecipeDetail(props) {
 
                 <FacebookShareButton
                   style={{
-                    ...styles.iconButton,
-                    borderRadius: 50
+                    ...styles.iconButton
                   }}
                   url={window.location.href}
                 >
@@ -863,11 +861,12 @@ const styles = {
   orangeInfo: { color: COLOR.primary1, fontWeight: 700, fontSize: 18 },
   iconButton: {
     marginBottom: 24,
-    marginRight: 24,
+    marginRight: 16,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     width: 60,
     height: 60,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderRadius: 60
   },
   readModeStyle: {
     width: '100vw',
