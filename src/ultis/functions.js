@@ -14,7 +14,7 @@ history.listen(window => {
   ReactGA.pageview(window?.pathname + window?.search)
 })
 
-export const DOMAIN = 'http://174.138.23.100/api'
+export const DOMAIN = 'https://api.mammam.me/api'
 // export const DOMAIN = 'http://localhost:3001/api'
 export const __DEV__ = false
 

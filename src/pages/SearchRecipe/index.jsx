@@ -538,28 +538,30 @@ export default function SearchPage() {
     <>
       <AppHeader />
       <div className="search-banner">
-        <div className="text-banner">
-        <div className="container-fluid">
-          <p className="text">Eat good</p>
-          <p className="text">Feel good</p>
-          {!user && (
-            <Button
-              className="button"
-              onClick={() => {
-                history.push({
-                  pathname: '/signin',
-                  state: { from: `/recipes?search=${searchText}` }
-                })
-              }}
-            >
-              {' '}
-              Try it out
-            </Button>
-          )}
+        <div className="header-fluid">
+          <div className="text-banner">
+            <p className="text">Eat good</p>
+            <p className="text">Feel good</p>
+            <div>
+              {!user && (
+                <Button
+                  className="button"
+                  onClick={() => {
+                    history.push({
+                      pathname: '/signin',
+                      state: { from: `/` }
+                    })
+                  }}
+                >
+                  {' '}
+                  Try it Out
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div className="body-container" style={{ paddingBottom: 64 }}>
+      <div className="container-fluid" style={{ paddingBottom: 64 }}>
         {!searchText && (
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <Input
@@ -601,13 +603,12 @@ export default function SearchPage() {
           <Row gutter={[16, 24]} style={{ marginTop: 52 }}>
             {result.map(recipe => (
               <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
-              <Row justify="center">
-              <RecipeItem recipe={recipe} />
-              </Row>
-            </Col>
+                <Row justify="center">
+                  <RecipeItem recipe={recipe} />
+                </Row>
+              </Col>
             ))}
           </Row>
-          
         ) : (
           <div style={{ marginTop: 48 }}>
             <Text style={{ fontSize: 16 }}>{t('search.noResult')}</Text>

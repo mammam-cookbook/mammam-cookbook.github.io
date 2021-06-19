@@ -58,7 +58,7 @@ function ChangePasswordTab() {
   }
 
   return (
-    <div className="chooseContainer" style={{ paddingTop: 0 }}>
+    <div className="chooseContainer">
       <Title level={4}>{t('profile.changePassword')}</Title>
       <Text>{t('profile.changePassFrequently')}</Text>
       <Formik

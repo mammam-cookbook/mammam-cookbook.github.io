@@ -70,7 +70,7 @@ export const en = {
   home: {
     title1: 'Eat good',
     title2: 'Feel good',
-    tryItOut: 'Try it out',
+    tryItOut: 'Try it Out',
     browse: 'BROWSE',
     recipes: 'Recipes',
     mealPlanner: 'MEAL PLANNERS',

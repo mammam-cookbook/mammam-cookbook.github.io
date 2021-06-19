@@ -24,13 +24,12 @@
 
 #menuContainer {
   display: flex;
-  flex: 0;
   width: auto;
-  height: 100%;
   flex-direction: column;
   background-color: #f6a13a;
   align-items: center;
   padding-top: calc(40px + 1vmin);
+  margin-top: calc(28px + 1vmin);
 }
 
 #adminName {
@@ -297,4 +296,14 @@
 
 .ant-menu.ant-menu-light .ant-menu-item-selected.customItem {
   background-color: #ffc000;
+}
+
+.container-fluid {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 15px;
+}
+
+#txtItem {
+  font-weight: 600;
 }

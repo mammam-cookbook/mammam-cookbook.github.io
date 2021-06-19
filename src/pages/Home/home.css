@@ -71,3 +71,12 @@ body {
   padding: 0 15px;
   align-items: center;
 }
+
+.header-fluid {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 15px;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
