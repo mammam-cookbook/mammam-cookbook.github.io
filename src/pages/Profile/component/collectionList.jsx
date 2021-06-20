@@ -47,8 +47,12 @@ function CollectionListProfile() {
     <>
       <div className="chooseContainer">
         <div style={{ display: 'flex', height: '100%' }}>
-          <Row justify="space-between" style={{ display: 'flex', flex: 1 }}>
-            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
+          <Row
+            gutter={{ xs: 0, sm: 0, md: 16, lg: 16 }}
+            justify="space-between"
+            style={{ display: 'flex', flex: 1 }}
+          >
+            <Col xs={24} sm={24} md={16} lg={18} xl={18} xxl={18}>
               <div
                 style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}
               >
@@ -116,7 +120,7 @@ function CollectionListProfile() {
             <Col
               xs={24}
               sm={24}
-              md={5}
+              md={8}
               lg={5}
               xl={5}
               xxl={5}
@@ -131,7 +135,7 @@ function CollectionListProfile() {
             >
               <Row justify="center">
                 <Col>
-                  <Title style={{ marginLeft: 8, marginTop: 16 }} level={5}>
+                  <Title style={{ marginTop: 16 }} level={5}>
                     {t('profile.collection')}
                   </Title>
                   <Col>

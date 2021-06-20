@@ -143,7 +143,7 @@ export default function MealPlanner() {
       >
         <div
           style={{
-            border: '2px solid #F38B12',
+            border: '2px solid #F6A13A',
             width: '100%',
             padding: 16,
             display: 'flex',
@@ -169,21 +169,21 @@ export default function MealPlanner() {
           <Panel
             header={<LabelSession list={breakfast} name={MENU_SESSION[0]} />}
             key={MENU_SESSION[0]}
-            style={{ border: '2px solid #F38B12' }}
+            style={{ border: '2px solid #F6A13A' }}
           >
             <ListRecipeSession recipes={breakfast} session={MENU_SESSION[0]} />
           </Panel>
           <Panel
             header={<LabelSession list={lunch} name={MENU_SESSION[1]} />}
             key={MENU_SESSION[1]}
-            style={{ border: '2px solid #F38B12' }}
+            style={{ border: '2px solid #F6A13A' }}
           >
             <ListRecipeSession recipes={lunch} session={MENU_SESSION[1]} />
           </Panel>
           <Panel
             header={<LabelSession list={dinner} name={MENU_SESSION[2]} />}
             key={MENU_SESSION[2]}
-            style={{ border: '2px solid #F38B12' }}
+            style={{ border: '2px solid #F6A13A' }}
           >
             <ListRecipeSession recipes={dinner} session={MENU_SESSION[2]} />
           </Panel>

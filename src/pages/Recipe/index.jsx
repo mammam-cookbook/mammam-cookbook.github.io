@@ -274,7 +274,7 @@ export default function RecipeDetail(props) {
       {!readMode && (
         <div
           style={{ marginTop: 48, paddingBottom: 60 }}
-          className="body-container"
+          className="container-fluid"
         >
           <div style={styles.spaceBetween} className="info-container">
             <div style={{ display: 'flex', flexDirection: 'column', flex: 4 }}>
@@ -469,7 +469,7 @@ export default function RecipeDetail(props) {
                         height={28}
                       />
                     ) : (
-                      <FiSmile size={24} color={COLOR.primary2} />
+                      <FiSmile size={24} color={COLOR.primary1} />
                     )
                   }
                 />
@@ -483,9 +483,9 @@ export default function RecipeDetail(props) {
                   onClick={onClickFollow}
                   icon={
                     isFollow ? (
-                      <FiUserCheck size={24} color={COLOR.primary2} />
+                      <FiUserCheck size={24} color={COLOR.primary1} />
                     ) : (
-                      <FiUserPlus size={24} color={COLOR.primary2} />
+                      <FiUserPlus size={24} color={COLOR.primary1} />
                     )
                   }
                 />
@@ -501,7 +501,7 @@ export default function RecipeDetail(props) {
                   shape="circle"
                   type="text"
                   onClick={onClickSave}
-                  icon={<FiBookmark size={24} color={COLOR.primary2} />}
+                  icon={<FiBookmark size={24} color={COLOR.primary1} />}
                 />
               </Popover>
 
@@ -511,13 +511,13 @@ export default function RecipeDetail(props) {
                 }}
                 url={window.location.href}
               >
-                <FiFacebook size={24} color={COLOR.primary2} />
+                <FiFacebook size={24} color={COLOR.primary1} />
               </FacebookShareButton>
               <Button
                 style={styles.iconButton}
                 shape="circle"
                 type="text"
-                icon={<FiPrinter size={24} color={COLOR.primary2} />}
+                icon={<FiPrinter size={24} color={COLOR.primary1} />}
               />
             </div>
             <Affix offsetTop={72}>
@@ -544,7 +544,7 @@ export default function RecipeDetail(props) {
                           height={28}
                         />
                       ) : (
-                        <FiSmile size={24} color={COLOR.primary2} />
+                        <FiSmile size={24} color={COLOR.primary1} />
                       )
                     }
                   />
@@ -557,9 +557,9 @@ export default function RecipeDetail(props) {
                     onClick={onClickFollow}
                     icon={
                       isFollow ? (
-                        <FiUserCheck size={24} color={COLOR.primary2} />
+                        <FiUserCheck size={24} color={COLOR.primary1} />
                       ) : (
-                        <FiUserPlus size={24} color={COLOR.primary2} />
+                        <FiUserPlus size={24} color={COLOR.primary1} />
                       )
                     }
                   />
@@ -575,7 +575,7 @@ export default function RecipeDetail(props) {
                     shape="circle"
                     type="text"
                     onClick={onClickSave}
-                    icon={<FiBookmark size={24} color={COLOR.primary2} />}
+                    icon={<FiBookmark size={24} color={COLOR.primary1} />}
                   />
                 </Popover>
 
@@ -585,13 +585,13 @@ export default function RecipeDetail(props) {
                   }}
                   url={window.location.href}
                 >
-                  <FiFacebook size={24} color={COLOR.primary2} />
+                  <FiFacebook size={24} color={COLOR.primary1} />
                 </FacebookShareButton>
                 <Button
                   style={styles.iconButton}
                   shape="circle"
                   type="text"
-                  icon={<FiPrinter size={24} color={COLOR.primary2} />}
+                  icon={<FiPrinter size={24} color={COLOR.primary1} />}
                 />
               </div>
             </Affix>
@@ -601,17 +601,38 @@ export default function RecipeDetail(props) {
               activeKey={currentTab}
               onChange={key => setCurrentTab(key)}
             >
-              <TabPane tab={t('recipe.comment').toLocaleUpperCase()} key="0">
+              <TabPane
+                tab={
+                  <Text
+                    style={{
+                      fontWeight: 700,
+                      color: currentTab === '0' ? COLOR.primary1 : ''
+                    }}
+                  >
+                    {t('recipe.comment').toLocaleUpperCase()}
+                  </Text>
+                }
+                key="0"
+              >
                 <RecipeComments comments={post.comments} postId={post.id} />
               </TabPane>
               <TabPane
-                tab={t('create.ingredients').toLocaleUpperCase()}
+                tab={
+                  <Text
+                    style={{
+                      fontWeight: 700,
+                      color: currentTab === '1' ? COLOR.primary1 : ''
+                    }}
+                  >
+                    {t('create.ingredients').toLocaleUpperCase()}
+                  </Text>
+                }
                 key="1"
               >
                 <>
-                  <Row gutter={[16, 24]} style={{ marginTop: 20 }}>
+                  <Row gutter={[16, 16]} style={{ marginTop: 20 }}>
                     {post.ingredients.map(item => (
-                      <Col md={12} lg={8} sm={24}>
+                      <Col xxl={4} xl={4} lg={4} md={6} sm={6} xs={12}>
                         <RecipeIngredient item={item} />
                       </Col>
                     ))}
@@ -628,14 +649,38 @@ export default function RecipeDetail(props) {
                   </Button>
                 </>
               </TabPane>
-              <TabPane tab={t('create.direction').toLocaleUpperCase()} key="2">
+              <TabPane
+                tab={
+                  <Text
+                    style={{
+                      fontWeight: 700,
+                      color: currentTab === '2' ? COLOR.primary1 : ''
+                    }}
+                  >
+                    {t('create.direction').toLocaleUpperCase()}
+                  </Text>
+                }
+                key="2"
+              >
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   {post.steps.map((item, index) => (
                     <Direction item={item} index={index + 1} />
                   ))}
                 </div>
               </TabPane>
-              <TabPane tab={t('recipe.challenge').toLocaleUpperCase()} key="3">
+              <TabPane
+                tab={
+                  <Text
+                    style={{
+                      fontWeight: 700,
+                      color: currentTab === '3' ? COLOR.primary1 : ''
+                    }}
+                  >
+                    {t('recipe.challenge').toLocaleUpperCase()}
+                  </Text>
+                }
+                key="3"
+              >
                 {post?.challenges && post?.challenges?.length > 0 ? (
                   post?.challenges?.map((item, index) => (
                     <Challenge item={item} />
@@ -863,10 +908,12 @@ const styles = {
     marginBottom: 24,
     marginRight: 16,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+    borderRadius: '50%',
     width: 60,
     height: 60,
     backgroundColor: 'white',
-    borderRadius: 60
+    minWidth: 48,
+    minHeight: 48
   },
   readModeStyle: {
     width: '100vw',
