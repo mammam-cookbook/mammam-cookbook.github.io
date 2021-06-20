@@ -143,11 +143,13 @@ export default function MealPlanner() {
       >
         <div
           style={{
-            border: '1px solid gray',
+            border: '2px solid #F38B12',
             width: '100%',
             padding: 16,
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            borderTopRightRadius: 10,
+            borderTopLeftRadius: 10
           }}
         >
           <Text style={{ fontWeight: 600, fontSize: 18 }}>
@@ -167,21 +169,21 @@ export default function MealPlanner() {
           <Panel
             header={<LabelSession list={breakfast} name={MENU_SESSION[0]} />}
             key={MENU_SESSION[0]}
-            style={{ border: '1px solid gray' }}
+            style={{ border: '2px solid #F38B12' }}
           >
             <ListRecipeSession recipes={breakfast} session={MENU_SESSION[0]} />
           </Panel>
           <Panel
             header={<LabelSession list={lunch} name={MENU_SESSION[1]} />}
             key={MENU_SESSION[1]}
-            style={{ border: '1px solid gray' }}
+            style={{ border: '2px solid #F38B12' }}
           >
             <ListRecipeSession recipes={lunch} session={MENU_SESSION[1]} />
           </Panel>
           <Panel
             header={<LabelSession list={dinner} name={MENU_SESSION[2]} />}
             key={MENU_SESSION[2]}
-            style={{ border: '1px solid gray' }}
+            style={{ border: '2px solid #F38B12' }}
           >
             <ListRecipeSession recipes={dinner} session={MENU_SESSION[2]} />
           </Panel>
@@ -193,25 +195,16 @@ export default function MealPlanner() {
   return (
     <>
       <AppHeader />
-      <div
-        className="body-container"
-        style={{ display: 'flex', flex: 1, flexDirection: 'column' }}
-      >
+      <div className="container-fluid">
         <div
           style={{
             display: 'flex',
-            flex: 1,
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            paddingTop: 32
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flex: 1,
-              alignItems: 'center'
-            }}
-          >
+          <div>
             <Button
               style={{ marginRight: 16 }}
               onClick={() => {
@@ -231,6 +224,13 @@ export default function MealPlanner() {
             >
               {t('profile.today')}
             </Button>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
             <Button
               type="text"
               shape="circle"
@@ -241,6 +241,9 @@ export default function MealPlanner() {
               }}
               icon={<FiChevronLeft size={28} color={COLOR.primary1} />}
             />
+            <Text style={{ fontSize: 20, fontWeight: 600 }}>
+              {startDate.format('DD/MM/YYYY')} - {endDate.format('DD/MM/YYYY')}
+            </Text>
             <Button
               type="text"
               shape="circle"
@@ -255,15 +258,12 @@ export default function MealPlanner() {
           <Button type="primary">{t('profile.recommendPlanner')}</Button>
         </div>
 
-        <Text style={{ fontSize: 26, fontWeight: 600, marginTop: 8 }}>
-          {startDate.format('DD/MM/YYYY')} - {endDate.format('DD/MM/YYYY')}
-        </Text>
         <div
           style={{
             display: 'flex',
             flex: 1,
             overflowX: 'scroll',
-            marginTop: 48,
+            marginTop: 24,
             marginBottom: 48
           }}
         >

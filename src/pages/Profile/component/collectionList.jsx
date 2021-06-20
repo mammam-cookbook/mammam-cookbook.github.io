@@ -47,120 +47,159 @@ function CollectionListProfile() {
     <>
       <div className="chooseContainer">
         <div style={{ display: 'flex', height: '100%' }}>
-          <div style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}>
-            {collections && collections?.length > 0 ? (
+          <Row justify="space-between" style={{ display: 'flex', flex: 1 }}>
+            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
               <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
+                style={{ display: 'flex', flex: 2.5, flexDirection: 'column' }}
               >
-                <Title level={4}>{collectionDetail?.name}</Title>
-                <Button
-                  onClick={() => setIsShowEdit(true)}
-                  shape="circle"
-                  type="text"
-                  style={{ marginTop: -16 }}
-                  icon={<FiEdit size={24} color={COLOR.primary1} />}
-                />
-              </div>
-            ) : (
-              <Title level={4}>{t('profile.noCollections')}</Title>
-            )}
-            {collectionDetail?.recipes &&
-            collectionDetail?.recipes?.length > 0 ? (
-              <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
-                {collectionDetail?.recipes?.map(item => (
-                  <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
-                    <RecipeItem
-                      recipe={item?.recipe}
-                      showMoreBtn={true}
-                      popoverList={[
-                        {
-                          key: 'delete_from_collection',
-                          title: t('profile.deleteRecipeInCollection'),
-                          onPress: recipeId => {
-                            GlobalModal.alertMessage(
-                              t('common.confirm'),
-                              t('profile.confirmToDeleteRecipeInCollection'),
-                              MODAL_TYPE.CHOICE,
-                              () => {
-                                dispatch(
-                                  DeleteRecipeInCollection.get({
-                                    collectionId: collectionDetail?.id,
-                                    recipeId
-                                  })
+                {collections && collections?.length > 0 ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Title level={4}>{collectionDetail?.name}</Title>
+                    <Button
+                      onClick={() => setIsShowEdit(true)}
+                      shape="circle"
+                      type="text"
+                      style={{ marginTop: -16 }}
+                      icon={<FiEdit size={24} color={COLOR.primary1} />}
+                    />
+                  </div>
+                ) : (
+                  <Title level={4}>{t('profile.noCollections')}</Title>
+                )}
+                {collectionDetail?.recipes &&
+                collectionDetail?.recipes?.length > 0 ? (
+                  <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+                    {collectionDetail?.recipes?.map(item => (
+                      <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
+                        <RecipeItem
+                          recipe={item?.recipe}
+                          showMoreBtn={true}
+                          popoverList={[
+                            {
+                              key: 'delete_from_collection',
+                              title: t('profile.deleteRecipeInCollection'),
+                              onPress: recipeId => {
+                                GlobalModal.alertMessage(
+                                  t('common.confirm'),
+                                  t(
+                                    'profile.confirmToDeleteRecipeInCollection'
+                                  ),
+                                  MODAL_TYPE.CHOICE,
+                                  () => {
+                                    dispatch(
+                                      DeleteRecipeInCollection.get({
+                                        collectionId: collectionDetail?.id,
+                                        recipeId
+                                      })
+                                    )
+                                  }
                                 )
                               }
-                            )
-                          }
-                        }
-                      ]}
-                    />
-                  </Col>
-                ))}
-              </Row>
-            ) : (
-              <Text>{t('profile.noRecipeInCollection')}</Text>
-            )}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-              backgroundColor: '#EEE',
-              borderRadius: 10,
-              marginLeft: 'calc(28px + 1vmin)',
-              padding: 8
-            }}
-          >
-            <Title style={{ marginLeft: 8, marginTop: 16 }} level={5}>
-              {t('profile.collection')}
-            </Title>
-            {collections.map((item, index) => (
-              <ButtonBase
-                style={{
-                  height: 48,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: index === chosenIndex ? COLOR.primary3 : null
-                }}
-                onClick={() => setChosenIndex(index)}
-              >
-                <Text style={{ fontWeight: 500, fontSize: 14 }}>
-                  {item.name}
-                </Text>
-                <Button
-                  onClick={() =>
-                    GlobalModal.alertMessage(
-                      t('common.confirm'),
-                      t('profile.confirmToDeleteCollection'),
-                      MODAL_TYPE.CHOICE,
-                      () => {
-                        setChosenIndex(0)
-                        dispatch(DeleteCollection.get(item.id))
-                      }
-                    )
-                  }
-                  shape="circle"
-                  type="text"
-                  icon={<FiX size={16} color={COLOR.mainBlack} />}
-                />
-              </ButtonBase>
-            ))}
-            <Button
-              onClick={() => setIsShow(true)}
-              style={{ marginTop: 24 }}
-              type="primary"
-              icon={
-                <FiPlus size={18} color="white" style={{ marginRight: 8 }} />
-              }
+                            }
+                          ]}
+                        />
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <Text>{t('profile.noRecipeInCollection')}</Text>
+                )}
+              </div>
+            </Col>
+
+            <Col
+              xs={24}
+              sm={24}
+              md={5}
+              lg={5}
+              xl={5}
+              xxl={5}
+              style={{
+                flexDirection: 'column',
+                backgroundColor: '#EEE',
+                borderRadius: 10,
+                padding: 8,
+                width: '100%',
+                height: 'auto'
+              }}
             >
-              {t('recipe.addNewCollection')}
-            </Button>
-          </div>
+              <Row justify="center">
+                <Col>
+                  <Title style={{ marginLeft: 8, marginTop: 16 }} level={5}>
+                    {t('profile.collection')}
+                  </Title>
+                  <Col>
+                    {collections.map((item, index) => (
+                      <ButtonBase
+                        style={{
+                          alignItems: 'center',
+                          backgroundColor:
+                            index === chosenIndex ? COLOR.primary3 : null,
+                          width: '100%',
+                          display: 'flex',
+                          flex: 1,
+                          whiteSpace: 'normal'
+                        }}
+                        onClick={() => setChosenIndex(index)}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'space-between'
+                          }}
+                        >
+                          <div>
+                            <Text style={{ fontWeight: 500, fontSize: 14 }}>
+                              {item.name}
+                            </Text>
+                          </div>
+                          <div>
+                            <Button
+                              onClick={() =>
+                                GlobalModal.alertMessage(
+                                  t('common.confirm'),
+                                  t('profile.confirmToDeleteCollection'),
+                                  MODAL_TYPE.CHOICE,
+                                  () => {
+                                    setChosenIndex(0)
+                                    dispatch(DeleteCollection.get(item.id))
+                                  }
+                                )
+                              }
+                              shape="circle"
+                              type="text"
+                              icon={<FiX size={16} color={COLOR.mainBlack} />}
+                            />
+                          </div>
+                        </div>
+                      </ButtonBase>
+                    ))}
+                  </Col>
+                  <Button
+                    onClick={() => setIsShow(true)}
+                    style={{
+                      marginTop: 24,
+                      width: '100%',
+                      whiteSpace: 'normal',
+                      height: 'auto',
+                      marginBottom: '10px'
+                    }}
+                    type="primary"
+                  >
+                    {t('recipe.addNewCollection')}
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </div>
       </div>
       <ModalAddNewCollection

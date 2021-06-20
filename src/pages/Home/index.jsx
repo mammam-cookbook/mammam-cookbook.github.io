@@ -66,7 +66,7 @@ function Home() {
             tab={
               <Text
                 style={{
-                  fontWeight: currentTab === '1' ? 700 : 500,
+                  fontWeight: 700,
                   color: currentTab === '1' ? COLOR.primary1 : ''
                 }}
               >
@@ -76,7 +76,7 @@ function Home() {
             key="1"
           >
             {recommend && recommend?.length > 0 ? (
-              <Row gutter={[16, 16]} justify="center" style={{ marginTop: 20 }}>
+              <Row gutter={[16, 16]} justify="start" style={{ marginTop: 20 }}>
                 {recommend.map(recipe => (
                   <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">
@@ -95,7 +95,7 @@ function Home() {
             tab={
               <Text
                 style={{
-                  fontWeight: currentTab === '2' ? 700 : 500,
+                  fontWeight: 700,
                   color: currentTab === '2' ? COLOR.primary1 : ''
                 }}
               >
@@ -105,7 +105,7 @@ function Home() {
             key="2"
           >
             {highlight && highlight?.length > 0 ? (
-              <Row gutter={[16, 16]} justify="center" style={{ marginTop: 20 }}>
+              <Row gutter={[16, 16]} justify="start" style={{ marginTop: 20 }}>
                 {highlight.map(recipe => (
                   <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">

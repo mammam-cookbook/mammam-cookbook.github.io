@@ -537,42 +537,42 @@ export default function SearchPage() {
   return (
     <>
       <AppHeader />
-      <div className="search-banner">
-        <div className="header-fluid">
-          <div className="text-banner">
-            <p className="text">Eat good</p>
-            <p className="text">Feel good</p>
-            <div>
-              {!user && (
-                <Button
-                  className="button"
-                  onClick={() => {
-                    history.push({
-                      pathname: '/signin',
-                      state: { from: `/` }
-                    })
-                  }}
-                >
-                  {' '}
-                  Try it Out
-                </Button>
-              )}
+      <div>
+        <div className="search-banner">
+          <div className="header-fluid">
+            <div className="text-banner">
+              <p className="text">Eat good</p>
+              <p className="text">Feel good</p>
+              <div>
+                {!user && (
+                  <Button
+                    className="button"
+                    onClick={() => {
+                      history.push({
+                        pathname: '/signin',
+                        state: { from: `/` }
+                      })
+                    }}
+                  >
+                    {' '}
+                    Try it Out
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="container-fluid" style={{ paddingBottom: 64 }}>
-        {!searchText && (
-          <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-            <Input
-              style={styles.inputSearchStyle}
-              onChange={event => setSearchTextInput(event.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={t('home.searchPlaceholder')}
-              suffix={<FiSearch size={20} color={COLOR.primary1} />}
-            />
-          </div>
-        )}
+        <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
+          <Input
+            style={styles.inputSearchStyle}
+            onChange={event => setSearchTextInput(event.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder={t('home.searchPlaceholder')}
+            suffix={<FiSearch size={20} color={COLOR.primary1} />}
+          />
+        </div>
 
         <Title level={3} style={{ marginTop: 48 }}>
           {searchText ? t('home.result') : t('home.browse')}
@@ -600,7 +600,7 @@ export default function SearchPage() {
         {isShowFilter && renderFilter()}
 
         {result && result?.length > 0 ? (
-          <Row gutter={[16, 24]} style={{ marginTop: 52 }}>
+          <Row gutter={[16, 16]} justify="start" style={{ marginTop: 40 }}>
             {result.map(recipe => (
               <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                 <Row justify="center">

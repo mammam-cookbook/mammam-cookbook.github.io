@@ -2,7 +2,7 @@
   "name": "mammam-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mammam-cookbook.github.io/",
+  "homepage": "https://mammam.me/",
   "dependencies": {
     "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",

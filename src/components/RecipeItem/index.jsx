@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Image, Menu, Popover } from 'antd'
+import { Avatar, Button, Menu, Popover } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import chart from 'assets/images/bar-chart.svg'
 import fire from 'assets/images/fire.svg'
@@ -7,7 +7,7 @@ import hourglass from 'assets/images/hourglass.svg'
 import ButtonBase from 'components/ButtonBase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiMoreHorizontal } from 'react-icons/fi'
+import { FiMoreVertical } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
 import { calcCalories, history } from 'ultis/functions'
 import './index.css'
@@ -80,22 +80,18 @@ export default function RecipeItem({
           onVisibleChange={visible => setIsShowPopover(visible)}
         >
           <Button
-            shape="round"
-            type="primary"
             style={{
               position: 'absolute',
-              right: 8,
-              top: 8,
-              paddingLeft: 4,
-              paddingRight: 4,
-              paddingTop: 0
+              right: 24,
+              top: 24,
+              backgroundColor: 'transparent',
+              border: '0px'
             }}
             onClick={() => onClickMore()}
-            icon={<FiMoreHorizontal size={28} color={'white'} />}
+            icon={<FiMoreVertical size={24} color={'white'} />}
           />
         </Popover>
       )}
-
 
       <ButtonBase onClick={() => history.push(`/recipe/${recipe.id}`)}>
         <div className="bgRecipe">
@@ -113,7 +109,14 @@ export default function RecipeItem({
             ) : (
               <Avatar size={24} icon={<UserOutlined />} />
             )}
-            <Text style={{ fontSize: 16, color: 'white', marginLeft: 8, fontWeight: "bold" }}>
+            <Text
+              style={{
+                fontSize: 16,
+                color: 'white',
+                marginLeft: 8,
+                fontWeight: 'bold'
+              }}
+            >
               {recipe?.author?.name}
             </Text>
           </div>
@@ -126,20 +129,41 @@ export default function RecipeItem({
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={hourglass} width={16} height={16} alt="" />
-              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'white',
+                  marginLeft: 4,
+                  fontWeight: 'bold'
+                }}
+              >
                 {recipe?.cooking_time} {t('create.min')}
               </Text>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={chart} width={16} height={16} alt="" />
 
-              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'white',
+                  marginLeft: 4,
+                  fontWeight: 'bold'
+                }}
+              >
                 {LEVEL[recipe?.level]}
               </Text>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <img src={fire} width={16} height={16} alt="" />
-              <Text style={{ fontSize: 14, color: 'white', marginLeft: 4 , fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'white',
+                  marginLeft: 4,
+                  fontWeight: 'bold'
+                }}
+              >
                 {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
               </Text>
             </div>

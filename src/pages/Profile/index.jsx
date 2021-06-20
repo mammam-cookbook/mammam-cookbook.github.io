@@ -132,10 +132,13 @@ export default function ProfilePage() {
 
       <div className="container-fluid">
         <Row justify="start">
-          <Col span={6} sm={24} xs={24} md={6} lg={6} xl={6} xxl={6}>
+          <Col span={6} sm={24} xs={24} md={8} lg={8} xl={6} xxl={6}>
             <div
               id="menuContainer"
-              style={{ backgroundColor: '#EEE', borderRadius: 10 }}
+              style={{
+                backgroundColor: '#EEE',
+                borderRadius: 10
+              }}
             >
               <div
                 style={{
@@ -268,7 +271,7 @@ export default function ProfilePage() {
               </Menu>
             </div>
           </Col>
-          <Col span={18} sm={24} xs={24} md={18} lg={18} xl={18} xxl={18}>
+          <Col span={18} sm={24} xs={24} md={16} lg={16} xl={18} xxl={18}>
             {renderRightDashboard()}
           </Col>
         </Row>
