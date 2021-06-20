@@ -8,7 +8,7 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             modifyVars: {
-              '@primary-color': '#F38B12',
+              '@primary-color': '#F6A13A',
               '@font-size-base': '14px', // major text font size
               '@font-weight-base': '500',
               '@text-color': '#000000', // major text color
@@ -17,8 +17,8 @@ module.exports = {
               '@border-radius-base': '10px', // major border radius
               '@input-height-base': '48px',
               '@input-height-lg': '48px',
-              '@border-color-base': '#F38B12',
-              '@btn-default-color': '#F38B12'
+              '@border-color-base': '#F6A13A',
+              '@btn-default-color': '#F6A13A'
             },
             javascriptEnabled: true
           }

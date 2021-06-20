@@ -54,7 +54,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: calc(28px + 1vmin);
+  padding-top: calc(28px + 1vmin);
+  height: 100% !important;
 }
 
 #infoCell {

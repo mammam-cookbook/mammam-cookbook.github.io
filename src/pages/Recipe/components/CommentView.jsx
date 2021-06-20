@@ -60,7 +60,7 @@ export default function CommentView(props) {
       icon={
         <FiArrowUp
           size={16}
-          color={COLOR.primary2}
+          color={COLOR.primary1}
           style={{ marginRight: 4, marginBottom: 2 }}
         />
       }
