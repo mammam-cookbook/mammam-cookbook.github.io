@@ -8,6 +8,10 @@ export const SignUpRequest = defineAction('SIGNUP_REQUEST')
 export const SignUpRequestSuccess = defineAction('SIGNUP_REQUEST_SUCCESS')
 export const SignUpRequestFailed = defineAction('SIGNUP_REQUEST_FAILED')
 
+export const RefreshToken = defineAction('REFRESH_TOKEN_REQUEST')
+export const RefreshTokenSuccess = defineAction('REFRESH_TOKEN_SUCCESS')
+export const RefreshTokenFailed = defineAction('REFRESH_TOKEN_FAILED')
+
 export const ResetPassword = defineAction('RESET_PASSWORD_REQUEST')
 export const ResetPasswordSuccess = defineAction('RESET_PASSWORD_SUCCESS')
 export const ResetPasswordFailed = defineAction('RESET_PASSWORD_FAILED')

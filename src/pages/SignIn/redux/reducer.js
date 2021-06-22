@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {
   GetFollowerSuccess,
   GetFollowingSuccess
@@ -12,6 +13,7 @@ import {
   GetMenuFailed,
   GetMenuSuccess,
   GetProfileSuccess,
+  RefreshTokenSuccess,
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
@@ -21,7 +23,9 @@ import {
 } from './actions'
 const initialState = {
   token: null,
+  tokenExp: null,
   refreshToken: null,
+  refreshTokenExp: null,
   user: null,
   isLoading: false,
   prevLogin: null,
@@ -36,9 +40,19 @@ export function authReducer(state = initialState, action) {
       return {
         ...state,
         token: action.payload.token,
+        tokenExp: action.payload?.tokenExp,
+        refreshToken: action.payload?.refreshToken,
+        refreshTokenExp: action.payload?.refreshTokenExp,
         user: action.payload.user,
         prevLogin: new Date().getTime()
       }
+    case RefreshTokenSuccess.type: {
+      return {
+        ...state,
+        token: action.payload.token,
+        tokenExp: moment().unix() + 86400
+      }
+    }
     case UpdateProfile.type:
       return { ...state, isLoading: true }
     case UpdateProfileSuccess.type:

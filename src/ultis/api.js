@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { store } from 'core/store'
+import moment from 'moment'
+import { RefreshToken, SignOut } from 'pages/SignIn/redux/actions'
 import { from } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { DOMAIN, log as SysLog } from 'ultis/functions'
@@ -9,14 +11,23 @@ export function request(param) {
 
   const language = store.getState().Auth.language || 'vi'
   const parameters = param.param
-  const { token } = store.getState().Auth
-  const headers = token
+  const { token, tokenExp, refreshToken, refreshTokenExp } =
+    store.getState().Auth
+  let canUseToken = token
+  if (refreshTokenExp - moment().unix() < 10) {
+    store.dispatch(SignOut.get())
+    canUseToken = null
+  }
+  if (tokenExp - moment().unix() < 10) {
+    store.dispatch(RefreshToken.get({ refreshToken }))
+  }
+  const headers = canUseToken
     ? {
         'Content-Type': 'application/json',
         accept: 'application/json',
         'Access-Control-Allow-Origin': true,
         'Accept-Language': language,
-        Authorization: token
+        Authorization: canUseToken
       }
     : {
         'Content-Type': 'application/json',

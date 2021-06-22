@@ -25,6 +25,9 @@ import {
   GetProfile,
   GetProfileFailed,
   GetProfileSuccess,
+  RefreshToken,
+  RefreshTokenFailed,
+  RefreshTokenSuccess,
   ResetPassword,
   ResetPasswordFailed,
   ResetPasswordSuccess,
@@ -303,6 +306,28 @@ const createPasswordEpic$ = action$ =>
     })
   )
 
+const refreshTokenEpic$ = action$ =>
+  action$.pipe(
+    ofType(RefreshToken.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'auth/refresh-token',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return RefreshTokenSuccess.get(result.data)
+          }
+          return RefreshTokenFailed.get(result)
+        }),
+        catchError(error => {
+          return RefreshTokenFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const authEpics = combineEpics(
   signinEpic$,
   signupEpic$,
@@ -312,5 +337,6 @@ export const authEpics = combineEpics(
   updateUserProfileEpic$,
   getProfileEpic$,
   getMenuEpic$,
-  deleteRecipeInMenuEpic$
+  deleteRecipeInMenuEpic$,
+  refreshTokenEpic$
 )
