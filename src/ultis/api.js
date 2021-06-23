@@ -14,12 +14,17 @@ export function request(param) {
   const { token, tokenExp, refreshToken, refreshTokenExp } =
     store.getState().Auth
   let canUseToken = token
-  if (refreshTokenExp - moment().unix() < 10) {
+  if (refreshTokenExp != null && refreshTokenExp - moment().unix() < 10) {
     store.dispatch(SignOut.get())
     canUseToken = null
   }
-  if (tokenExp - moment().unix() < 10) {
-    store.dispatch(RefreshToken.get({ refreshToken }))
+  if (tokenExp != null && tokenExp - moment().unix() < 10) {
+    if (refreshToken != null) {
+      store.dispatch(RefreshToken.get({ refreshToken }))
+    } else {
+      store.dispatch(SignOut.get())
+      canUseToken = null
+    }
   }
   const headers = canUseToken
     ? {

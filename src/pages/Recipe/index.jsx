@@ -127,7 +127,7 @@ export default function RecipeDetail(props) {
   const [timerTime, setTimerTime] = useState('00:00')
   const [timer, setTimer] = useState(null)
   const isFollow = user
-    ? user?.following?.findIndex(item => item.following_id === user.id) > -1
+    ? user?.following?.findIndex(item => item.user_id === user.id) > -1
     : false
   const reaction = user
     ? post?.reactions?.find(item => item.author?.id === user?.id)
@@ -158,9 +158,9 @@ export default function RecipeDetail(props) {
   const onClickFollow = () => {
     if (user) {
       if (isFollow) {
-        dispatch(UnFollowUser.get(user.id))
+        dispatch(UnFollowUser.get(post?.author?.id))
       } else {
-        dispatch(FollowUser.get(user.id))
+        dispatch(FollowUser.get(post?.author?.id))
       }
     } else {
       GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>

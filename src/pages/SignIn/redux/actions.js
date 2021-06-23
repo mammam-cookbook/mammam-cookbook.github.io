@@ -32,6 +32,10 @@ export const UpdateProfile = defineAction('UPDATE_PROFILE_REQUEST')
 export const UpdateProfileSuccess = defineAction('UPDATE_PROFILE_SUCCESS')
 export const UpdateProfileFailed = defineAction('UPDATE_PROFILE_FAILED')
 
+export const GetNotification = defineAction('GET_NOTIFICATION_REQUEST')
+export const GetNotificationSuccess = defineAction('GET_NOTIFICATION_SUCCESS')
+export const GetNotificationFailed = defineAction('GET_NOTIFICATION_FAILED')
+
 export const GetMenu = defineAction('GET_MENU_REQUEST')
 export const GetMenuSuccess = defineAction('GET_MENU_SUCCESS')
 export const GetMenuFailed = defineAction('GET_MENU_FAILED')

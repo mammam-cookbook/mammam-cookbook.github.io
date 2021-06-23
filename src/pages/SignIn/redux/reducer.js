@@ -12,6 +12,7 @@ import {
   GetMenu,
   GetMenuFailed,
   GetMenuSuccess,
+  GetNotificationSuccess,
   GetProfileSuccess,
   RefreshTokenSuccess,
   ResetReducer,
@@ -31,7 +32,8 @@ const initialState = {
   prevLogin: null,
   isLoadingMenu: false,
   menu: [],
-  language: i18n.language
+  language: i18n.language,
+  notifications: []
 }
 
 export function authReducer(state = initialState, action) {
@@ -97,6 +99,11 @@ export function authReducer(state = initialState, action) {
       return { ...state, isLoadingMenu: false, menu: action.payload }
     case GetMenuFailed.type:
       return { ...state, isLoadingMenu: false }
+    case GetNotificationSuccess.type:
+      return {
+        ...state,
+        notifications: action.payload?.notifications?.rows || []
+      }
     case SignOut.type:
       return initialState
     case ResetReducer.type:

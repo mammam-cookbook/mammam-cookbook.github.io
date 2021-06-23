@@ -2,7 +2,11 @@ import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
 import moment from 'moment'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
-import { ChangeLanguage, SignOut } from 'pages/SignIn/redux/actions'
+import {
+  ChangeLanguage,
+  GetNotification,
+  SignOut
+} from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiBell, FiMenu, FiSearch, FiUser, FiX } from 'react-icons/fi'
@@ -18,13 +22,16 @@ function AppHeader(props) {
   const [showSearchBar, setShowSearchBar] = useState(false)
   const history = useHistory()
   const location = useLocation()
-  const user = useSelector(state => state.Auth.user)
+  const { user, notifications } = useSelector(state => state.Auth)
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const currentLng = getCurrentLng().substring(0, 2).toUpperCase()
 
   useEffect(() => {
     dispatch(ChangeLanguage.get(currentLng.toLowerCase()))
+    if (user) {
+      dispatch(GetNotification.get())
+    }
     moment.locale(currentLng.toLowerCase())
   }, [])
 

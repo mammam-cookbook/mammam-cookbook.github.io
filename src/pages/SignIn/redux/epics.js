@@ -22,6 +22,9 @@ import {
   GetMenu,
   GetMenuFailed,
   GetMenuSuccess,
+  GetNotification,
+  GetNotificationFailed,
+  GetNotificationSuccess,
   GetProfile,
   GetProfileFailed,
   GetProfileSuccess,
@@ -328,6 +331,27 @@ const refreshTokenEpic$ = action$ =>
     })
   )
 
+const getNotiListEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetNotification.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: 'notification'
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetNotificationSuccess.get(result.data)
+          }
+          return GetNotificationFailed.get(result)
+        }),
+        catchError(error => {
+          return GetNotificationFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const authEpics = combineEpics(
   signinEpic$,
   signupEpic$,
@@ -338,5 +362,6 @@ export const authEpics = combineEpics(
   getProfileEpic$,
   getMenuEpic$,
   deleteRecipeInMenuEpic$,
-  refreshTokenEpic$
+  refreshTokenEpic$,
+  getNotiListEpic$
 )
