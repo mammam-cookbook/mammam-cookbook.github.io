@@ -1,11 +1,21 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Drawer, Dropdown, Input, Menu, Popover } from 'antd'
+import {
+  Avatar,
+  Badge,
+  Button,
+  Drawer,
+  Dropdown,
+  Input,
+  Menu,
+  Popover
+} from 'antd'
 import moment from 'moment'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import {
   ChangeLanguage,
   GetNotification,
-  SignOut
+  SignOut,
+  UpdateCurrentOpenNoti
 } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +25,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { COLOR, getCurrentLng, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import 'moment/locale/vi'
+import NotificationList from './components/NotificationList'
 
 function AppHeader(props) {
   const [visible, setVisible] = useState(false)
@@ -22,11 +33,22 @@ function AppHeader(props) {
   const [showSearchBar, setShowSearchBar] = useState(false)
   const history = useHistory()
   const location = useLocation()
-  const { user, notifications } = useSelector(state => state.Auth)
+  const { user, notifications, recentOpenNoti } = useSelector(
+    state => state.Auth
+  )
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const currentLng = getCurrentLng().substring(0, 2).toUpperCase()
+  const unreadNotiCount =
+    notifications && notifications?.length > 0
+      ? notifications?.filter(
+          item =>
+            moment(item?.createdAt).isAfter(recentOpenNoti, 'seconds') &&
+            item?.read === false
+        )?.length
+      : 0
 
+  console.log('notifications', notifications, recentOpenNoti)
   useEffect(() => {
     dispatch(ChangeLanguage.get(currentLng.toLowerCase()))
     if (user) {
@@ -90,14 +112,6 @@ function AppHeader(props) {
       >
         {t('auth.profile')}
       </Menu.Item>
-      {/* <Menu.Item
-        key={'course'}
-        onClick={() => {
-          history.push(`/my-courses`)
-        }}
-      >
-        {t('auth.settings')}
-      </Menu.Item> */}
       <Menu.Item
         key={'logout'}
         onClick={() => {
@@ -111,14 +125,6 @@ function AppHeader(props) {
 
   const adminPopover = (
     <Menu style={{ width: 200 }}>
-      {/* <Menu.Item
-        key={'profile'}
-        onClick={() => {
-          history.push(`/profile`)
-        }}
-      >
-        {t('auth.profile')}
-      </Menu.Item> */}
       <Menu.Item
         key={'dashboard'}
         onClick={() => {
@@ -203,12 +209,22 @@ function AppHeader(props) {
             />
           )}
           {user && (
-            <Button
-              type="link"
-              style={{ marginRight: 16 }}
-              onClick={() => {}}
-              icon={<FiBell size={20} color={COLOR.primary1} />}
-            />
+            <Popover
+              placement="bottomLeft"
+              content={<NotificationList />}
+              trigger="click"
+            >
+              <Badge offset={[-18, 8]} count={unreadNotiCount}>
+                <Button
+                  type="link"
+                  style={{ marginRight: 16 }}
+                  onClick={() => {
+                    dispatch(UpdateCurrentOpenNoti.get())
+                  }}
+                  icon={<FiBell size={20} color={COLOR.primary1} />}
+                />
+              </Badge>
+            </Popover>
           )}
           {user ? (
             <Popover
@@ -250,12 +266,22 @@ function AppHeader(props) {
             icon={<FiSearch size={20} color={COLOR.primary1} />}
           />
           {user && (
-            <Button
-              type="link"
-              style={{ marginRight: 24 }}
-              onClick={() => {}}
-              icon={<FiBell size={20} color={COLOR.primary1} />}
-            />
+            <Popover
+              placement="bottomLeft"
+              content={<NotificationList />}
+              trigger="click"
+            >
+              <Badge offset={[-26, 8]} count={unreadNotiCount}>
+                <Button
+                  type="link"
+                  style={{ marginRight: 24 }}
+                  onClick={() => {
+                    dispatch(UpdateCurrentOpenNoti.get())
+                  }}
+                  icon={<FiBell size={20} color={COLOR.primary1} />}
+                />
+              </Badge>
+            </Popover>
           )}
           <Button
             type="link"
@@ -311,7 +337,7 @@ function AppHeader(props) {
               )}
 
               {user ? (
-                user?.avatar ? (
+                user?.avatar_url ? (
                   <Popover
                     placement="bottomRight"
                     content={
@@ -319,7 +345,7 @@ function AppHeader(props) {
                     }
                     trigger="click"
                   >
-                    <Avatar size={48} src={user?.avatar} />
+                    <Avatar size={48} src={user?.avatar_url} />
                   </Popover>
                 ) : (
                   <Popover

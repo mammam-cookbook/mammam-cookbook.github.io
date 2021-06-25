@@ -18,6 +18,7 @@ import {
   ResetReducer,
   SignInRequestSuccess,
   SignOut,
+  UpdateCurrentOpenNoti,
   UpdateProfile,
   UpdateProfileFailed,
   UpdateProfileSuccess
@@ -33,7 +34,8 @@ const initialState = {
   isLoadingMenu: false,
   menu: [],
   language: i18n.language,
-  notifications: []
+  notifications: [],
+  recentOpenNoti: moment().valueOf()
 }
 
 export function authReducer(state = initialState, action) {
@@ -104,10 +106,15 @@ export function authReducer(state = initialState, action) {
         ...state,
         notifications: action.payload?.notifications?.rows || []
       }
+    case UpdateCurrentOpenNoti.type:
+      return {
+        ...state,
+        recentOpenNoti: moment().valueOf()
+      }
     case SignOut.type:
-      return initialState
+      return { ...initialState, recentOpenNoti: state.recentOpenNoti }
     case ResetReducer.type:
-      return initialState
+      return { ...initialState, recentOpenNoti: state.recentOpenNoti }
     default:
       return state
   }

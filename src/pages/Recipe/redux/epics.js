@@ -18,6 +18,9 @@ import {
   CommentPost,
   CommentPostFailed,
   CommentPostSuccess,
+  DeleteComment,
+  DeleteCommentFailed,
+  DeleteCommentSuccess,
   GetDetailRecipe,
   GetDetailRecipeFailed,
   GetDetailRecipeSuccess,
@@ -223,6 +226,32 @@ const upvoteCommentEpic$ = action$ =>
     })
   )
 
+const deleteCommentEpic$ = action$ =>
+  action$.pipe(
+    ofType(DeleteComment.type),
+    exhaustMap(action => {
+      return request({
+        method: 'DELETE',
+        url: `comment/${action.payload.commentId}`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(
+              GetDetailRecipe.get({ recipeId: action.payload.recipeId })
+            )
+            return DeleteCommentSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage()
+          return DeleteCommentFailed.get(result)
+        }),
+        catchError(error => {
+          GlobalModal.alertMessage()
+          return DeleteCommentFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const recipeEpics = combineEpics(
   getDetailRecipeEpic$,
   commentRecipeEpic$,
@@ -230,5 +259,6 @@ export const recipeEpics = combineEpics(
   addMenuEpic$,
   reactRecipeEpic$,
   commentChallengeRecipeEpic$,
-  upvoteCommentEpic$
+  upvoteCommentEpic$,
+  deleteCommentEpic$
 )

@@ -125,8 +125,8 @@ function Dashboard() {
             padding: 16
           }}
         >
-          {user?.avatar ? (
-            <Avatar size={40} src={user?.avatar} />
+          {user?.avatar_url ? (
+            <Avatar size={40} src={user?.avatar_url} />
           ) : (
             <Avatar size={40} icon={<UserOutlined />} />
           )}

@@ -36,6 +36,14 @@ export const GetNotification = defineAction('GET_NOTIFICATION_REQUEST')
 export const GetNotificationSuccess = defineAction('GET_NOTIFICATION_SUCCESS')
 export const GetNotificationFailed = defineAction('GET_NOTIFICATION_FAILED')
 
+export const UpdateNotification = defineAction('UPDATE_NOTIFICATION_REQUEST')
+export const UpdateNotificationSuccess = defineAction(
+  'UPDATE_NOTIFICATION_SUCCESS'
+)
+export const UpdateNotificationFailed = defineAction(
+  'UPDATE_NOTIFICATION_FAILED'
+)
+
 export const GetMenu = defineAction('GET_MENU_REQUEST')
 export const GetMenuSuccess = defineAction('GET_MENU_SUCCESS')
 export const GetMenuFailed = defineAction('GET_MENU_FAILED')
@@ -47,6 +55,8 @@ export const DeleteRecipeInMenuSuccess = defineAction(
 export const DeleteRecipeInMenuFailed = defineAction(
   'DELETE_RECIPE_IN_MENU_FAILED'
 )
+
+export const UpdateCurrentOpenNoti = defineAction('UPDATE_OPEN_NOTI_TIME')
 
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')

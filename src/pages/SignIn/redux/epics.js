@@ -41,6 +41,9 @@ import {
   SignUpRequest,
   SignUpRequestFailed,
   SignUpRequestSuccess,
+  UpdateNotification,
+  UpdateNotificationFailed,
+  UpdateNotificationSuccess,
   UpdateProfile,
   UpdateProfileFailed,
   UpdateProfileSuccess
@@ -331,6 +334,29 @@ const refreshTokenEpic$ = action$ =>
     })
   )
 
+const updateNotificationEpic$ = action$ =>
+  action$.pipe(
+    ofType(UpdateNotification.type),
+    exhaustMap(action => {
+      return request({
+        method: 'PUT',
+        url: `notification/${action.payload?.id}`,
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetNotification.get())
+            return UpdateNotificationSuccess.get(result.data)
+          }
+          return UpdateNotificationFailed.get(result)
+        }),
+        catchError(error => {
+          return UpdateNotificationFailed.get(error)
+        })
+      )
+    })
+  )
+
 const getNotiListEpic$ = action$ =>
   action$.pipe(
     ofType(GetNotification.type),
@@ -363,5 +389,6 @@ export const authEpics = combineEpics(
   getMenuEpic$,
   deleteRecipeInMenuEpic$,
   refreshTokenEpic$,
-  getNotiListEpic$
+  getNotiListEpic$,
+  updateNotificationEpic$
 )

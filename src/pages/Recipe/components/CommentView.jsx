@@ -9,10 +9,10 @@ import { UserOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FiArrowUp } from 'react-icons/fi'
-import { UpvoteComment } from '../redux/actions'
+import { DeleteComment, UpvoteComment } from '../redux/actions'
 
 export default function CommentView(props) {
-  const { comment, canReply, postId, padding } = props
+  const { comment, canReply, postId, padding, key } = props
   const user = useSelector(state => state.Auth.user)
   const [isShowReply, setIsShowReply] = useState(false)
   const dispatch = useDispatch()
@@ -96,7 +96,11 @@ export default function CommentView(props) {
             t('common.confirm'),
             t('recipe.confirmDeleteComment'),
             MODAL_TYPE.CHOICE,
-            () => {}
+            () => {
+              dispatch(
+                DeleteComment.get({ commentId: comment?.id, recipeId: postId })
+              )
+            }
           )
         }
       >
@@ -105,7 +109,7 @@ export default function CommentView(props) {
     )
   ]
   return (
-    <div style={padding ? { paddingLeft: 60 } : {}}>
+    <div key={`comment-${key}`} style={padding ? { paddingLeft: 60 } : {}}>
       <Comment
         actions={actions}
         author={
@@ -121,12 +125,7 @@ export default function CommentView(props) {
         }
         avatar={
           comment?.author?.avatar_url ? (
-            <Avatar
-              size={'large'}
-              // style={{ backgroundColor: 'red' }}
-              src={comment?.author?.avatar_url}
-              alt={comment?.author?.name}
-            />
+            <Avatar size={'large'} src={comment.author.avatar_url} />
           ) : (
             <Avatar size={'large'} icon={<UserOutlined />} />
           )

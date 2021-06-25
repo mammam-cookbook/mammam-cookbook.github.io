@@ -239,6 +239,14 @@ export const en = {
     dishes: 'dishes',
     today: 'Today',
     recommendPlanner: 'Recommend meal'
+  },
+  notification: {
+    liked: 'reacted to your',
+    commented: 'commented',
+    followed: 'is now following you',
+    replied: 'replied',
+    notification: 'Notification',
+    noNotification: 'There is no notifications'
   }
 }
 
@@ -482,5 +490,13 @@ export const vi = {
     dishes: 'món',
     today: 'Hôm nay',
     recommendPlanner: 'Đề xuất thực đơn'
+  },
+  notification: {
+    liked: 'đã thích công thức',
+    commented: 'đã bình luận',
+    followed: 'đã theo dõi bạn',
+    replied: 'đã trả lời bạn',
+    notification: 'Thông báo',
+    noNotification: 'Chưa có thông báo'
   }
 }
