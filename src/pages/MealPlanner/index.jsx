@@ -32,10 +32,10 @@ export default function MealPlanner() {
   const { isLoadingMenu, menu, user } = useSelector(state => state.Auth)
 
   const [startDate, setStartDate] = useState(
-    moment().weekday(0).utcOffset(0).set({ hour: 0, minute: 0, second: 0 })
+    moment().utcOffset(0).set({ hour: 0, minute: 0, second: 0 }).weekday(0)
   )
   const [endDate, setEndDate] = useState(
-    moment().weekday(6).utcOffset(0).set({ hour: 23, minute: 59, second: 59 })
+    moment().utcOffset(0).set({ hour: 23, minute: 59, second: 59 }).weekday(6)
   )
 
   useEffect(() => {
@@ -210,15 +210,15 @@ export default function MealPlanner() {
               onClick={() => {
                 setStartDate(
                   moment()
-                    .weekday(0)
                     .utcOffset(0)
                     .set({ hour: 0, minute: 0, second: 0 })
+                    .weekday(0)
                 )
                 setEndDate(
                   moment()
-                    .weekday(6)
                     .utcOffset(0)
                     .set({ hour: 23, minute: 59, second: 59 })
+                    .weekday(6)
                 )
               }}
             >

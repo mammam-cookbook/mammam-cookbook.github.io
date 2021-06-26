@@ -48,7 +48,6 @@ function AppHeader(props) {
         )?.length
       : 0
 
-  console.log('notifications', notifications, recentOpenNoti)
   useEffect(() => {
     dispatch(ChangeLanguage.get(currentLng.toLowerCase()))
     if (user) {

@@ -15,15 +15,19 @@ export default function ModalAddMenu({
 }) {
   const [session, setSession] = useState('morning')
   const [date, setDate] = useState(
-    moment().add(1, 'days').utcOffset(0).set({ hour: 0, minute: 0, second: 0 })
+    moment().utcOffset(0).set({ hour: 0, minute: 0, second: 0 }).add(1, 'days')
   )
   const dispatch = useDispatch()
   const handleOk = () => {
     dispatch(
       AddToMenu.get({
-        recipe_id: recipeId,
-        timestamp: date?.unix(),
-        session
+        menu: [
+          {
+            recipe_id: recipeId,
+            timestamp: date?.unix(),
+            session
+          }
+        ]
       })
     )
     closeModal()
