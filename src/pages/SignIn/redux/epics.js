@@ -6,10 +6,13 @@ import {
   GetFollowing
 } from 'pages/Profile/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
+import { EMPTY } from 'rxjs'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
 import { MODAL_TYPE, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
+import { socket } from 'ultis/socket'
+import { notification } from 'antd'
 import {
   ChangePassword,
   ChangePasswordFailed,
@@ -63,6 +66,27 @@ const signinEpic$ = action$ =>
             if (result.data?.user) {
               store.dispatch(GetFollowing.get(result.data?.user?.id))
             }
+            if (result.data?.token) {
+              socket.io.opts.query = result.data?.token
+              socket.connect()
+
+              socket.on('connect', () => {
+                socket.on('newNotification', data => {
+                  console.log('socket data', data)
+                  store.dispatch(GetNotification.get())
+                  notification.open({
+                    message: JSON.stringify(data),
+                    placement: 'topRight',
+                    duration: 3
+                  })
+                })
+                console.log('socket', socket.connected) // true
+              })
+
+              socket.on('connect_error', res => {
+                console.log('error connect', res)
+              })
+            }
             return SignInRequestSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
@@ -75,6 +99,17 @@ const signinEpic$ = action$ =>
           return SignInRequestFailed.get(error)
         })
       )
+    })
+  )
+
+const signOutEpic$ = action$ =>
+  action$.pipe(
+    ofType(SignOut.type),
+    exhaustMap(action => {
+      if (socket.connected) {
+        socket.disconnect()
+      }
+      return EMPTY
     })
   )
 
@@ -390,5 +425,6 @@ export const authEpics = combineEpics(
   deleteRecipeInMenuEpic$,
   refreshTokenEpic$,
   getNotiListEpic$,
-  updateNotificationEpic$
+  updateNotificationEpic$,
+  signOutEpic$
 )

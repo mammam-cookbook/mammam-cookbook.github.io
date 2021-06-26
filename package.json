@@ -2,7 +2,7 @@
   "name": "mammam-web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mammam.me/",
+  "homepage": "https://mammam.me",
   "dependencies": {
     "@craco/craco": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -53,6 +53,7 @@
     "redux-typed-actions": "^0.1.5",
     "rxjs": "^6.6.2",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.1.2",
     "web-vitals": "^1.0.1",
     "yarn": "^1.22.4",
     "yup": "^0.29.3"
