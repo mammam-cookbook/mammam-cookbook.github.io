@@ -11,7 +11,7 @@ import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
 import { MODAL_TYPE, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
-import { socket } from 'ultis/socket'
+import { socketService } from 'ultis/socket'
 import { notification } from 'antd'
 import {
   ChangePassword,
@@ -67,10 +67,8 @@ const signinEpic$ = action$ =>
               store.dispatch(GetFollowing.get(result.data?.user?.id))
             }
             if (result.data?.token) {
-              socket.io.opts.query = result.data?.token
-              socket.connect()
-
-              socket.on('connect', () => {
+              socketService.connect(result.data?.token).then(socket => {
+                console.log({ socket})
                 socket.on('newNotification', data => {
                   console.log('socket data', data)
                   store.dispatch(GetNotification.get())
@@ -80,12 +78,28 @@ const signinEpic$ = action$ =>
                     duration: 3
                   })
                 })
-                console.log('socket', socket.connected) // true
+              })
+              .catch(err  => {
+                console.log({ err })
               })
 
-              socket.on('connect_error', res => {
-                console.log('error connect', res)
-              })
+              // socket(result.data?.token).on('connect', () => {
+                // socket(result.data?.token).on('newNotification', data => {
+                //   console.log('socket data', data)
+                //   store.dispatch(GetNotification.get())
+                //   notification.open({
+                //     message: JSON.stringify(data),
+                //     placement: 'topRight',
+                //     duration: 3
+                //   })
+                // })
+              //   console.log('socket', socket(result.data?.token).connected) // true
+              // })
+
+              // socket.on('connect_error', res => {
+              //   debugger
+              //   console.log('error connect', res)
+              // })
             }
             return SignInRequestSuccess.get(result.data)
           }
@@ -106,9 +120,9 @@ const signOutEpic$ = action$ =>
   action$.pipe(
     ofType(SignOut.type),
     exhaustMap(action => {
-      if (socket.connected) {
-        socket.disconnect()
-      }
+      // if (socket.connected) {
+      //   socket.disconnect()
+      // }
       return EMPTY
     })
   )
