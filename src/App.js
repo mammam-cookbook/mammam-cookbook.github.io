@@ -35,7 +35,6 @@ function App() {
   const { t } = useTranslation()
 
   useEffect(() => {
-    console.log(user, socket)
     if (user && socket === null) {
       socketService
         .connect(token)
