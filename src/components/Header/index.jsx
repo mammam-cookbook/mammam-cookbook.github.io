@@ -7,7 +7,8 @@ import {
   Dropdown,
   Input,
   Menu,
-  Popover
+  Popover,
+  Typography
 } from 'antd'
 import moment from 'moment'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
@@ -27,6 +28,7 @@ import i18n from 'ultis/i18n'
 import 'moment/locale/vi'
 import NotificationList from './components/NotificationList'
 
+const { Text } = Typography
 function AppHeader(props) {
   const [visible, setVisible] = useState(false)
   const [searchText, setSearchText] = useState('')
@@ -213,7 +215,34 @@ function AppHeader(props) {
               content={<NotificationList />}
               trigger="click"
             >
-              <Badge offset={[-18, 8]} count={unreadNotiCount}>
+              <Badge
+                offset={[-18, 8]}
+                count={
+                  unreadNotiCount ? (
+                    <div
+                      style={{
+                        backgroundColor: 'red',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 12,
+                        height: 20,
+                        width: unreadNotiCount > 9 ? 28 : 20
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: 'white'
+                        }}
+                      >
+                        {unreadNotiCount > 9 ? '9+' : unreadNotiCount}
+                      </Text>
+                    </div>
+                  ) : null
+                }
+                overflowCount={9}
+              >
                 <Button
                   type="link"
                   style={{ marginRight: 16 }}
@@ -270,7 +299,34 @@ function AppHeader(props) {
               content={<NotificationList />}
               trigger="click"
             >
-              <Badge offset={[-26, 8]} count={unreadNotiCount}>
+              <Badge
+                offset={[-26, 8]}
+                count={
+                  unreadNotiCount ? (
+                    <div
+                      style={{
+                        backgroundColor: 'red',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 12,
+                        height: 20,
+                        width: unreadNotiCount > 9 ? 28 : 20
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: 'white'
+                        }}
+                      >
+                        {unreadNotiCount > 9 ? '9+' : unreadNotiCount}
+                      </Text>
+                    </div>
+                  ) : null
+                }
+                overflowCount={9}
+              >
                 <Button
                   type="link"
                   style={{ marginRight: 24 }}

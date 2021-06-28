@@ -1,7 +1,8 @@
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, notification } from 'antd'
 import enUS from 'antd/lib/locale/en_US'
 import viVN from 'antd/lib/locale/vi_VN'
 import GlobalModal from 'components/GlobalModal'
+import { store } from 'core/store'
 import CreatePasswordPage from 'pages/CreatePassword'
 import CreateRecipe from 'pages/CreateRecipe'
 import Dashboard from 'pages/Dashboard'
@@ -9,20 +10,79 @@ import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import MealPlanner from 'pages/MealPlanner'
 import ProfilePage from 'pages/Profile'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import RecipeDetail from 'pages/Recipe'
 import SearchRecipe from 'pages/SearchRecipe'
 import SignIn from 'pages/SignIn'
+import {
+  GetNotification,
+  UpdateNotification,
+  UpdateSocket
+} from 'pages/SignIn/redux/actions'
 import SignUp from 'pages/SignUp'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import { history } from 'ultis/functions'
+import { getNotiContent, history, NOTI_TYPE } from 'ultis/functions'
+import { socketService } from 'ultis/socket'
 import './App.less'
 
 function App() {
-  const language = useSelector(state => state.Auth.language)
+  const { language, user, socket, token } = useSelector(state => state.Auth)
+  const { t } = useTranslation()
+
+  useEffect(() => {
+    console.log(user, socket)
+    if (user && socket === null) {
+      socketService
+        .connect(token)
+        .then(socket => {
+          store.dispatch(UpdateSocket.get(socket))
+          socket.on('newNotification', data => {
+            const noti = data?.notification
+            const NOTI_TEXT = {
+              [NOTI_TYPE.LIKE]: t('notification.liked'),
+              [NOTI_TYPE.COMMENT]: t('notification.commented'),
+              [NOTI_TYPE.FOLLOW]: t('notification.followed'),
+              [NOTI_TYPE.REPLY]: t('notification.replied')
+            }
+            store.dispatch(GetNotification.get())
+            notification.open({
+              message: `${noti?.sender?.name} ${
+                NOTI_TEXT[noti?.type]
+              } ${getNotiContent(noti)}`,
+              onClick: () => {
+                if (
+                  noti.type === NOTI_TYPE.LIKE ||
+                  noti.type === NOTI_TYPE.COMMENT ||
+                  noti.type === NOTI_TYPE.REPLY
+                ) {
+                  if (noti?.recipe) {
+                    history.push(`/recipe/${noti?.recipe?.id}`)
+                  }
+                } else if (noti.type === NOTI_TYPE.FOLLOW) {
+                  history.push(
+                    `/profile?page=${PROFILE_PAGE.RECIPE}&user=${noti?.sender.id}`
+                  )
+                }
+                store.dispatch(
+                  UpdateNotification.get({
+                    ...noti,
+                    read: true
+                  })
+                )
+              }
+            })
+          })
+        })
+        .catch(err => {
+          console.log({ err })
+        })
+    }
+  }, [])
   return (
     <ConfigProvider locale={language && language === 'en' ? enUS : viVN}>
       <Router history={history}>

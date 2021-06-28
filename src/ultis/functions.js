@@ -1,10 +1,10 @@
-import { createHashHistory } from 'history'
-import i18n from './i18n'
 import easy from 'assets/images/easy peasy.png'
-import yum from 'assets/images/yum.png'
-import yuck from 'assets/images/yuck.png'
 import tough from 'assets/images/tough nut.png'
+import yuck from 'assets/images/yuck.png'
+import yum from 'assets/images/yum.png'
+import { createHashHistory } from 'history'
 import ReactGA from 'react-ga'
+import i18n from './i18n'
 
 ReactGA.initialize('UA-199127755-2')
 export const history = createHashHistory({ forceRefresh: true })
@@ -77,6 +77,21 @@ export const calcCaloriesMenu = (accumulator, currentValue) =>
 
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toLocaleUpperCase() + string.slice(1)
+}
+
+export const getNotiContent = noti => {
+  switch (noti.type) {
+    case NOTI_TYPE.LIKE:
+      return noti?.recipe?.title
+    case NOTI_TYPE.COMMENT:
+      return `"${noti?.comment?.content}"`
+    case NOTI_TYPE.FOLLOW:
+      return ''
+    case NOTI_TYPE.REPLY:
+      return `"${noti?.comment?.content}"`
+    default:
+      return noti?.recipe?.title
+  }
 }
 
 export function log(...arg) {

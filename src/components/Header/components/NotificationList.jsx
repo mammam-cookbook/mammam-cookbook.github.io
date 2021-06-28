@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 import { useHistory } from 'react-router-dom'
-import { COLOR, NOTI_TYPE } from 'ultis/functions'
+import { COLOR, getNotiContent, NOTI_TYPE } from 'ultis/functions'
 
 export default function NotificationList() {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
@@ -25,21 +25,6 @@ export default function NotificationList() {
     [NOTI_TYPE.COMMENT]: t('notification.commented'),
     [NOTI_TYPE.FOLLOW]: t('notification.followed'),
     [NOTI_TYPE.REPLY]: t('notification.replied')
-  }
-
-  const getNotiContent = noti => {
-    switch (noti.type) {
-      case NOTI_TYPE.LIKE:
-        return noti?.recipe?.title
-      case NOTI_TYPE.COMMENT:
-        return `"${noti?.comment?.content}"`
-      case NOTI_TYPE.FOLLOW:
-        return ''
-      case NOTI_TYPE.REPLY:
-        return `"${noti?.comment?.content}"`
-      default:
-        return noti?.recipe?.title
-    }
   }
 
   const onClickNoti = noti => {

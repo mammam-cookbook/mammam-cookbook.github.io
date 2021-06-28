@@ -1,18 +1,24 @@
+import { notification } from 'antd'
 import GlobalModal from 'components/GlobalModal'
 import { replace } from 'connected-react-router'
 import { store } from 'core/store'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import {
   DeleteRecipeInCollectionFailed,
   GetFollowing
 } from 'pages/Profile/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
-import { EMPTY } from 'rxjs'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
-import { MODAL_TYPE, ROLES } from 'ultis/functions'
+import {
+  getNotiContent,
+  history,
+  MODAL_TYPE,
+  NOTI_TYPE,
+  ROLES
+} from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import { socketService } from 'ultis/socket'
-import { notification } from 'antd'
 import {
   ChangePassword,
   ChangePasswordFailed,
@@ -49,7 +55,8 @@ import {
   UpdateNotificationSuccess,
   UpdateProfile,
   UpdateProfileFailed,
-  UpdateProfileSuccess
+  UpdateProfileSuccess,
+  UpdateSocket
 } from './actions'
 
 const signinEpic$ = action$ =>
@@ -67,39 +74,50 @@ const signinEpic$ = action$ =>
               store.dispatch(GetFollowing.get(result.data?.user?.id))
             }
             if (result.data?.token) {
-              socketService.connect(result.data?.token).then(socket => {
-                console.log({ socket})
-                socket.on('newNotification', data => {
-                  console.log('socket data', data)
-                  store.dispatch(GetNotification.get())
-                  notification.open({
-                    message: JSON.stringify(data),
-                    placement: 'topRight',
-                    duration: 3
+              socketService
+                .connect(result.data?.token)
+                .then(socket => {
+                  store.dispatch(UpdateSocket.get(socket))
+                  socket.on('newNotification', data => {
+                    const noti = data?.notification
+                    const NOTI_TEXT = {
+                      [NOTI_TYPE.LIKE]: i18n.t('notification.liked'),
+                      [NOTI_TYPE.COMMENT]: i18n.t('notification.commented'),
+                      [NOTI_TYPE.FOLLOW]: i18n.t('notification.followed'),
+                      [NOTI_TYPE.REPLY]: i18n.t('notification.replied')
+                    }
+                    store.dispatch(GetNotification.get())
+                    notification.open({
+                      message: `${noti?.sender?.name} ${
+                        NOTI_TEXT[noti?.type]
+                      } ${getNotiContent(noti)}`,
+                      onClick: () => {
+                        if (
+                          noti.type === NOTI_TYPE.LIKE ||
+                          noti.type === NOTI_TYPE.COMMENT ||
+                          noti.type === NOTI_TYPE.REPLY
+                        ) {
+                          if (noti?.recipe) {
+                            history.push(`/recipe/${noti?.recipe?.id}`)
+                          }
+                        } else if (noti.type === NOTI_TYPE.FOLLOW) {
+                          history.push(
+                            `/profile?page=${PROFILE_PAGE.RECIPE}&user=${noti?.sender.id}`
+                          )
+                        }
+                        store.dispatch(
+                          UpdateNotification.get({
+                            ...noti,
+                            read: true
+                          })
+                        )
+                      }
+                    })
                   })
                 })
-              })
-              .catch(err  => {
-                console.log({ err })
-              })
-
-              // socket(result.data?.token).on('connect', () => {
-                // socket(result.data?.token).on('newNotification', data => {
-                //   console.log('socket data', data)
-                //   store.dispatch(GetNotification.get())
-                //   notification.open({
-                //     message: JSON.stringify(data),
-                //     placement: 'topRight',
-                //     duration: 3
-                //   })
-                // })
-              //   console.log('socket', socket(result.data?.token).connected) // true
-              // })
-
-              // socket.on('connect_error', res => {
-              //   debugger
-              //   console.log('error connect', res)
-              // })
+                .catch(err => {
+                  console.log({ err })
+                })
             }
             return SignInRequestSuccess.get(result.data)
           }
@@ -113,17 +131,6 @@ const signinEpic$ = action$ =>
           return SignInRequestFailed.get(error)
         })
       )
-    })
-  )
-
-const signOutEpic$ = action$ =>
-  action$.pipe(
-    ofType(SignOut.type),
-    exhaustMap(action => {
-      // if (socket.connected) {
-      //   socket.disconnect()
-      // }
-      return EMPTY
     })
   )
 
@@ -439,6 +446,5 @@ export const authEpics = combineEpics(
   deleteRecipeInMenuEpic$,
   refreshTokenEpic$,
   getNotiListEpic$,
-  updateNotificationEpic$,
-  signOutEpic$
+  updateNotificationEpic$
 )

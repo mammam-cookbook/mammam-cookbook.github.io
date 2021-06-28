@@ -21,7 +21,8 @@ import {
   UpdateCurrentOpenNoti,
   UpdateProfile,
   UpdateProfileFailed,
-  UpdateProfileSuccess
+  UpdateProfileSuccess,
+  UpdateSocket
 } from './actions'
 const initialState = {
   token: null,
@@ -35,7 +36,9 @@ const initialState = {
   menu: [],
   language: i18n.language,
   notifications: [],
-  recentOpenNoti: moment().valueOf()
+  recentOpenNoti: moment().valueOf(),
+  pastUserOpenNoti: {},
+  socket: null
 }
 
 export function authReducer(state = initialState, action) {
@@ -48,6 +51,11 @@ export function authReducer(state = initialState, action) {
         refreshToken: action.payload?.refreshToken,
         refreshTokenExp: action.payload?.refreshTokenExp,
         user: action.payload.user,
+        recentOpenNoti:
+          state.pastUserOpenNoti &&
+          state.pastUserOpenNoti?.hasOwnProperty(action.payload.user?.id)
+            ? state.pastUserOpenNoti[action.payload.user?.id]
+            : moment().valueOf(),
         prevLogin: new Date().getTime()
       }
     case RefreshTokenSuccess.type: {
@@ -107,14 +115,29 @@ export function authReducer(state = initialState, action) {
         notifications: action.payload?.notifications?.rows || []
       }
     case UpdateCurrentOpenNoti.type:
+      const now = moment().valueOf()
       return {
         ...state,
-        recentOpenNoti: moment().valueOf()
+        recentOpenNoti: now,
+        pastUserOpenNoti: { ...state.pastUserOpenNoti, [state.user?.id]: now }
       }
+    case UpdateSocket.type:
+      return { ...state, socket: action?.payload }
     case SignOut.type:
-      return { ...initialState, recentOpenNoti: state.recentOpenNoti }
+      if (state.socket && state.socket.connected) {
+        state.socket?.disconnect()
+      }
+      return {
+        ...initialState,
+        recentOpenNoti: state.recentOpenNoti,
+        pastUserOpenNoti: state.pastUserOpenNoti
+      }
     case ResetReducer.type:
-      return { ...initialState, recentOpenNoti: state.recentOpenNoti }
+      return {
+        ...initialState,
+        recentOpenNoti: state.recentOpenNoti,
+        pastUserOpenNoti: state.pastUserOpenNoti
+      }
     default:
       return state
   }

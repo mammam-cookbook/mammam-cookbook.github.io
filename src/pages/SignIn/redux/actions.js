@@ -58,6 +58,7 @@ export const DeleteRecipeInMenuFailed = defineAction(
 
 export const UpdateCurrentOpenNoti = defineAction('UPDATE_OPEN_NOTI_TIME')
 
+export const UpdateSocket = defineAction('UPDATE_SOCKET')
 export const SignOut = defineAction('SIGNOUT_REQUEST')
 export const ResetReducer = defineAction('RESET_REDUCER')
 
