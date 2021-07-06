@@ -57,6 +57,7 @@ import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import ModalMadeIt from './components/madeItModal'
 import Challenge from './components/challengeView'
+import ModalReaction from './components/reactionModal'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -115,6 +116,7 @@ export default function RecipeDetail(props) {
   const [isShowSaveMenu, setIsShowSaveMenu] = useState(false)
   const [isShowMadeIt, setIsShowMadeIt] = useState(false)
   const [isShowSaveCollection, setIsShowSaveCollection] = useState(false)
+  const [isShowReaction, setIsShowReaction] = useState(false)
   const [isShowPopover, setIsShowPopover] = useState(false)
 
   const useQuery = () => {
@@ -132,6 +134,19 @@ export default function RecipeDetail(props) {
   const reaction = user
     ? post?.reactions?.find(item => item.author?.id === user?.id)
     : null
+  let reactType = {}
+  post?.reactions &&
+    post?.reactions?.length > 0 &&
+    post?.reactions?.forEach(reaction => {
+      if (reactType[reaction?.react]) {
+        reactType[reaction?.react].push(reaction)
+      } else {
+        reactType[reaction?.react] = [reaction]
+      }
+    })
+  reactType = Object.entries(reactType).sort(
+    ([, a], [, b]) => b?.length - a?.length
+  )
 
   let timeLeft = 0
 
@@ -279,6 +294,29 @@ export default function RecipeDetail(props) {
           <div style={styles.spaceBetween} className="info-container">
             <div style={{ display: 'flex', flexDirection: 'column', flex: 4 }}>
               <Title level={2}>{post.title}</Title>
+              {reactType && reactType?.length > 0 && (
+                <ButtonBase
+                  onClick={() => setIsShowReaction(true)}
+                  style={{
+                    width: '20%',
+                    alignItems: 'center',
+                    flex: 0,
+                    backgroundColor: 'white'
+                  }}
+                >
+                  {reactType?.map(item => (
+                    <img
+                      src={REACTION_IMG[item[0]]}
+                      alt=""
+                      width={28}
+                      height={28}
+                    />
+                  ))}
+                  <Text style={{ fontWeight: 700, marginLeft: 8 }}>
+                    {post?.reactions?.length}
+                  </Text>
+                </ButtonBase>
+              )}
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Text style={{ color: COLOR.grayText }}>
                   {t('recipe.updatedBy')}
@@ -308,7 +346,12 @@ export default function RecipeDetail(props) {
                       size="middle"
                       style={{ marginRight: 16, borderRadius: 50 }}
                       type="primary"
-                      onClick={() => {}}
+                      onClick={() => {
+                        history.push({
+                          pathname: '/recipes',
+                          state: { category: item.category }
+                        })
+                      }}
                     >
                       {item.category['vi']}
                     </Button>
@@ -879,6 +922,12 @@ export default function RecipeDetail(props) {
         recipeId={id}
         isShow={isShowMadeIt}
         closeModal={() => setIsShowMadeIt(false)}
+      />
+      <ModalReaction
+        reactionList={post?.reactions}
+        reactionType={reactType}
+        isShow={isShowReaction}
+        closeModal={() => setIsShowReaction(false)}
       />
     </div>
   )

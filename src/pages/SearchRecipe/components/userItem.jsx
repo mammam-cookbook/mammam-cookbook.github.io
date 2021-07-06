@@ -100,7 +100,7 @@ function UserItem(props) {
               )
             }}
           >
-            {t('profile.following')}
+            {t('profile.follow')}
           </Button>
         )}
       </div>

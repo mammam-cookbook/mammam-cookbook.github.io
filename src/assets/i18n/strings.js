@@ -162,7 +162,11 @@ export const en = {
     chooseSession: 'Choose session',
     morning: 'Breakfast',
     lunch: 'Lunch',
-    dinner: 'Dinner'
+    dinner: 'Dinner',
+    yum: 'Yum',
+    easyPeasy: 'Easy peasy',
+    yuck: 'Yuck',
+    toughNut: 'Tough nut'
   },
   validation: {
     contentRequired: '* Enter direction',
@@ -412,7 +416,11 @@ export const vi = {
     chooseSession: 'Chọn bữa',
     morning: 'Bữa sáng',
     lunch: 'Bữa trưa',
-    dinner: 'Bữa tối'
+    dinner: 'Bữa tối',
+    yum: 'Ngon lắm',
+    easyPeasy: 'Dễ lắm luôn',
+    yuck: 'Hổng ngon gì hết',
+    toughNut: 'Khó quá à'
   },
   validation: {
     contentRequired: '* Nhập bước thực hiện',

@@ -63,7 +63,13 @@ export default function SearchPage() {
         dispatch(GetFollowing.get(user.id))
       }
     } else {
-      dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
+      if (history.location.state?.category) {
+        setCategoriesFilter([history.location.state?.category?.id])
+        setCategoriesFilterItem([history.location.state?.category])
+        onFilter([history.location.state?.category?.id])
+      } else {
+        dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
+      }
     }
   }, [searchText])
 
