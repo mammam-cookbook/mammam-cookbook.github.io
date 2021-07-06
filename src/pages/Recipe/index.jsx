@@ -301,7 +301,8 @@ export default function RecipeDetail(props) {
                     width: '20%',
                     alignItems: 'center',
                     flex: 0,
-                    backgroundColor: 'white'
+                    backgroundColor: 'white',
+                    padding: 0
                   }}
                 >
                   {reactType?.map(item => (

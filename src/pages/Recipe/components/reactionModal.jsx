@@ -166,7 +166,7 @@ export default function ModalReaction({
                   color: currentTab === 'all' ? COLOR.primary1 : ''
                 }}
               >
-                {t('recipe.comment')}
+                {t('recipe.all')}
               </Text>
             }
             key="all"

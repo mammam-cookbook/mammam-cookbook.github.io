@@ -166,7 +166,8 @@ export const en = {
     yum: 'Yum',
     easyPeasy: 'Easy peasy',
     yuck: 'Yuck',
-    toughNut: 'Tough nut'
+    toughNut: 'Tough nut',
+    all: 'All'
   },
   validation: {
     contentRequired: '* Enter direction',
@@ -420,7 +421,8 @@ export const vi = {
     yum: 'Ngon lắm',
     easyPeasy: 'Dễ lắm luôn',
     yuck: 'Hổng ngon gì hết',
-    toughNut: 'Khó quá à'
+    toughNut: 'Khó quá à',
+    all: 'Tất cả'
   },
   validation: {
     contentRequired: '* Nhập bước thực hiện',
