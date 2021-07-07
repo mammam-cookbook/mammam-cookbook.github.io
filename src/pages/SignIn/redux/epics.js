@@ -47,6 +47,8 @@ import {
   SignInRequestFailed,
   SignInRequestSuccess,
   SignOut,
+  SignOutFailed,
+  SignOutSuccess,
   SignUpRequest,
   SignUpRequestFailed,
   SignUpRequestSuccess,
@@ -434,6 +436,27 @@ const getNotiListEpic$ = action$ =>
     })
   )
 
+const logoutEpic$ = action$ =>
+  action$.pipe(
+    ofType(SignOut.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: `auth/logout`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return SignOutSuccess.get(result.data)
+          }
+          return SignOutFailed.get(result)
+        }),
+        catchError(error => {
+          return SignOutFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const authEpics = combineEpics(
   signinEpic$,
   signupEpic$,
@@ -446,5 +469,6 @@ export const authEpics = combineEpics(
   deleteRecipeInMenuEpic$,
   refreshTokenEpic$,
   getNotiListEpic$,
-  updateNotificationEpic$
+  updateNotificationEpic$,
+  logoutEpic$
 )

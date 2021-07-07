@@ -17,7 +17,8 @@ import {
   RefreshTokenSuccess,
   ResetReducer,
   SignInRequestSuccess,
-  SignOut,
+  SignOutFailed,
+  SignOutSuccess,
   UpdateCurrentOpenNoti,
   UpdateProfile,
   UpdateProfileFailed,
@@ -123,7 +124,16 @@ export function authReducer(state = initialState, action) {
       }
     case UpdateSocket.type:
       return { ...state, socket: action?.payload }
-    case SignOut.type:
+    case SignOutSuccess.type:
+      if (state.socket && state.socket.connected) {
+        state.socket?.disconnect()
+      }
+      return {
+        ...initialState,
+        recentOpenNoti: state.recentOpenNoti,
+        pastUserOpenNoti: state.pastUserOpenNoti
+      }
+    case SignOutFailed.type:
       if (state.socket && state.socket.connected) {
         state.socket?.disconnect()
       }
