@@ -89,7 +89,7 @@ function App() {
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/forgot" component={ForgotPassword} />
-        <Route path="/reset/:token" component={CreatePasswordPage} />
+        <Route path="/confirm" component={CreatePasswordPage} />
         <Route path="/create" component={CreateRecipe} />
         <Route path="/recipes" component={SearchRecipe} />
         <Route path="/recipe/:id" component={RecipeDetail} />

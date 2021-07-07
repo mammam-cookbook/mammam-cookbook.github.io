@@ -1,25 +1,30 @@
 import { Button } from 'antd'
+import forgotPic from 'assets/images/forgot_password.jpg'
+import logo from 'assets/logo.svg'
 import CInput from 'components/CInput'
 import { Form, Formik } from 'formik'
 import { CreatePassword } from 'pages/SignIn/redux/actions'
 import React, { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import * as yup from 'yup'
 import '../SignIn/signin.css'
-import forgotPic from 'assets/images/forgot_password.jpg'
-import logo from 'assets/logo.svg'
-import { useTranslation } from 'react-i18next'
 
 function CreatePasswordPage() {
-  const param = useParams()
-  const { token } = param
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search)
+  }
+  const query = useQuery()
+  const token = query.get('code')
   const history = useHistory()
   const dispatch = useDispatch()
   const user = useSelector(state => state.Auth?.user)
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const { t } = useTranslation()
+
+  console.log(token)
 
   useEffect(() => {
     if (user || !token) {
@@ -51,7 +56,7 @@ function CreatePasswordPage() {
     dispatch(
       CreatePassword.get({
         password: values.password,
-        token: token
+        resetToken: token
       })
     )
   }
