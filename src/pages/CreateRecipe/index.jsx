@@ -315,7 +315,6 @@ export default props => {
                       allowClear
                       style={{
                         width: '100%',
-                        height: 48,
                         borderColor: COLOR.primary1
                       }}
                       placeholder={t('create.categoriesPlaceholder')}
