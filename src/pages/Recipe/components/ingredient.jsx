@@ -1,4 +1,5 @@
 import { Typography } from 'antd'
+import Paragraph from 'antd/lib/typography/Paragraph'
 import 'pages/CreateRecipe/create.css'
 import 'pages/SignIn/signin.css'
 import React from 'react'
@@ -22,7 +23,16 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
           <span className="imgSrcDefault" style={{ borderRadius: 10 }} />
         )}
       </div>
-      <Text style={styles.nameTxt}>{capitalizeFirstLetter(item.name)}</Text>
+      <Paragraph
+        ellipsis={{
+          rows: 2,
+          expandable: false,
+          suffix: ''
+        }}
+        style={{ marginBottom: 0, minHeight: 48 }}
+      >
+        <Text style={styles.nameTxt}>{capitalizeFirstLetter(item.name)}</Text>
+      </Paragraph>
 
       <Text style={styles.amountTxt}>
         {item.amount} {item?.unit?.measurement_description}
@@ -50,7 +60,7 @@ const styles = {
   },
   nameTxt: {
     fontWeight: 600,
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 16,
     paddingLeft: 8,
     paddingRight: 8

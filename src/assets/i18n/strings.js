@@ -167,7 +167,10 @@ export const en = {
     easyPeasy: 'Easy peasy',
     yuck: 'Yuck',
     toughNut: 'Tough nut',
-    all: 'All'
+    all: 'All',
+    startTimer: 'Start timer',
+    stopTimer: 'Stop timer',
+    done: 'Done'
   },
   validation: {
     contentRequired: '* Enter direction',
@@ -422,7 +425,10 @@ export const vi = {
     easyPeasy: 'Dễ lắm luôn',
     yuck: 'Hổng ngon gì hết',
     toughNut: 'Khó quá à',
-    all: 'Tất cả'
+    all: 'Tất cả',
+    startTimer: 'Đếm giờ',
+    stopTimer: 'Dừng đếm',
+    done: 'Xong'
   },
   validation: {
     contentRequired: '* Nhập bước thực hiện',

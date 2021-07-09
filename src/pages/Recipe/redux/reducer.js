@@ -2,11 +2,13 @@ import { ResetReducer } from 'pages/SignIn/redux/actions'
 import {
   GetDetailRecipe,
   GetDetailRecipeFailed,
-  GetDetailRecipeSuccess
+  GetDetailRecipeSuccess,
+  UpdateIsCountdown
 } from './actions'
 const initialState = {
   recipeDetail: null,
-  isLoading: false
+  isLoading: false,
+  isCountDown: false
 }
 
 export function recipeReducer(state = initialState, action) {
@@ -26,6 +28,11 @@ export function recipeReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false
+      }
+    case UpdateIsCountdown.type:
+      return {
+        ...state,
+        isCountDown: action.payload
       }
     case ResetReducer.type:
       return initialState

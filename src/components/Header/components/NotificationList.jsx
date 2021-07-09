@@ -46,10 +46,11 @@ export default function NotificationList() {
   return (
     <div
       style={{
-        width: isDesktopOrLaptop ? 400 : '90vw',
-        height: '90vh',
+        width: isDesktopOrLaptop ? 400 : '70vw',
+        maxHeight: 600,
         borderRadius: 10,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        overflowY: 'auto'
       }}
     >
       <Title level={4} style={{ marginLeft: 12, marginTop: 12 }}>
@@ -79,7 +80,8 @@ export default function NotificationList() {
             >
               <Paragraph
                 style={{
-                  opacity: item?.read ? 0.6 : 1
+                  opacity: item?.read ? 0.6 : 1,
+                  marginBottom: 0
                 }}
                 ellipsis={{
                   rows: 2,

@@ -49,7 +49,8 @@ import RecipeIngredient from './components/ingredient'
 import {
   AddToShoppingList,
   GetDetailRecipe,
-  ReactRecipe
+  ReactRecipe,
+  UpdateIsCountdown
 } from './redux/actions'
 import { FacebookShareButton } from 'react-share'
 import ButtonBase from 'components/ButtonBase'
@@ -58,6 +59,8 @@ import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import ModalMadeIt from './components/madeItModal'
 import Challenge from './components/challengeView'
 import ModalReaction from './components/reactionModal'
+import DirectionList from './components/directionList'
+import IngredientList from './components/ingredientList'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -108,6 +111,7 @@ export default function RecipeDetail(props) {
   const { id } = params // Recipe ID (The UUID was returned from API)
   const dispatch = useDispatch()
   const post = useSelector(state => state.Recipe.recipeDetail)
+  const isCountdown = useSelector(state => state.Recipe.isCountDown)
   const user = useSelector(state => state.Auth.user)
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState('0')
@@ -124,9 +128,8 @@ export default function RecipeDetail(props) {
   }
   const query = useQuery()
   const readMode = query.get('readMode')
-  const step = Number(query.get('step'))
-  const [isCountdown, setIsCountdown] = useState(false)
-  const [timerTime, setTimerTime] = useState('00:00')
+  const step = Number(query.get('step')) || 0
+  const [timerTime, setTimerTime] = useState(-1)
   const [timer, setTimer] = useState(null)
   const isFollow = user
     ? user?.following?.findIndex(item => item.user_id === user.id) > -1
@@ -160,6 +163,31 @@ export default function RecipeDetail(props) {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
   }, [user])
 
+  useEffect(() => {
+    if (
+      readMode &&
+      step > 0 &&
+      step <= post.steps.length &&
+      isCountdown &&
+      !timer
+    ) {
+      startTimer(Number(post.steps[step - 1].time))
+    }
+  }, [step])
+
+  useEffect(() => {
+    if (isCountdown && timerTime === 0 && timer) {
+      clearInterval(timer)
+      setTimerTime(Number(post.steps[step - 1].time) * 60)
+      setTimer(null)
+      if (step < post.steps.length) {
+        history.replace(`/recipe/${id}?readMode=true&step=${step + 1}`)
+      } else {
+        dispatch(UpdateIsCountdown.get(false))
+      }
+    }
+  }, [timerTime])
+
   const onClickSave = () => {
     if (user) {
       setIsShowPopover(!isShowPopover)
@@ -185,24 +213,32 @@ export default function RecipeDetail(props) {
   }
 
   const startTimer = timeCount => {
-    timeLeft = timeCount * 60
-    setIsCountdown(true)
-    setTimerTime(moment.utc(timeLeft * 1000).format('HH:mm:ss'))
-    if (!timer && timeLeft > 0) {
-      setTimer(setInterval(countDown, 1000))
+    if (timeCount > 0) {
+      timeLeft = timeCount * 60
+      dispatch(UpdateIsCountdown.get(true))
+      setTimerTime(timeLeft)
+      if (!timer && timeLeft > 0) {
+        const time = setInterval(countDown, 1000)
+        setTimer(time)
+      }
+    } else {
+      stopTimer()
     }
+  }
+
+  const stopTimer = () => {
+    if (timer) {
+      clearInterval(timer)
+    }
+    setTimerTime(Number(post.steps[step - 1].time) * 60)
+    dispatch(UpdateIsCountdown.get(false))
+    setTimer(null)
   }
 
   const countDown = () => {
     // Remove one second, set state so a re-render happens.
     timeLeft = timeLeft - 1
-    setTimerTime(moment.utc(timeLeft * 1000).format('HH:mm:ss'))
-    // Check if we're at zero.
-    if (timeLeft === 0) {
-      clearInterval(timer)
-      setTimer(null)
-      setIsCountdown(false)
-    }
+    setTimerTime(timeLeft)
   }
 
   const reactToRecipe = react => {
@@ -786,36 +822,69 @@ export default function RecipeDetail(props) {
               right: 48,
               top: 24,
               zIndex: 11,
-              justifyContent: 'flex-start'
+              justifyContent: 'flex-start',
+              alignItems: 'center'
             }}
           >
-            <Button
-              size="large"
-              style={{ marginRight: 16, borderRadius: 50 }}
-              type="primary"
-              onClick={() => {}}
+            <Popover
+              placement="bottomLeft"
+              content={
+                <DirectionList
+                  directions={post?.steps}
+                  onClickItem={chosenStep => {
+                    stopTimer()
+                    history.replace(
+                      `/recipe/${id}?readMode=true&step=${chosenStep}`
+                    )
+                  }}
+                />
+              }
+              trigger="click"
             >
-              {t('create.direction')}
-            </Button>
-            <Button
-              size="large"
-              style={{ marginRight: 16, borderRadius: 50 }}
-              type="primary"
-              onClick={() => {}}
+              <Button
+                size="large"
+                style={{ marginRight: 16, borderRadius: 50 }}
+                type="primary"
+              >
+                {t('create.direction')}
+              </Button>
+            </Popover>
+
+            <Popover
+              placement="bottom"
+              content={<IngredientList ingredients={post?.ingredients} />}
+              trigger="click"
             >
-              {t('create.ingredients')}
-            </Button>
+              <Button
+                size="large"
+                style={{ marginRight: 16, borderRadius: 50 }}
+                type="primary"
+                onClick={() => {}}
+              >
+                {t('create.ingredients')}
+              </Button>
+            </Popover>
             <Button
               size="middle"
               type="link"
               shape="circle"
+              style={{ padding: 0 }}
               icon={<FiX size={40} color={COLOR.gray} />}
-              onClick={() => history.replace(`/recipe/${id}`)}
+              onClick={() => {
+                stopTimer()
+                history.replace(`/recipe/${id}`)
+              }}
             />
           </div>
           <div
             className="row-container"
-            style={{ paddingLeft: 48, paddingRight: 48 }}
+            style={{
+              paddingLeft: 48,
+              paddingRight: 48,
+              flex: 1,
+              paddingTop: 80,
+              marginBottom: 60
+            }}
           >
             <div
               style={{
@@ -831,16 +900,27 @@ export default function RecipeDetail(props) {
                   strokeColor={COLOR.primary1}
                   type="circle"
                   percent={
-                    moment(timerTime, 'HH:mm:ss').diff(
-                      moment().startOf('day'),
-                      'seconds'
-                    ) /
-                    (Number(post.steps[step - 1].time) * 60)
+                    (timerTime * 100) / (Number(post.steps[step - 1].time) * 60)
                   }
-                  format={percent => timerTime}
+                  format={percent =>
+                    moment.utc(timerTime * 1000).format('HH:mm:ss')
+                  }
                 />
               ) : (
-                <img style={{ flex: 1 }} src={post.steps[step - 1].images[0]} />
+                <Image.PreviewGroup>
+                  <Carousel infiniteLoop autoPlay interval={3000} swipeable>
+                    {post.steps[step - 1].images?.map((item, index) => (
+                      <div>
+                        <Image
+                          src={item}
+                          alt=""
+                          height={300}
+                          style={{ objectFit: 'cover' }}
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
+                </Image.PreviewGroup>
               )}
             </div>
 
@@ -865,24 +945,18 @@ export default function RecipeDetail(props) {
                     type="default"
                     onClick={
                       isCountdown
-                        ? () => {
-                            clearInterval(timer)
-                            setTimerTime(
-                              moment
-                                .utc(Number(post.steps[step - 1].time) * 60000)
-                                .format('HH:mm:ss')
-                            )
-                            setIsCountdown(false)
-                            setTimer(null)
-                          }
+                        ? () => stopTimer()
                         : () => startTimer(Number(post.steps[step - 1].time))
                     }
                   >
-                    {isCountdown ? 'Dừng đếm' : 'Đếm giờ'}
+                    {isCountdown
+                      ? t('recipe.stopTimer')
+                      : t('recipe.startTimer')}
                   </Button>
                 )}
                 {step < post.steps.length ? (
                   <Button
+                    disabled={isCountdown}
                     size="large"
                     style={{ marginRight: 16, borderRadius: 50 }}
                     type="primary"
@@ -896,12 +970,13 @@ export default function RecipeDetail(props) {
                   </Button>
                 ) : (
                   <Button
+                    disabled={isCountdown}
                     size="large"
                     style={{ marginRight: 16, borderRadius: 50 }}
                     type="primary"
                     onClick={() => history.replace(`/recipe/${id}`)}
                   >
-                    Xong
+                    {t('recipe.done')}
                   </Button>
                 )}
               </div>
@@ -971,7 +1046,7 @@ const styles = {
     position: 'absolute',
     left: 0,
     top: 0,
-    bottom: 0,
+    // bottom: 0,
     right: 0,
     zIndex: 10,
     display: 'flex'

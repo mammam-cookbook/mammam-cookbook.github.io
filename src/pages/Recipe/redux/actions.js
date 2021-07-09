@@ -43,3 +43,5 @@ export const ReactRecipeFailed = defineAction('REACT_RECIPE_FAILED')
 export const UpvoteComment = defineAction('UPVOTE_COMMENT')
 export const UpvoteCommentSuccess = defineAction('UPVOTE_COMMENT_SUCCESS')
 export const UpvoteCommentFailed = defineAction('UPVOTE_COMMENT_FAILED')
+
+export const UpdateIsCountdown = defineAction('UPDATE_IS_COUNTDOWN')
