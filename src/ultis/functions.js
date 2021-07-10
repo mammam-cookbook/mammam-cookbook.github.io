@@ -6,7 +6,7 @@ import { createHashHistory } from 'history'
 import ReactGA from 'react-ga'
 import i18n from './i18n'
 
-ReactGA.initialize('UA-199127755-2')
+ReactGA.initialize('UA-198059333-1')
 export const history = createHashHistory({ forceRefresh: true })
 
 history.listen(window => {
