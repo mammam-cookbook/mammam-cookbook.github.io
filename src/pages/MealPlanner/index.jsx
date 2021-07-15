@@ -195,7 +195,7 @@ export default function MealPlanner() {
   return (
     <>
       <AppHeader />
-      <div className="container-fluid">
+      <div className="body-container">
         <div
           style={{
             display: 'flex',

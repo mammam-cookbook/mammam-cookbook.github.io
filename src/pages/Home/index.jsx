@@ -51,7 +51,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="container-fluid">
+      <div className="body-container">
         <Tabs
           style={{
             flex: 1,

@@ -2,21 +2,25 @@ import { LoadingOutlined } from '@ant-design/icons'
 import {
   Affix,
   Button,
+  Col,
   Image,
   Menu,
   Popover,
   Progress,
+  Row,
   Spin,
   Tabs,
-  Typography,
-  Row,
-  Col
+  Typography
 } from 'antd'
+import ButtonBase from 'components/ButtonBase'
 import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
 import moment from 'moment'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
+import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import 'pages/Recipe/recipe.css'
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import {
   FiBookmark,
@@ -28,12 +32,12 @@ import {
   FiX
 } from 'react-icons/fi'
 import Lottie from 'react-lottie'
-import MetaTags from 'react-meta-tags'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { FacebookShareButton } from 'react-share'
 import {
   calcCalories,
   COLOR,
@@ -43,24 +47,20 @@ import {
 } from 'ultis/functions'
 import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
+import Challenge from './components/challengeView'
 import RecipeComments from './components/comment'
 import Direction from './components/direction'
+import DirectionList from './components/directionList'
 import RecipeIngredient from './components/ingredient'
+import IngredientList from './components/ingredientList'
+import ModalMadeIt from './components/madeItModal'
+import ModalReaction from './components/reactionModal'
 import {
   AddToShoppingList,
   GetDetailRecipe,
   ReactRecipe,
   UpdateIsCountdown
 } from './redux/actions'
-import { FacebookShareButton } from 'react-share'
-import ButtonBase from 'components/ButtonBase'
-import { PROFILE_PAGE } from 'pages/Profile/constant'
-import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
-import ModalMadeIt from './components/madeItModal'
-import Challenge from './components/challengeView'
-import ModalReaction from './components/reactionModal'
-import DirectionList from './components/directionList'
-import IngredientList from './components/ingredientList'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -311,21 +311,21 @@ export default function RecipeDetail(props) {
   return (
     <div>
       {!readMode && <AppHeader />}
-      <MetaTags>
+      <Helmet>
         <title>{post.title}</title>
         {post.description && (
-          <meta name="description" content={post.description} />
+          <meta name="og:description" content={post.description} />
         )}
         <meta property="og:title" content={post.title} />
         {post.avatar && post.avatar.length > 0 && (
           <meta property="og:image" content={post.avatar[0]} />
         )}
-      </MetaTags>
+      </Helmet>
 
       {!readMode && (
         <div
           style={{ marginTop: 48, paddingBottom: 60 }}
-          className="container-fluid"
+          className="body-container"
         >
           <div style={styles.spaceBetween} className="info-container">
             <div style={{ display: 'flex', flexDirection: 'column', flex: 4 }}>

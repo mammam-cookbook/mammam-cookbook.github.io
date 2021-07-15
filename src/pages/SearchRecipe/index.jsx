@@ -569,7 +569,7 @@ export default function SearchPage() {
           </div>
         </div>
       </div>
-      <div className="container-fluid" style={{ paddingBottom: 64 }}>
+      <div className="body-container" style={{ paddingBottom: 64 }}>
         <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
           <Input
             style={styles.inputSearchStyle}

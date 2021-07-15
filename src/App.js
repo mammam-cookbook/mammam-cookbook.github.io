@@ -9,6 +9,7 @@ import Dashboard from 'pages/Dashboard'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import MealPlanner from 'pages/MealPlanner'
+import Policy from 'pages/Policy'
 import ProfilePage from 'pages/Profile'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
 import RecipeDetail from 'pages/Recipe'
@@ -21,6 +22,7 @@ import {
 } from 'pages/SignIn/redux/actions'
 import SignUp from 'pages/SignUp'
 import React, { useEffect } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
@@ -84,20 +86,23 @@ function App() {
   }, [])
   return (
     <ConfigProvider locale={language && language === 'en' ? enUS : viVN}>
-      <Router history={history}>
-        <Route exact path="/" component={Home} />
-        <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/forgot" component={ForgotPassword} />
-        <Route path="/confirm" component={CreatePasswordPage} />
-        <Route path="/create" component={CreateRecipe} />
-        <Route path="/recipes" component={SearchRecipe} />
-        <Route path="/recipe/:id" component={RecipeDetail} />
-        <Route path="/profile" component={ProfilePage} />
-        <Route path="/meal-planner" component={MealPlanner} />
-        <Route path="/admin" component={Dashboard} />
-      </Router>
-      <GlobalModal />
+      <HelmetProvider>
+        <Router history={history}>
+          <Route exact path="/" component={Home} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/forgot" component={ForgotPassword} />
+          <Route path="/confirm" component={CreatePasswordPage} />
+          <Route path="/create" component={CreateRecipe} />
+          <Route path="/recipes" component={SearchRecipe} />
+          <Route path="/recipe/:id" component={RecipeDetail} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route path="/meal-planner" component={MealPlanner} />
+          <Route path="/admin" component={Dashboard} />
+          <Route path="/policy" component={Policy} />
+        </Router>
+        <GlobalModal />
+      </HelmetProvider>
     </ConfigProvider>
   )
 }

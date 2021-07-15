@@ -27,7 +27,7 @@ export const COLOR = {
   gray: '#C4C4C4',
   grayText: '#828282'
 }
-
+export const MAM_TITLE = 'MAM | Có MAM chăm vào bếp'
 export const NAME_REGEX =
   /^[A-Z0-9a-z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]*$/
 

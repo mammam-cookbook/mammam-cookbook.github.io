@@ -130,7 +130,7 @@ export default function ProfilePage() {
     <>
       <AppHeader />
 
-      <div className="container-fluid">
+      <div className="body-container">
         <Row justify="start" gutter={{ xs: 0, sm: 0, md: 16, lg: 16 }}>
           <Col span={6} sm={24} xs={24} md={8} lg={8} xl={6} xxl={6}>
             <div
