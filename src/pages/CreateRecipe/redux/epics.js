@@ -49,7 +49,7 @@ const createRecipeEpic$ = action$ =>
           if (result.status === 200) {
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Tạo công thức thàng công',
+              i18n.t('notification.createRecipeSuccess'),
               MODAL_TYPE.NORMAL,
               () => history.replace(`/recipe/${result.data.recipe.id}`)
             )

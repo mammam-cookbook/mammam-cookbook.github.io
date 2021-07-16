@@ -1,16 +1,15 @@
-import { Button, Input, Select, Typography } from 'antd'
+import { Button, Grid, Select, Typography } from 'antd'
 import CInput from 'components/CInput'
-import _ from 'lodash'
 import 'pages/CreateRecipe/create.css'
 import 'pages/SignIn/signin.css'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { capitalizeFirstLetter, COLOR } from 'ultis/functions'
 
-const { Text, Title } = Typography
-const { TextArea } = Input
+const { Text } = Typography
 const { Option } = Select
+const { useBreakpoint } = Grid
 
 function Ingredient({
   isAdd = true,
@@ -27,14 +26,18 @@ function Ingredient({
   const user = useSelector(state => state.Auth.user)
   const [unitSelected, setUnitSelected] = useState(item.selectUnit || 0)
   const [amount, setAmount] = useState(item.selectAmount || 1)
+  const screens = useBreakpoint()
 
-  const delayedQuery = useCallback(
-    _.debounce(q => {
-      setAmount(Number(q))
-      onChange({ ...item, selectAmount: Number(q) })
-    }, 500),
-    []
-  )
+  const getMaxWidth = () => {
+    if (screens.xs && !screens.sm) {
+      return 'calc(100vw - 2vmin - 142px)'
+    } else if ((screens.sm || screens.md) && !screens.lg) {
+      if (!screens.md) return 'calc(48vw - 2vmin - 128px)'
+      return 'calc(42vw - 162px)'
+    } else if (screens.lg && !screens.xl) {
+      return 'calc(25vw - 112px)'
+    } else return 'calc(17vw - 112px)'
+  }
 
   const changeAmount = text => {
     // delayedQuery(text)
@@ -47,23 +50,13 @@ function Ingredient({
     onChange({ ...item, selectUnit: unitIndex })
   }
 
-  const delayedChangeCustomUnit = useCallback(
-    _.debounce(q => {
-      onChangeCustomUnit(q)
-    }, 500),
-    []
-  )
-
-  const changeCustomUnit = text => {
-    delayedChangeCustomUnit(text)
-  }
-
   return (
     <div
       style={{
+        display: 'flex',
+        flex: 1,
         ...style
       }}
-      className="ingredient-create"
       key={item.id}
     >
       <div
@@ -99,8 +92,10 @@ function Ingredient({
         item?.unit?.length > 0 &&
         item.unit[unitSelected]?.calories ? (
           <Text style={{ fontWeight: 600, color: COLOR.grayText }}>
-            {Number(item.unit[unitSelected].calories) *
-              (amount / Number(item.unit[unitSelected].number_of_units))}{' '}
+            {Math.round(
+              Number(item.unit[unitSelected].calories) *
+                (amount / Number(item.unit[unitSelected].number_of_units))
+            )}{' '}
             kcal
           </Text>
         ) : (
@@ -115,8 +110,6 @@ function Ingredient({
         }}
       >
         <CInput
-          style={{ borderColor: COLOR.primary1, maxWidth: '100%' }}
-          className="inputBox"
           value={amount}
           onChange={event => changeAmount(event.target.value)}
           placeholder={'200'}
@@ -127,8 +120,7 @@ function Ingredient({
           <Select
             style={{
               borderColor: COLOR.primary1,
-              width: '100%',
-              maxWidth: 190
+              maxWidth: getMaxWidth()
             }}
             placeholder={t('create.measurePlaceholder')}
             defaultValue={unitSelected}
@@ -144,8 +136,7 @@ function Ingredient({
           <CInput
             style={{
               borderColor: COLOR.primary1,
-              width: '100%'
-              // maxWidth: 190
+              marginBottom: 0
             }}
             defaultValue={item.unit[0].measurement_description}
             placeholder={t('create.measurePlaceholder')}

@@ -24,8 +24,6 @@ function CreatePasswordPage() {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const { t } = useTranslation()
 
-  console.log(token)
-
   useEffect(() => {
     if (user || !token) {
       history.replace('/')

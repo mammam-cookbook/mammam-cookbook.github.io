@@ -1,24 +1,25 @@
-import { Button, Select, Steps, Typography, Row, Col } from 'antd'
+import { Button, Col, Row, Select, Steps, Typography } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import Paragraph from 'antd/lib/typography/Paragraph'
 import CInput from 'components/CInput'
 import AppHeader from 'components/Header'
 import { store } from 'core/store'
 import { FieldArray, Formik } from 'formik'
+import ImageUpload from 'pages/CreateRecipe/components/imageUpload'
+import Ingredient from 'pages/CreateRecipe/components/ingredient'
+import Step from 'pages/CreateRecipe/components/step'
+import { MAX_COOKING_TIME } from 'pages/CreateRecipe/constants'
 import 'pages/CreateRecipe/create.css'
+import { SearchIngredient } from 'pages/CreateRecipe/redux/actions'
 import { GetAllCategories } from 'pages/Dashboard/redux/actions'
+import { GetDetailRecipe, UpdateRecipe } from 'pages/Recipe/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { capitalizeFirstLetter, COLOR, RECIPE_STATUS } from 'ultis/functions'
 import * as yup from 'yup'
-import ImageUpload from './components/imageUpload'
-import Ingredient from './components/ingredient'
-import Step from './components/step'
-import { MAX_COOKING_TIME } from './constants'
-import { CreateRecipe, SearchIngredient } from './redux/actions'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -51,10 +52,13 @@ function search(value, callback) {
 }
 
 export default props => {
+  const params = useParams()
+  const { id } = params
   const dispatch = useDispatch()
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
   const { user, language } = useSelector(state => state.Auth)
   const categories = useSelector(state => state.Create.categories)
+  const post = useSelector(state => state.Recipe.recipeDetail)
   const history = useHistory()
   const { t } = useTranslation()
   const stepTitle = [t('create.step1'), t('create.step2'), t('create.step3')]
@@ -68,6 +72,13 @@ export default props => {
     })
   const [isUploading, setIsUploading] = useState({})
   // let isUploading = {}
+
+  useEffect(() => {
+    if (id) {
+      dispatch(GetDetailRecipe.get({ recipeId: id }))
+    }
+    dispatch(GetAllCategories.get())
+  }, [])
 
   const LEVEL = [
     {
@@ -117,10 +128,6 @@ export default props => {
     avatar: yup.array().required(t('validation.thumbnailRequired'))
   })
 
-  useEffect(() => {
-    dispatch(GetAllCategories.get())
-  }, [])
-
   const handleSearch = value => {
     if (value) {
       setOtherIngre(value)
@@ -167,14 +174,22 @@ export default props => {
 
   const submitRecipe = async (values, type = RECIPE_STATUS.APPROVED) => {
     const avalink = values.avatar.map(item => {
+      if (typeof item === 'string') {
+        return item
+      }
       return item.src.url
     })
+
     const steps = values.steps.map(item => {
       const images = item.images.map(itemImg => {
+        if (typeof itemImg === 'string') {
+          return itemImg
+        }
         return itemImg.src.url
       })
       return { ...item, images }
     })
+
     let ingredients_name = []
     const ingredients = values.ingredients.map(item => {
       ingredients_name.push(item.name)
@@ -195,18 +210,21 @@ export default props => {
       return tmp
     })
     dispatch(
-      CreateRecipe.get({
-        ...values,
-        avatar: avalink,
-        steps,
-        ingredients,
-        ingredients_name,
-        status: type
+      UpdateRecipe.get({
+        recipeId: id,
+        data: {
+          ...values,
+          avatar: avalink,
+          steps,
+          ingredients,
+          ingredients_name,
+          status: type
+        }
       })
     )
   }
 
-  if (!user) {
+  if (!user || !id || post?.author?.id !== user?.id) {
     return (
       <>
         <AppHeader from="create" />
@@ -219,19 +237,27 @@ export default props => {
           }}
         >
           <Text style={{ margin: 28 }}>
-            {t('notification.loginToCreateRecipe')}
+            {!user
+              ? t('notification.loginToEditRecipe')
+              : t('notification.cannotEditRecipe')}
           </Text>
           <Button
             size="large"
             type="primary"
-            onClick={() =>
-              history.push({
-                pathname: '/signin',
-                state: { from: `/create` }
-              })
-            }
+            onClick={() => {
+              if (!user) {
+                history.push({
+                  pathname: '/signin',
+                  state: { from: `/create` }
+                })
+              } else {
+                history.push('/')
+              }
+            }}
           >
-            {t('auth.login').toLocaleUpperCase()}
+            {!user
+              ? t('auth.login').toLocaleUpperCase()
+              : t('notification.backToHome').toLocaleUpperCase()}
           </Button>
         </div>
       </>
@@ -243,16 +269,26 @@ export default props => {
       <AppHeader from="create" />
       <Formik
         initialValues={{
-          title: '',
-          description: '',
-          avatar: [],
-          ration: 1,
-          cooking_time: 20,
-          level: LEVEL[0].code,
-          ingredients: [],
-          categories: [],
+          title: post?.title,
+          description: post?.description,
+          avatar: post?.avatar,
+          ration: post?.ration,
+          cooking_time: post?.cooking_time,
+          level: post?.level,
+          ingredients: post?.ingredients?.map(item => {
+            return {
+              ...item,
+              unit: [item?.unit],
+              selectAmount: item?.amount,
+              selectUnit: 0
+            }
+          }),
+          categories:
+            post?.categories && post?.categories?.length > 0
+              ? post?.categories?.map(item => item.category_id)
+              : [],
           hashtags: [],
-          steps: [{ content: '', images: [], time: null }]
+          steps: post?.steps
         }}
         isInitialValid={false}
         validationSchema={validationRecipeSchema}
@@ -271,7 +307,7 @@ export default props => {
         }) => {
           return (
             <div className="body-container">
-              <Title level={2}>{t('home.createRecipe')}</Title>
+              <Title level={2}>{t('home.editRecipe')}</Title>
               <div
                 style={{
                   ...style.spaceBetween,
@@ -629,21 +665,13 @@ export default props => {
                 }}
               >
                 <Button
-                  size="large"
-                  disabled={!isValid}
-                  onClick={() => submitRecipe(values, RECIPE_STATUS.PENDING)}
-                  style={{ flex: 1, marginRight: 16 }}
-                >
-                  {t('create.saveDraft')}
-                </Button>
-                <Button
                   type="primary"
                   size="large"
-                  style={{ flex: 1, marginLeft: 16 }}
+                  style={{ flex: 1 }}
                   disabled={!isValid}
                   onClick={handleSubmit}
                 >
-                  {t('create.create')}
+                  {t('common.save').toLocaleUpperCase()}
                 </Button>
               </div>
             </div>

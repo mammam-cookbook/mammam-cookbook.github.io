@@ -7,6 +7,7 @@ import RecipeItem from 'components/RecipeItem'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { COLOR, MODAL_TYPE } from 'ultis/functions'
 import { DeleteRecipe, GetRecipeOfUser } from '../redux/actions'
 
@@ -21,12 +22,13 @@ function RecipeListProfile(props) {
   const user = useSelector(state => state.Auth.user)
   const dispatch = useDispatch()
   const { t } = useTranslation()
+  const history = useHistory()
   const recipePopover = [
     {
       key: 'edit_recipe',
       title: t('profile.editRecipe'),
       onPress: recipeId => {
-        console.log('edit', recipeId)
+        history.replace(`/edit/${recipeId}`)
       }
     },
     {

@@ -34,9 +34,19 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
         <Text style={styles.nameTxt}>{capitalizeFirstLetter(item.name)}</Text>
       </Paragraph>
 
-      <Text style={styles.amountTxt}>
-        {item.amount} {item?.unit?.measurement_description}
-      </Text>
+      <Paragraph
+        ellipsis={{
+          rows: 1,
+          expandable: false,
+          suffix: ''
+        }}
+        style={{ marginBottom: 0 }}
+      >
+        <Text style={styles.amountTxt}>
+          {item.amount} {item?.unit?.measurement_description}
+        </Text>
+      </Paragraph>
+
       <Text style={styles.calTxt}>{item?.calories} kcal</Text>
     </div>
   )

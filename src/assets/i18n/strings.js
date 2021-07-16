@@ -68,13 +68,14 @@ export const en = {
     wrongOldPass: 'Old password is incorrect'
   },
   home: {
-    title1: 'Eat good',
+    title1: 'Eat good\nFeel good',
     title2: 'Feel good',
     tryItOut: 'Try it Out',
     browse: 'BROWSE',
     recipes: 'Recipes',
     mealPlanner: 'MEAL PLANNERS',
     createRecipe: 'CREATE MY RECIPE',
+    editRecipe: 'EDIT MY RECIPE',
     searchHere: 'Search here',
     result: 'Result',
     filter: 'Filter',
@@ -254,7 +255,15 @@ export const en = {
     followed: 'is now following you',
     replied: 'replied',
     notification: 'Notification',
-    noNotification: 'There is no notifications'
+    noNotification: 'There is no notifications',
+    loginToCreateRecipe: 'You are not logged in. Log in to create your recipe.',
+    loginToEditRecipe: 'You are not logged in. Log in to edit your recipe.',
+    cannotEditRecipe: 'You do not have permission to edit this recipe',
+    backToHome: 'Back to home',
+    createRecipeSuccess: 'Create recipe success',
+    editRecipeSuccess: 'Edit recipe success',
+    addToShoppingListSuccess: 'Added to shopping list',
+    addToMenuSuccess: 'Added to meal planner'
   }
 }
 
@@ -326,13 +335,14 @@ export const vi = {
     wrongOldPass: 'Sai mật khẩu cũ'
   },
   home: {
-    title1: 'Eat good',
+    title1: 'Có MAM,\nChăm vào bếp.\nTrăm việc khó,\nCó MAM lo.',
     title2: 'Feel good',
     tryItOut: 'Thử ngay',
     browse: 'KHÁM PHÁ',
     recipes: 'Công thức',
     mealPlanner: 'TẠO THỰC ĐƠN',
     createRecipe: 'ĐĂNG CÔNG THỨC',
+    editRecipe: 'SỬA CÔNG THỨC',
     searchHere: 'Tìm kiếm',
     result: 'Kết quả',
     filter: 'Lọc',
@@ -513,6 +523,16 @@ export const vi = {
     followed: 'đã theo dõi bạn',
     replied: 'đã trả lời bạn',
     notification: 'Thông báo',
-    noNotification: 'Chưa có thông báo'
+    noNotification: 'Chưa có thông báo',
+    loginToCreateRecipe:
+      'Bạn chưa đăng nhập. Vui lòng đăng nhập để tạo bài viết.',
+    loginToEditRecipe:
+      'Bạn chưa đăng nhập. Vui lòng đăng nhập để sửa bài viết.',
+    cannotEditRecipe: 'Không thể sửa bài viết này',
+    backToHome: 'Về trang chủ',
+    createRecipeSuccess: 'Tạo công thức thàng công',
+    editRecipeSuccess: 'Thay đổi công thức thàng công',
+    addToShoppingListSuccess: 'Đã thêm vào danh sách mua',
+    addToMenuSuccess: 'Đã thêm vào thực đơn'
   }
 }

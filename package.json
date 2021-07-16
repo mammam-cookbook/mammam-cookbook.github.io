@@ -60,7 +60,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "cleanBuild": "rimraf ./build/*",
+    "build": "npm run cleanBuild && set \"GENERATE_SOURCEMAP=false\" && craco build ",
     "test": "craco test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

@@ -43,15 +43,23 @@ function ImageUpload(props) {
     })
   }
 
-  const removeImg = async index => {
+  const onRemoveImg = index => {
     let tmp = props.value
-    const deleteResult = await deleteImg(tmp[index].src.public_id)
-    if (deleteResult.result === 'ok') {
-      tmp.splice(index, 1)
-      if (props?.step) {
-        props.onDelete(tmp)
-      } else {
-        props.onChange(tmp)
+    tmp.splice(index, 1)
+    if (props?.step) {
+      props.onDelete(tmp)
+    } else {
+      props.onChange(tmp)
+    }
+  }
+
+  const removeImg = async index => {
+    if (typeof props.value[index] === 'string') {
+      onRemoveImg(index)
+    } else {
+      const deleteResult = await deleteImg(props.value[index].src.public_id)
+      if (deleteResult.result === 'ok') {
+        onRemoveImg(index)
       }
     }
   }
@@ -144,7 +152,9 @@ function ImageUpload(props) {
                 <span
                   style={{
                     ...style.imageSrc,
-                    backgroundImage: `url("${item.src.url}")`
+                    backgroundImage: `url("${
+                      typeof item === 'string' ? item : item.src.url
+                    }")`
                   }}
                 />
                 <Text

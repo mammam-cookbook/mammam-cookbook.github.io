@@ -112,7 +112,7 @@ export default function RecipeDetail(props) {
   const dispatch = useDispatch()
   const post = useSelector(state => state.Recipe.recipeDetail)
   const isCountdown = useSelector(state => state.Recipe.isCountDown)
-  const user = useSelector(state => state.Auth.user)
+  const { user, language } = useSelector(state => state.Auth)
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState('0')
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 1224 })
@@ -376,12 +376,16 @@ export default function RecipeDetail(props) {
 
               {post.categories && post.categories.length > 0 && (
                 <div
-                  style={{ display: 'flex', flexWrap: 'wrap', marginTop: 24 }}
+                  style={{ display: 'flex', flexWrap: 'wrap', marginTop: 12 }}
                 >
                   {post.categories.map(item => (
                     <Button
                       size="middle"
-                      style={{ marginRight: 16, borderRadius: 50 }}
+                      style={{
+                        marginRight: 16,
+                        borderRadius: 50,
+                        marginBottom: 16
+                      }}
                       type="primary"
                       onClick={() => {
                         history.push({
@@ -390,7 +394,7 @@ export default function RecipeDetail(props) {
                         })
                       }}
                     >
-                      {item.category['vi']}
+                      {item.category[language]}
                     </Button>
                   ))}
                 </div>
@@ -435,7 +439,7 @@ export default function RecipeDetail(props) {
                 </div>
               </div>
 
-              <div style={{ ...styles.spaceBetween, marginTop: 24 }}>
+              <div style={{ ...styles.spaceBetween }}>
                 <Button
                   size="large"
                   style={{ flex: 1, marginRight: 24 }}
@@ -461,9 +465,9 @@ export default function RecipeDetail(props) {
             <div
               style={{
                 display: 'flex',
-                flex: 3,
-                marginLeft: 24
+                flex: 3
               }}
+              className="img-upload-container"
             >
               {post.avatar && post.avatar.length > 0 && (
                 <Image.PreviewGroup>
@@ -526,7 +530,7 @@ export default function RecipeDetail(props) {
             </Text>
           </div>
 
-          <div style={{ marginTop: 24 }} className="row-container">
+          <div style={{ marginTop: 28 }} className="row-container">
             <div className="side-col-container">
               <Popover
                 content={reactContent}
@@ -712,7 +716,7 @@ export default function RecipeDetail(props) {
                 <>
                   <Row gutter={[16, 16]} style={{ marginTop: 20 }}>
                     {post.ingredients.map(item => (
-                      <Col xxl={4} xl={4} lg={4} md={6} sm={6} xs={12}>
+                      <Col xxl={4} xl={6} lg={6} md={8} sm={8} xs={12}>
                         <RecipeIngredient item={item} />
                       </Col>
                     ))}
@@ -1014,7 +1018,7 @@ const styles = {
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: 20
+    marginBottom: 12
   },
   spaceBetween: {
     display: 'flex',

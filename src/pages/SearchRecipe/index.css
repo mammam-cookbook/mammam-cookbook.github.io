@@ -16,55 +16,58 @@
   height: 100%;
   background-image: url('../../assets//images/search-banner.png');
   filter: blur(2px);
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.text-banner {
+/* .text-banner {
   display: flex;
   position: relative;
   flex-direction: column;
   height: 40vh;
   justify-content: center;
-}
+} */
 
 @media only screen and (max-width: 1367px) {
   .search-banner {
     height: 40vh;
   }
-  .text-banner p {
+  /* .text-banner p {
     font-size: 30px !important;
-  }
-
+  } */
+  /* 
   .text-banner .button {
     margin-top: 20px;
     background-color: #f6a13a;
     color: white;
     border-color: #f6a13a;
     border-radius: 10px;
-  }
+  } */
 }
 
 @media only screen and (max-width: 766px) {
   .search-banner {
     height: 40vh;
   }
-  .text-banner {
+  /* .text-banner {
     flex: 1;
-  }
+  } */
 }
 
-.text-banner p {
+/* .text-banner p {
   font-family: 'Segoe UI';
   margin-bottom: 4px;
   color: white;
   font-weight: 800;
   font-size: 38px;
-}
+} */
 
-.text-banner .button {
+/* .text-banner .button {
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: #f6a13a;
   color: white;
   border-color: #f6a13a;
   border-radius: 10px;
-}
+} */

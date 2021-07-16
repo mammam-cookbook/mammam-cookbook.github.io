@@ -27,6 +27,9 @@ import {
   ReactRecipe,
   ReactRecipeFailed,
   ReactRecipeSuccess,
+  UpdateRecipe,
+  UpdateRecipeFailed,
+  UpdateRecipeSuccess,
   UpvoteComment,
   UpvoteCommentFailed,
   UpvoteCommentSuccess
@@ -117,6 +120,36 @@ const getDetailRecipeEpic$ = action$ =>
     })
   )
 
+const updateRecipeEpic$ = action$ =>
+  action$.pipe(
+    ofType(UpdateRecipe.type),
+    exhaustMap(action => {
+      return request({
+        method: 'PUT',
+        url: `recipe/${action.payload.recipeId}`,
+        param: action.payload?.data
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              i18n.t('notification.editRecipeSuccess'),
+              MODAL_TYPE.NORMAL,
+              () => history.replace(`/recipe/${action.payload.recipeId}`)
+            )
+            return UpdateRecipeSuccess.get(result.data.result)
+          }
+          GlobalModal.alertMessage(null, result.data.err)
+          return UpdateRecipeFailed.get(result)
+        }),
+        catchError(error => {
+          GlobalModal.alertMessage()
+          return UpdateRecipeFailed.get(error)
+        })
+      )
+    })
+  )
+
 const addShoppingListEpic$ = action$ =>
   action$.pipe(
     ofType(AddToShoppingList.type),
@@ -130,7 +163,7 @@ const addShoppingListEpic$ = action$ =>
           if (result.status === 200) {
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Đã thêm vào danh sách mua'
+              i18n.t('notification.addToShoppingListSuccess')
             )
             return AddToShoppingListSuccess.get(result.data)
           }
@@ -158,7 +191,7 @@ const addMenuEpic$ = action$ =>
           if (result.status === 200) {
             GlobalModal.alertMessage(
               i18n.t('common.information'),
-              'Đã thêm vào thực đơn'
+              i18n.t('notification.addToMenuSuccess')
             )
             return AddToMenuListSuccess.get(result.data)
           }
@@ -260,5 +293,6 @@ export const recipeEpics = combineEpics(
   reactRecipeEpic$,
   commentChallengeRecipeEpic$,
   upvoteCommentEpic$,
-  deleteCommentEpic$
+  deleteCommentEpic$,
+  updateRecipeEpic$
 )

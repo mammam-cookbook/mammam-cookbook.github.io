@@ -6,6 +6,7 @@ import { store } from 'core/store'
 import CreatePasswordPage from 'pages/CreatePassword'
 import CreateRecipe from 'pages/CreateRecipe'
 import Dashboard from 'pages/Dashboard'
+import EditRecipe from 'pages/EditRecipe'
 import ForgotPassword from 'pages/ForgotPassword'
 import Home from 'pages/Home'
 import MealPlanner from 'pages/MealPlanner'
@@ -96,6 +97,7 @@ function App() {
           <Route path="/create" component={CreateRecipe} />
           <Route path="/recipes" component={SearchRecipe} />
           <Route path="/recipe/:id" component={RecipeDetail} />
+          <Route path="/edit/:id" component={EditRecipe} />
           <Route path="/profile" component={ProfilePage} />
           <Route path="/meal-planner" component={MealPlanner} />
           <Route path="/admin" component={Dashboard} />

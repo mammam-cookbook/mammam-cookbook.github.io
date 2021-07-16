@@ -1,15 +1,15 @@
+import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button, Comment } from 'antd'
 import GlobalModal from 'components/GlobalModal'
+import { PROFILE_PAGE } from 'pages/Profile/constant'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { COLOR, MODAL_TYPE } from 'ultis/functions'
-import CommentSend from './CommentSend'
-import { UserOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
-import { PROFILE_PAGE } from 'pages/Profile/constant'
-import { FiArrowUp } from 'react-icons/fi'
 import { DeleteComment, UpvoteComment } from '../redux/actions'
+import CommentSend from './CommentSend'
 
 export default function CommentView(props) {
   const { comment, canReply, postId, padding, key } = props
@@ -58,11 +58,19 @@ export default function CommentView(props) {
   const actions = [
     <Button
       icon={
-        <FiArrowUp
-          size={16}
-          color={COLOR.primary1}
-          style={{ marginRight: 4, marginBottom: 2 }}
-        />
+        comment?.isUpvoted ? (
+          <IoIosHeart
+            size={20}
+            color={COLOR.primary1}
+            style={{ marginRight: 4, marginBottom: 2 }}
+          />
+        ) : (
+          <IoIosHeartEmpty
+            size={20}
+            color={COLOR.primary1}
+            style={{ marginRight: 4, marginBottom: 2 }}
+          />
+        )
       }
       size="small"
       type={comment?.isUpvoted ? 'link' : 'text'}

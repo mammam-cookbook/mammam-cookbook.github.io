@@ -547,12 +547,22 @@ export default function SearchPage() {
         <div className="search-banner">
           <div className="header-fluid">
             <div className="text-banner">
-              <p className="text">Eat good</p>
-              <p className="text">Feel good</p>
+              <Text
+                style={{
+                  fontSize: 28,
+                  fontWeight: 900,
+                  color: 'white',
+                  whiteSpace: 'pre-wrap'
+                }}
+              >
+                {t('home.title1')}
+              </Text>
               <div>
                 {!user && (
                   <Button
-                    className="button"
+                    type="primary"
+                    size="large"
+                    style={{ marginTop: 20 }}
                     onClick={() => {
                       history.push({
                         pathname: '/signin',
@@ -560,8 +570,7 @@ export default function SearchPage() {
                       })
                     }}
                   >
-                    {' '}
-                    Try it Out
+                    {t('home.tryItOut')}
                   </Button>
                 )}
               </div>
