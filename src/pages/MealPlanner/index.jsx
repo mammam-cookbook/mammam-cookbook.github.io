@@ -1,6 +1,7 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Button, Col, Collapse, Select, Spin, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import RecipeItem from 'components/RecipeItem'
 import moment from 'moment'
@@ -204,7 +205,7 @@ export default function MealPlanner() {
             paddingTop: 32
           }}
         >
-          <div>
+          <div style={{ display: 'flex', flex: 1 }}>
             <Button
               style={{ marginRight: 16 }}
               onClick={() => {
@@ -255,7 +256,8 @@ export default function MealPlanner() {
               icon={<FiChevronRight size={28} color={COLOR.primary1} />}
             />
           </div>
-          <Button type="primary">{t('profile.recommendPlanner')}</Button>
+          <div style={{ display: 'flex', flex: 1 }} />
+          {/* <Button type="primary">{t('profile.recommendPlanner')}</Button> */}
         </div>
 
         <div
@@ -280,13 +282,7 @@ export default function MealPlanner() {
           })}
         </div>
       </div>
+      <AppFooter />
     </>
   )
-}
-
-const styles = {
-  icon: {
-    marginRight: 8,
-    marginTop: -4
-  }
 }

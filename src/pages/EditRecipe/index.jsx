@@ -2,6 +2,7 @@ import { Button, Col, Row, Select, Steps, Typography } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import Paragraph from 'antd/lib/typography/Paragraph'
 import CInput from 'components/CInput'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import { store } from 'core/store'
 import { FieldArray, Formik } from 'formik'
@@ -678,6 +679,7 @@ export default props => {
           )
         }}
       </Formik>
+      <AppFooter />
     </>
   )
 }

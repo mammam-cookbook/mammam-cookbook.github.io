@@ -1,4 +1,5 @@
 import Title from 'antd/lib/typography/Title'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -180,6 +181,7 @@ function Policy() {
           not hesitate to contact us at mammam.cookbook@gmail.com.
         </p>
       </div>
+      <AppFooter />
     </div>
   )
 }

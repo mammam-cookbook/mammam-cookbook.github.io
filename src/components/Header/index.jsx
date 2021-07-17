@@ -27,6 +27,7 @@ import { COLOR, getCurrentLng, ROLES } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import 'moment/locale/vi'
 import NotificationList from './components/NotificationList'
+import ButtonBase from 'components/ButtonBase'
 
 const { Text } = Typography
 function AppHeader(props) {
@@ -149,19 +150,17 @@ function AppHeader(props) {
     <div className="container-fluid">
       <div className="header">
         <div style={{ display: 'flex' }}>
-          <div id="logo">
-            <span
-              id="logoText"
-              onClick={() =>
-                history.push({
-                  pathname: '/',
-                  state: { from: `/` }
-                })
-              }
-            >
-              MAM
-            </span>
-          </div>
+          <ButtonBase
+            style={{ padding: 0, backgroundColor: 'white' }}
+            onClick={() =>
+              history.push({
+                pathname: '/',
+                state: { from: `/` }
+              })
+            }
+          >
+            <span id="logoText">MAM</span>
+          </ButtonBase>
         </div>
         <div className="mobileHidden">
           <Button

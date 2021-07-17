@@ -13,6 +13,7 @@ import {
   Typography
 } from 'antd'
 import ButtonBase from 'components/ButtonBase'
+import AppFooter from 'components/Footer'
 import GlobalModal from 'components/GlobalModal'
 import AppHeader from 'components/Header'
 import moment from 'moment'
@@ -988,6 +989,7 @@ export default function RecipeDetail(props) {
           </div>
         </div>
       )}
+      {!readMode && <AppFooter />}
       <ModalAddMenu
         recipeId={id}
         isShow={isShowSaveMenu}

@@ -2,6 +2,7 @@ import { Badge, Button, Col, Input, Pagination, Row, Select, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import ButtonBase from 'components/ButtonBase'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import RecipeItem from 'components/RecipeItem'
 import { GetAllCategories } from 'pages/Dashboard/redux/actions'
@@ -651,6 +652,7 @@ export default function SearchPage() {
           </div>
         )}
       </div>
+      <AppFooter />
     </>
   )
 }

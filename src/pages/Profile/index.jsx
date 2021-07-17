@@ -1,6 +1,7 @@
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Col, Menu, Row, Select, Spin, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import { GetProfile } from 'pages/SignIn/redux/actions'
 import React, { useEffect } from 'react'
@@ -129,8 +130,7 @@ export default function ProfilePage() {
   return (
     <>
       <AppHeader />
-
-      <div className="body-container">
+      <div className="body-container" style={{ paddingBottom: 60 }}>
         <Row justify="start" gutter={{ xs: 0, sm: 0, md: 16, lg: 16 }}>
           <Col span={6} sm={24} xs={24} md={8} lg={8} xl={6} xxl={6}>
             <div
@@ -276,6 +276,7 @@ export default function ProfilePage() {
           </Col>
         </Row>
       </div>
+      <AppFooter />
     </>
   )
 }

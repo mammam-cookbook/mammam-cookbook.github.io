@@ -1,5 +1,6 @@
 import { Button, Col, Row, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import AppFooter from 'components/Footer'
 import AppHeader from 'components/Header'
 import RecipeItem from 'components/RecipeItem'
 import React, { useEffect, useState } from 'react'
@@ -131,6 +132,7 @@ function Home() {
           </TabPane>
         </Tabs>
       </div>
+      <AppFooter />
     </>
   )
 }

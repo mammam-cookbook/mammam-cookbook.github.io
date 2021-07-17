@@ -19,7 +19,10 @@ export const en = {
     action: 'Action',
     find: 'Find',
     reset: 'Reset',
-    save: 'Save'
+    save: 'Save',
+    policy: 'Policy',
+    privacyPolicy: 'Privacy policy',
+    app: 'App'
   },
   auth: {
     login: 'Sign In',
@@ -286,7 +289,10 @@ export const vi = {
     action: 'Tác vụ',
     find: 'Tìm',
     reset: 'Đặt lại',
-    save: 'Lưu'
+    save: 'Lưu',
+    policy: 'Chính sách',
+    privacyPolicy: 'Chính sách quyền riêng tư',
+    app: 'Ứng dụng'
   },
   auth: {
     login: 'Đăng nhập',
