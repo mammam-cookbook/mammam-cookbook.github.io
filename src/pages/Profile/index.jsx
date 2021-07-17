@@ -163,14 +163,26 @@ export default function ProfilePage() {
                 >
                   {userProfile?.name}
                 </Text>
+                {user && user?.id === userProfile?.id ? (
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: COLOR.grayText,
+                      textAlign: 'center'
+                    }}
+                  >
+                    {userProfile?.email}
+                  </Text>
+                ) : null}
                 <Text
                   style={{
                     fontSize: 14,
-                    color: COLOR.grayText,
+                    fontWeight: 700,
+                    color: COLOR.primary1,
                     textAlign: 'center'
                   }}
                 >
-                  {userProfile?.email}
+                  {t(`profile.${userProfile?.rank}`)}
                 </Text>
               </div>
               <Menu

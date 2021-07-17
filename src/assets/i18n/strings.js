@@ -250,7 +250,11 @@ export const en = {
     dish: 'dish',
     dishes: 'dishes',
     today: 'Today',
-    recommendPlanner: 'Recommend meal'
+    recommendPlanner: 'Recommend meal',
+    bronze: 'Bronze',
+    gold: 'Gold',
+    silver: 'Silver',
+    diamond: 'Diamond'
   },
   notification: {
     liked: 'reacted to your',
@@ -521,7 +525,11 @@ export const vi = {
     dish: 'món',
     dishes: 'món',
     today: 'Hôm nay',
-    recommendPlanner: 'Đề xuất thực đơn'
+    recommendPlanner: 'Đề xuất thực đơn',
+    bronze: 'Đồng',
+    gold: 'Vàng',
+    silver: 'Bạc',
+    diamond: 'Kim cương'
   },
   notification: {
     liked: 'đã thích công thức',

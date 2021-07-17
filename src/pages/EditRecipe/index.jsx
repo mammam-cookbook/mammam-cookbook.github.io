@@ -19,7 +19,12 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 import { useHistory, useParams } from 'react-router-dom'
-import { capitalizeFirstLetter, COLOR, RECIPE_STATUS } from 'ultis/functions'
+import {
+  capitalizeFirstLetter,
+  COLOR,
+  RECIPE_STATUS,
+  ROLES
+} from 'ultis/functions'
 import * as yup from 'yup'
 
 const { Text, Title } = Typography
@@ -225,7 +230,11 @@ export default props => {
     )
   }
 
-  if (!user || !id || post?.author?.id !== user?.id) {
+  if (
+    !user ||
+    !id ||
+    (user?.role === ROLES.USER && post?.author?.id !== user?.id)
+  ) {
     return (
       <>
         <AppHeader from="create" />

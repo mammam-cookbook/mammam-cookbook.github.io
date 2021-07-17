@@ -1,7 +1,7 @@
 import { Button } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
-import logo from 'assets/logo.svg'
+import logo from 'assets/logo_footer.svg'
 import badgeVi from 'assets/images/google-play-badge-vi.png'
 import badgeEn from 'assets/images/google-play-badge-en.png'
 import React from 'react'
@@ -71,8 +71,9 @@ function AppFooter() {
           </Title>
           <ButtonBase style={{ padding: 0 }}>
             <img
+              alt=""
               src={language === 'vi' ? badgeVi : badgeEn}
-              width="130"
+              width={130}
               style={{ objectFit: 'contain' }}
             />
           </ButtonBase>

@@ -26,7 +26,11 @@ const searchRecipeEpic$ = action$ =>
               total: result?.data?.total,
               rows:
                 result?.data?.result?.length > 0
-                  ? result?.data?.result?.map(item => item?._source)
+                  ? result?.data?.result?.map(item =>
+                      item?._source?.id
+                        ? item?._source
+                        : item?._source?.dataValues
+                    )
                   : [],
               currentPage: action.payload.offset / LIMIT_ITEMS + 1
             })

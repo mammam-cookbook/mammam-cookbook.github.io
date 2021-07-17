@@ -39,6 +39,7 @@ function UserItem(props) {
         flex: 1,
         flexDirection: 'row',
         border: `1px solid #828282`,
+        alignItems: 'center',
         borderRadius: 10,
         padding: 16
       }}
@@ -74,7 +75,13 @@ function UserItem(props) {
         </ButtonBase>
         <Text
           style={{
-            fontSize: 16,
+            fontWeight: 700
+          }}
+        >
+          {t(`profile.${user?.rank}`)}
+        </Text>
+        <Text
+          style={{
             fontWeight: 500,
             marginBottom: 8
           }}

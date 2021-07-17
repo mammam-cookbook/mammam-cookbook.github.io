@@ -133,7 +133,9 @@ export default function RecipeDetail(props) {
   const [timerTime, setTimerTime] = useState(-1)
   const [timer, setTimer] = useState(null)
   const isFollow = user
-    ? user?.following?.findIndex(item => item.user_id === user.id) > -1
+    ? user?.following?.findIndex(
+        item => item.following_id === post?.author?.id
+      ) > -1
     : false
   const reaction = user
     ? post?.reactions?.find(item => item.author?.id === user?.id)
@@ -151,7 +153,6 @@ export default function RecipeDetail(props) {
   reactType = Object.entries(reactType).sort(
     ([, a], [, b]) => b?.length - a?.length
   )
-
   let timeLeft = 0
 
   const LEVEL = {

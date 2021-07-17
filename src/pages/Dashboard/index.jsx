@@ -24,6 +24,7 @@ import {
   FiChevronRight,
   FiChevronLeft
 } from 'react-icons/fi'
+import RecipeList from './component/recipeList'
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
@@ -68,8 +69,8 @@ function Dashboard() {
     switch (currentPage) {
       case PAGE.CATEGORY:
         return <CategoryList />
-      // case PAGE.COURSE:
-      //   return <CoursesList />
+      case PAGE.RECIPE:
+        return <RecipeList />
       // case PAGE.TEACHER:
       //   return <TeacherList />
       // case PAGE.STUDENT:
@@ -162,6 +163,14 @@ function Dashboard() {
             icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
           >
             {t('create.categories')}
+          </Menu.Item>
+          <Menu.Item
+            style={{ color: 'white' }}
+            className="customItem"
+            key={PAGE.RECIPE}
+            icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
+          >
+            Công thức
           </Menu.Item>
           {/* <Menu.Item
             style={{ color: 'white' }}

@@ -153,7 +153,9 @@ function ImageUpload(props) {
                   style={{
                     ...style.imageSrc,
                     backgroundImage: `url("${
-                      typeof item === 'string' ? item : item.src.url
+                      item != null && typeof item === 'string'
+                        ? item
+                        : item.src.url
                     }")`
                   }}
                 />

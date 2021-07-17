@@ -1,5 +1,6 @@
 import GlobalModal from 'components/GlobalModal'
 import { store } from 'core/store'
+import { SearchRecipes } from 'pages/SearchRecipe/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
@@ -335,6 +336,7 @@ const deleteRecipeEpic$ = action$ =>
         map(result => {
           if (result.status === 200) {
             store.dispatch(GetRecipeOfUser.get(store.getState().Auth.user?.id))
+            store.dispatch(SearchRecipes.get({}))
             return DeleteRecipeSuccess.get(result?.data)
           }
           GlobalModal.alertMessage()

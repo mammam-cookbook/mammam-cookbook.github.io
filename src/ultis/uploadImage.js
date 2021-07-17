@@ -7,7 +7,9 @@ cloudinary.config({
 
 export const upload = async image => {
   try {
-    const link = await cloudinary.uploader.upload(image)
+    const link = await cloudinary.uploader.upload(image, () => {}, {
+      secure: true
+    })
     return link
   } catch (error) {
     console.log('===============imgae upload service ===========', error)

@@ -3,6 +3,7 @@ import { store } from 'core/store'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
+import i18n from 'ultis/i18n'
 import {
   AddCategory,
   AddCategoryFailed,
@@ -164,7 +165,10 @@ const getUsersEpic$ = action$ =>
           if (result.status === 200) {
             return GetUsersSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return GetUsersFailed.get(result)
         }),
         catchError(error => {

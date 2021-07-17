@@ -1,15 +1,14 @@
 import { PAGE } from 'pages/Dashboard/constant'
+import {
+  SearchRecipes,
+  SearchRecipesFailed,
+  SearchRecipesSuccess
+} from 'pages/SearchRecipe/redux/actions'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import {
   GetAllCategories,
   GetAllCategoriesFailed,
   GetAllCategoriesSuccess,
-  GetAllCourses,
-  GetAllCoursesFailed,
-  GetAllCoursesSuccess,
-  GetUserProfile,
-  GetUserProfileFailed,
-  GetUserProfileSuccess,
   GetUsers,
   GetUsersFailed,
   GetUsersSuccess,
@@ -23,7 +22,7 @@ const initialState = {
   categoryList: [],
   userList: [],
   userDetail: null,
-  courseList: []
+  recipeList: []
 }
 
 export function dashboardReducer(state = initialState, action) {
@@ -40,25 +39,22 @@ export function dashboardReducer(state = initialState, action) {
       return { ...state, userList: action.payload, isLoading: false }
     case GetUsersFailed.type:
       return { ...state, isLoading: false }
-    case GetUserProfile.type:
-      return { ...state, isLoading: true }
-    case GetUserProfileSuccess.type:
-      return { ...state, userDetail: action.payload, isLoading: false }
-    case GetUserProfileFailed.type:
-      return { ...state, isLoading: false }
-    case GetAllCourses.type:
-      return { ...state, isLoading: true }
-    case GetAllCoursesSuccess.type:
+    case SearchRecipes.type:
       return {
         ...state,
-        courseList: action.payload.page
-          ? action.payload.results
-          : action.payload,
-        page: action.payload.page,
+        isLoading: true
+      }
+    case SearchRecipesSuccess.type:
+      return {
+        ...state,
+        isLoading: false,
+        recipeList: action.payload.rows
+      }
+    case SearchRecipesFailed.type:
+      return {
+        ...state,
         isLoading: false
       }
-    case GetAllCoursesFailed.type:
-      return { ...state, isLoading: false }
     case SetCurrentPage.type:
       return {
         ...state,

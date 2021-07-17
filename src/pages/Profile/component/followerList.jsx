@@ -17,7 +17,9 @@ function FollowerListProfile(props) {
   const { followers, isLoadingRecipe } = useSelector(state => state.Profile)
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const followerList = followers?.map(item => item.user)
+  const followerList = followers?.map(item => {
+    return { ...item.user, recipes: item?.recipes ?? 0 }
+  })
 
   useEffect(() => {
     if (props?.userId) {

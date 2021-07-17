@@ -10,6 +10,7 @@ import { getColumnSearchProps } from './searchInput'
 import { Tabs } from 'antd'
 import ProfileTab from './profileTab'
 import CoursesTab from './coursesTab'
+import { SearchUsers } from 'pages/SearchRecipe/redux/actions'
 
 const { TabPane } = Tabs
 
@@ -29,7 +30,7 @@ function StudentList() {
   const [filteredInfo, setFilterInfo] = useState(null)
 
   useEffect(() => {
-    dispatch(GetUsers.get({ role: `${ROLES.STUDENT},${ROLES.NOT_VERIFIED}` }))
+    dispatch(SearchUsers.get({ keyword: searchText, limit: 10, offset: 0 }))
   }, [])
 
   const handleView = record => {
@@ -107,23 +108,23 @@ function StudentList() {
       key: 'phoneNumber',
       sorter: (a, b) => a.phoneNumber.localeCompare(b.phoneNumber)
     },
-    {
-      title: 'Status',
-      dataIndex: 'role',
-      render: (value, record, index) => {
-        switch (value) {
-          case ROLES.STUDENT:
-            return <span style={{ color: 'green' }}>{'Verified'}</span>
-          case ROLES.NOT_VERIFIED:
-            return <span style={{ color: 'red' }}>{'Not verified'}</span>
-          default:
-            return <span />
-        }
-      },
-      filters: ACCOUNT_STATUS,
-      filteredValue: filteredInfo ? filteredInfo.name : null,
-      onFilter: (value, record) => record.role === value
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'role',
+    //   render: (value, record, index) => {
+    //     switch (value) {
+    //       case ROLES.STUDENT:
+    //         return <span style={{ color: 'green' }}>{'Verified'}</span>
+    //       case ROLES.NOT_VERIFIED:
+    //         return <span style={{ color: 'red' }}>{'Not verified'}</span>
+    //       default:
+    //         return <span />
+    //     }
+    //   },
+    //   filters: ACCOUNT_STATUS,
+    //   filteredValue: filteredInfo ? filteredInfo.name : null,
+    //   onFilter: (value, record) => record.role === value
+    // },
     {
       title: 'Action',
       key: 'action',
@@ -148,30 +149,9 @@ function StudentList() {
     )
   }
 
-  if (detailPage === PAGE.PROFILE) {
-    return (
-      <div className="chooseContainer">
-        <span className="titleTopic" style={{ alignSelf: 'center' }}>
-          Profile
-        </span>
-        <Tabs defaultActiveKey="1" centered>
-          <TabPane tab="Information" key="1">
-            <ProfileTab user={userDetail} />
-          </TabPane>
-          <TabPane tab="All courses" key="2">
-            <CoursesTab
-              courseList={userDetail.enrollment}
-              role={ROLES.STUDENT}
-            />
-          </TabPane>
-        </Tabs>
-      </div>
-    )
-  }
-
   return (
     <div className="chooseContainer">
-      <span className="titleTopic">Students</span>
+      <span className="titleTopic">Người dùng</span>
       <Table
         columns={userColumns}
         dataSource={userList}
