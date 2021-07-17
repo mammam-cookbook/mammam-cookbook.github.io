@@ -21,7 +21,7 @@ import { PROFILE_PAGE } from 'pages/Profile/constant'
 import { FollowUser, UnFollowUser } from 'pages/Profile/redux/actions'
 import 'pages/Recipe/recipe.css'
 import React, { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
+import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import {
   FiBookmark,

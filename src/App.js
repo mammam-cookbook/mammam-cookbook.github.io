@@ -23,15 +23,15 @@ import {
 } from 'pages/SignIn/redux/actions'
 import SignUp from 'pages/SignUp'
 import React, { useEffect } from 'react'
-import { HelmetProvider } from 'react-helmet-async'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import { getNotiContent, history, NOTI_TYPE } from 'ultis/functions'
+import { getNotiContent, history, MAM_TITLE, NOTI_TYPE } from 'ultis/functions'
 import { socketService } from 'ultis/socket'
 import './App.less'
+import { Helmet } from 'react-helmet'
 
 function App() {
   const { language, user, socket, token } = useSelector(state => state.Auth)
@@ -87,24 +87,29 @@ function App() {
   }, [])
   return (
     <ConfigProvider locale={language && language === 'en' ? enUS : viVN}>
-      <HelmetProvider>
-        <Router history={history}>
-          <Route exact path="/" component={Home} />
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/forgot" component={ForgotPassword} />
-          <Route path="/confirm" component={CreatePasswordPage} />
-          <Route path="/create" component={CreateRecipe} />
-          <Route path="/recipes" component={SearchRecipe} />
-          <Route path="/recipe/:id" component={RecipeDetail} />
-          <Route path="/edit/:id" component={EditRecipe} />
-          <Route path="/profile" component={ProfilePage} />
-          <Route path="/meal-planner" component={MealPlanner} />
-          <Route path="/admin" component={Dashboard} />
-          <Route path="/policy" component={Policy} />
-        </Router>
-        <GlobalModal />
-      </HelmetProvider>
+      <Helmet>
+        <title>{MAM_TITLE}</title>
+        <meta
+          name="description"
+          content="Có MAM, chăm vào bếp. Trăm việc khó, có MAM lo."
+        />
+      </Helmet>
+      <Router history={history}>
+        <Route exact path="/" component={Home} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/forgot" component={ForgotPassword} />
+        <Route path="/confirm" component={CreatePasswordPage} />
+        <Route path="/create" component={CreateRecipe} />
+        <Route path="/recipes" component={SearchRecipe} />
+        <Route path="/recipe/:id" component={RecipeDetail} />
+        <Route path="/edit/:id" component={EditRecipe} />
+        <Route path="/profile" component={ProfilePage} />
+        <Route path="/meal-planner" component={MealPlanner} />
+        <Route path="/admin" component={Dashboard} />
+        <Route path="/policy" component={Policy} />
+      </Router>
+      <GlobalModal />
     </ConfigProvider>
   )
 }

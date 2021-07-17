@@ -1,6 +1,7 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Avatar, Button } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import ButtonBase from 'components/ButtonBase'
 import GlobalModal from 'components/GlobalModal'
 import 'pages/Home/home.css'
 import { PROFILE_PAGE } from 'pages/Profile/constant'
@@ -9,7 +10,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
-import { MODAL_TYPE } from 'ultis/functions'
+import { COLOR, MODAL_TYPE } from 'ultis/functions'
 
 function UserItem(props) {
   const { user } = props
@@ -55,15 +56,22 @@ function UserItem(props) {
           marginRight: 8
         }}
       >
-        <Button
-          type="link"
+        <ButtonBase
           onClick={() =>
             history.push(`/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`)
           }
-          style={{ fontSize: 18, fontWeight: 700, paddingLeft: 0 }}
+          style={{ padding: 0, backgroundColor: 'white' }}
         >
-          {user.name}
-        </Button>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 700,
+              color: COLOR.primary1
+            }}
+          >
+            {user?.name}
+          </Text>
+        </ButtonBase>
         <Text
           style={{
             fontSize: 16,
@@ -71,7 +79,7 @@ function UserItem(props) {
             marginBottom: 8
           }}
         >
-          10 {t('home.recipes').toLocaleLowerCase()}
+          {user?.recipes ?? 0} {t('home.recipes').toLocaleLowerCase()}
         </Text>
         {mainUser ? (
           mainUser?.id !== user.id ? (
