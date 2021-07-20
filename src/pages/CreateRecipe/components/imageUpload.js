@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons'
-import { Button, Spin } from 'antd'
+import { Button, Image, Spin } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,7 @@ import { COLOR } from 'ultis/functions'
 import { deleteImg, upload } from 'ultis/uploadImage'
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
-const MAX_IMAGES = 3
+const MAX_IMAGES = 4
 function ImageUpload(props) {
   const inputRef = useRef()
   const { t } = useTranslation()
@@ -19,7 +19,7 @@ function ImageUpload(props) {
     let newList = props.value || []
     const lengthLeft = MAX_IMAGES - newList.length
     const addLength = lengthLeft < list.length ? lengthLeft : list.length
-    if (newList.length < 3) {
+    if (newList.length < MAX_IMAGES) {
       props?.setIsUploading && props?.setIsUploading(true)
       setIsUploading(true)
       for (let i = 0; i < addLength; i++) {
@@ -83,8 +83,8 @@ function ImageUpload(props) {
       />
       <div
         style={{
-          width: 200,
-          height: 200,
+          width: 180,
+          height: 180,
           backgroundColor: 'rgba(196, 196, 196, 0.4)',
           borderColor: COLOR.primary1,
           borderWidth: 1,
@@ -123,57 +123,96 @@ function ImageUpload(props) {
           </Text>
         )}
       </div>
-      <div style={{}}>
-        {props?.error && (
-          <Text style={{ color: 'red', paddingLeft: 24 }}>{props.error}</Text>
-        )}
-        {props.value &&
-          props.value.length > 0 &&
-          props.value.map((item, index) => (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: 8,
-                flex: 1,
-                width: '100%'
-              }}
-              key={`upload-${index}`}
-            >
+      <div
+        className="img-div"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          flex: 1,
+          alignItems: 'flex-start',
+          paddingLeft: 24
+        }}
+      >
+        {props?.error && <Text style={{ color: 'red' }}>{props.error}</Text>}
+        {props.value && props.value.length > 0 && (
+          <Image.PreviewGroup>
+            {props.value.map((item, index) => (
               <div
                 style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center'
+                  position: 'relative',
+                  marginBottom: 16,
+                  marginRight: 20
                 }}
+                key={`upload-${index}`}
               >
-                <span
+                <Image
+                  src={
+                    item != null && typeof item === 'string'
+                      ? item
+                      : item?.src?.url
+                  }
+                  className="img-size"
+                  alt=""
                   style={{
-                    ...style.imageSrc,
-                    backgroundImage: `url("${
-                      item != null && typeof item === 'string'
-                        ? item
-                        : item.src.url
-                    }")`
+                    objectFit: 'cover',
+                    borderRadius: 10
                   }}
                 />
-                <Text
-                  ellipsis
-                  style={{ display: 'flex', flex: 1, maxWidth: '15vw' }}
-                >
-                  {item?.name}
-                </Text>
+                <Button
+                  style={{ position: 'absolute', right: -10, top: -8 }}
+                  type="primary"
+                  shape="circle"
+                  size="small"
+                  onClick={() => removeImg(index)}
+                  icon={<FiX size={16} color="white" />}
+                />
               </div>
-              <Button
-                type="link"
-                shape="circle"
-                onClick={() => removeImg(index)}
-                icon={<FiX size={28} color="black" />}
-              />
-            </div>
-          ))}
+              // <div
+              //   style={{
+              //     display: 'flex',
+              //     flexDirection: 'row',
+              //     alignItems: 'center',
+              //     justifyContent: 'space-between',
+              //     marginBottom: 8,
+              //     flex: 1,
+              //     width: '100%'
+              //   }}
+              //   key={`upload-${index}`}
+              // >
+              //   <div
+              //     style={{
+              //       display: 'flex',
+              //       flexDirection: 'row',
+              //       alignItems: 'center'
+              //     }}
+              //   >
+              //     <span
+              //       style={{
+              //         ...style.imageSrc,
+              //         backgroundImage: `url("${
+              //           item != null && typeof item === 'string'
+              //             ? item
+              //             : item.src.url
+              //         }")`
+              //       }}
+              //     />
+              //     <Text
+              //       ellipsis
+              //       style={{ display: 'flex', flex: 1, maxWidth: '15vw' }}
+              //     >
+              //       {item?.name}
+              //     </Text>
+              //   </div>
+              //   <Button
+              //     type="link"
+              //     shape="circle"
+              //     onClick={() => removeImg(index)}
+              //     icon={<FiX size={28} color="black" />}
+              //   />
+              // </div>}
+            ))}
+          </Image.PreviewGroup>
+        )}
       </div>
     </div>
   )

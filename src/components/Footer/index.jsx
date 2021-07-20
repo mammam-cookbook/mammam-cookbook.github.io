@@ -1,14 +1,13 @@
 import { Button } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
-import logo from 'assets/logo_footer.svg'
-import badgeVi from 'assets/images/google-play-badge-vi.png'
 import badgeEn from 'assets/images/google-play-badge-en.png'
+import badgeVi from 'assets/images/google-play-badge-vi.png'
+import logo from 'assets/logo_footer.svg'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import ButtonBase from 'components/ButtonBase'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 function AppFooter() {
   const history = useHistory()
@@ -69,14 +68,18 @@ function AppFooter() {
           >
             {t('common.app')}
           </Title>
-          <ButtonBase style={{ padding: 0 }}>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://play.google.com/store/apps/details?id=com.mammamme.mam"
+          >
             <img
               alt=""
               src={language === 'vi' ? badgeVi : badgeEn}
               width={130}
-              style={{ objectFit: 'contain' }}
+              // style={{ objectFit: 'contain' }}
             />
-          </ButtonBase>
+          </a>
         </div>
       </div>
       <img

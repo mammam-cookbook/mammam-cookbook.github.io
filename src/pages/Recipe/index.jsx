@@ -62,6 +62,7 @@ import {
   ReactRecipe,
   UpdateIsCountdown
 } from './redux/actions'
+import noDirectionImg from 'assets/images/no_direction_img.svg'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -123,6 +124,7 @@ export default function RecipeDetail(props) {
   const [isShowSaveCollection, setIsShowSaveCollection] = useState(false)
   const [isShowReaction, setIsShowReaction] = useState(false)
   const [isShowPopover, setIsShowPopover] = useState(false)
+  const [isShowDirectionPopover, setIsShowDirectionPopover] = useState(false)
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search)
@@ -599,12 +601,12 @@ export default function RecipeDetail(props) {
               >
                 <FiFacebook size={24} color={COLOR.primary1} />
               </FacebookShareButton>
-              <Button
+              {/* <Button
                 style={styles.iconButton}
                 shape="circle"
                 type="text"
                 icon={<FiPrinter size={24} color={COLOR.primary1} />}
-              />
+              /> */}
             </div>
             <Affix offsetTop={72}>
               <div
@@ -673,12 +675,12 @@ export default function RecipeDetail(props) {
                 >
                   <FiFacebook size={24} color={COLOR.primary1} />
                 </FacebookShareButton>
-                <Button
+                {/* <Button
                   style={styles.iconButton}
                   shape="circle"
                   type="text"
                   icon={<FiPrinter size={24} color={COLOR.primary1} />}
-                />
+                /> */}
               </div>
             </Affix>
             <Tabs
@@ -838,6 +840,7 @@ export default function RecipeDetail(props) {
                 <DirectionList
                   directions={post?.steps}
                   onClickItem={chosenStep => {
+                    setIsShowDirectionPopover(false)
                     stopTimer()
                     history.replace(
                       `/recipe/${id}?readMode=true&step=${chosenStep}`
@@ -845,6 +848,8 @@ export default function RecipeDetail(props) {
                   }}
                 />
               }
+              visible={isShowDirectionPopover}
+              onVisibleChange={visible => setIsShowDirectionPopover(visible)}
               trigger="click"
             >
               <Button
@@ -888,8 +893,8 @@ export default function RecipeDetail(props) {
               paddingLeft: 48,
               paddingRight: 48,
               flex: 1,
-              paddingTop: 80,
-              marginBottom: 60
+              paddingTop: 100,
+              paddingBottom: 60
             }}
           >
             <div
@@ -912,7 +917,8 @@ export default function RecipeDetail(props) {
                     moment.utc(timerTime * 1000).format('HH:mm:ss')
                   }
                 />
-              ) : (
+              ) : post.steps[step - 1].images &&
+                post.steps[step - 1].images?.length > 0 ? (
                 <Image.PreviewGroup>
                   <Carousel infiniteLoop autoPlay interval={3000} swipeable>
                     {post.steps[step - 1].images?.map((item, index) => (
@@ -927,6 +933,15 @@ export default function RecipeDetail(props) {
                     ))}
                   </Carousel>
                 </Image.PreviewGroup>
+              ) : (
+                <div>
+                  <Image
+                    src={noDirectionImg}
+                    alt=""
+                    height={300}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
               )}
             </div>
 
@@ -1049,7 +1064,7 @@ const styles = {
   },
   readModeStyle: {
     width: '100vw',
-    height: '100vh',
+    minHeight: '100vh',
     position: 'absolute',
     left: 0,
     top: 0,
