@@ -62,6 +62,7 @@ export default function ModalMadeIt({
             title={t('recipe.iMadeIt')}
             visible={isShow}
             centered
+            onCancel={closeModal}
             footer={[
               <Button
                 key="cancelButton"

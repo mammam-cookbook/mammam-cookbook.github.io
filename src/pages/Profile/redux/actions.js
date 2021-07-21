@@ -65,3 +65,7 @@ export const UnFollowUserFailed = defineAction('UN_FOLLOW_USER_FAILED')
 export const DeleteRecipe = defineAction('DELETE_RECIPE')
 export const DeleteRecipeSuccess = defineAction('DELETE_RECIPE_SUCCESS')
 export const DeleteRecipeFailed = defineAction('DELETE_RECIPE_FAILED')
+
+export const GetShoppingList = defineAction('GET_SHOPPING_LIST')
+export const GetShoppingListSuccess = defineAction('GET_SHOPPING_LIST_SUCCESS')
+export const GetShoppingListFailed = defineAction('GET_SHOPPING_LIST_FAILED')

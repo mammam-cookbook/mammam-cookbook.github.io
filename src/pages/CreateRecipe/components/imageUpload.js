@@ -82,9 +82,8 @@ function ImageUpload(props) {
         }}
       />
       <div
+        className="img-btn"
         style={{
-          width: 180,
-          height: 180,
           backgroundColor: 'rgba(196, 196, 196, 0.4)',
           borderColor: COLOR.primary1,
           borderWidth: 1,
@@ -130,7 +129,7 @@ function ImageUpload(props) {
           flexWrap: 'wrap',
           flex: 1,
           alignItems: 'flex-start',
-          paddingLeft: 24
+          paddingLeft: 12
         }}
       >
         {props?.error && <Text style={{ color: 'red' }}>{props.error}</Text>}
@@ -141,7 +140,7 @@ function ImageUpload(props) {
                 style={{
                   position: 'relative',
                   marginBottom: 16,
-                  marginRight: 20
+                  marginRight: 16
                 }}
                 key={`upload-${index}`}
               >

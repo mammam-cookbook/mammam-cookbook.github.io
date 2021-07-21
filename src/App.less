@@ -31,10 +31,10 @@
   margin-bottom: 0;
 }
 
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 3840px) {
   .body-container {
-    padding-left: 13vw;
-    padding-right: 13vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
   }
   .row-container {
     display: flex;
@@ -78,8 +78,68 @@
     height: 250px;
   }
   .img-size {
-    height: 8vw;
-    width: 8vw;
+    height: 7vw;
+    width: 7vw;
+  }
+  .img-btn {
+    height: 12vw;
+    width: 12vw;
+  }
+}
+
+@media only screen and (max-width: 1600px) {
+  .body-container {
+    padding-left: 10vw;
+    padding-right: 10vw;
+  }
+  .row-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .info-container {
+    flex-direction: row;
+  }
+  .side-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 72;
+  }
+  .side-col-container {
+    display: none;
+    flex: 1;
+    margin-top: 48;
+    margin-bottom: 24;
+  }
+  .ingredient-recipe {
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    align-items: center;
+  }
+  .img-upload-container {
+    padding-left: 24px;
+  }
+  .text-banner {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 40vh;
+    justify-content: center;
+    // padding-left: 13vw;
+    // padding-right: 13vw;
+  }
+  .img-div {
+    height: 250px;
+  }
+  .img-size {
+    height: 7vw;
+    width: 7vw;
+  }
+  .img-btn {
+    height: 12vw;
+    width: 12vw;
   }
 }
 
@@ -133,6 +193,10 @@
     height: 8vw;
     width: 8vw;
   }
+  .img-btn {
+    height: 12vw;
+    width: 12vw;
+  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -181,11 +245,15 @@
   }
   .img-div {
     min-height: 200px;
-    max-height: 500px;
+    max-height: 4000px;
   }
   .img-size {
-    height: 15vw;
-    width: 15vw;
+    height: 11vw;
+    width: 11vw;
+  }
+  .img-btn {
+    height: 20vw;
+    width: 20vw;
   }
 }
 
@@ -234,11 +302,16 @@
     padding-right: calc(16px + 0.5vmin);
   }
   .img-div {
-    min-height: 200px;
-    max-height: 500px;
+    min-height: 150px;
+    max-height: 300px;
   }
   .img-size {
-    height: 15vw;
-    width: 15vw;
+    height: 14vw;
+    width: 14vw;
+  }
+
+  .img-btn {
+    height: 28vw;
+    width: 28vw;
   }
 }

@@ -28,6 +28,7 @@ import i18n from 'ultis/i18n'
 import 'moment/locale/vi'
 import NotificationList from './components/NotificationList'
 import ButtonBase from 'components/ButtonBase'
+import GlobalModal from 'components/GlobalModal'
 
 const { Text } = Typography
 function AppHeader(props) {
@@ -170,7 +171,13 @@ function AppHeader(props) {
           >
             {t('home.browse')}
           </Button>
-          <Button type="link" style={{ marginRight: 16 }}>
+          <Button
+            type="link"
+            onClick={() =>
+              GlobalModal.alertMessage(null, t('common.underDevelopment'))
+            }
+            style={{ marginRight: 16 }}
+          >
             {t('home.recipes').toLocaleUpperCase()}
           </Button>
           {user && (
@@ -377,7 +384,13 @@ function AppHeader(props) {
               >
                 {t('home.browse')}
               </Button>
-              <Button type="link" style={{ marginTop: 12, padding: 0 }}>
+              <Button
+                type="link"
+                onClick={() =>
+                  GlobalModal.alertMessage(null, t('common.underDevelopment'))
+                }
+                style={{ marginTop: 12, padding: 0 }}
+              >
                 {t('home.recipes').toLocaleUpperCase()}
               </Button>
               {user && (

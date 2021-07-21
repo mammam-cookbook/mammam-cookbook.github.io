@@ -24,6 +24,8 @@ import CollectionListProfile from './component/collectionList'
 import FollowerListProfile from './component/followerList'
 import FollowingListProfile from './component/followingList'
 import RecipeListProfile from './component/recipeList'
+import RecommendOptimization from './component/recommentOptimization'
+import ShoppingListProfile from './component/shoppingList'
 import UserInfoTab from './component/userInfoTab'
 import { PROFILE_PAGE } from './constant'
 
@@ -39,17 +41,7 @@ export default function ProfilePage() {
   const history = useHistory()
   const { t } = useTranslation()
   const user = useSelector(state => state.Auth.user)
-  const {
-    collections,
-    collectionDetail,
-    followers,
-    following,
-    recipes,
-    isLoadingCollections,
-    isLoadingCollectionDetail,
-    isLoadingProfile,
-    userProfile
-  } = useSelector(state => state.Profile)
+  const { isLoadingProfile, userProfile } = useSelector(state => state.Profile)
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search)
@@ -103,6 +95,10 @@ export default function ProfilePage() {
         return <UserInfoTab />
       case PROFILE_PAGE.CHANGE_PASSWORD:
         return <ChangePasswordTab />
+      case PROFILE_PAGE.SHOPPING_LIST:
+        return <ShoppingListProfile />
+      case PROFILE_PAGE.CUSTOMIZE:
+        return <RecommendOptimization />
       default:
         return <RecipeListProfile userId={currentUser} />
     }

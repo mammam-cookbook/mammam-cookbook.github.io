@@ -38,6 +38,9 @@ import {
   GetRecipeOfUser,
   GetRecipeOfUserFailed,
   GetRecipeOfUserSuccess,
+  GetShoppingList,
+  GetShoppingListFailed,
+  GetShoppingListSuccess,
   UnFollowUser,
   UnFollowUserFailed,
   UnFollowUserSuccess,
@@ -349,6 +352,27 @@ const deleteRecipeEpic$ = action$ =>
     })
   )
 
+const getShoppingListEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetShoppingList.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: `shopinglist`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetShoppingListSuccess.get(result?.data?.recipes)
+          }
+          return GetShoppingListFailed.get(result)
+        }),
+        catchError(error => {
+          return GetShoppingListFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const profileEpics = combineEpics(
   getCollectionsEpic$,
   createCollectionsEpic$,
@@ -362,5 +386,6 @@ export const profileEpics = combineEpics(
   unFollowUserEpic$,
   followUserEpic$,
   getRecipeUserEpic$,
-  deleteRecipeEpic$
+  deleteRecipeEpic$,
+  getShoppingListEpic$
 )

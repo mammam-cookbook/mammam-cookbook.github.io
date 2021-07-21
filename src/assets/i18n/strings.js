@@ -22,7 +22,9 @@ export const en = {
     save: 'Save',
     policy: 'Policy',
     privacyPolicy: 'Privacy policy',
-    app: 'App'
+    app: 'App',
+    underDevelopment:
+      'This function is under development. Please comeback later.'
   },
   auth: {
     login: 'Sign In',
@@ -231,7 +233,7 @@ export const en = {
     noRecipeInCollection: 'There is no recipe in this collection',
     noCollections: 'There is no collection',
     confirmToDeleteCollection: 'Are you sure to delete this collection?',
-    customize: 'Search optimization',
+    customize: 'Recommend optimization',
     userInfo: 'Personal information',
     shoppingList: 'Shopping list',
     changePassword: 'Modify password',
@@ -296,7 +298,9 @@ export const vi = {
     save: 'Lưu',
     policy: 'Chính sách',
     privacyPolicy: 'Chính sách quyền riêng tư',
-    app: 'Ứng dụng'
+    app: 'Ứng dụng',
+    underDevelopment:
+      'Chức năng này đang trong quá trình phát triển. Vui lòng quay lại sau'
   },
   auth: {
     login: 'Đăng nhập',
@@ -505,7 +509,7 @@ export const vi = {
     noRecipeInCollection: 'Chưa có công thức trong bộ sưu tập này',
     noCollections: 'Chưa có bộ sưu tập nào',
     confirmToDeleteCollection: 'Bạn chắc chắn muốn xóa bộ sưu tập này?',
-    customize: 'Tối ưu tìm kiếm',
+    customize: 'Tối ưu đề xuất',
     userInfo: 'Thông tin tài khoản',
     shoppingList: 'Danh sách mua',
     changePassword: 'Đổi mật khẩu',
