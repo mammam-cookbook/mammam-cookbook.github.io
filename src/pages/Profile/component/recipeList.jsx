@@ -28,7 +28,7 @@ function RecipeListProfile(props) {
       key: 'edit_recipe',
       title: t('profile.editRecipe'),
       onPress: recipeId => {
-        history.replace(`/edit/${recipeId}`)
+        history.push(`/edit/${recipeId}`)
       }
     },
     {
@@ -65,9 +65,9 @@ function RecipeListProfile(props) {
     <div className="chooseContainer">
       <Title level={4}>{t('home.recipes')}</Title>
       {recipes && recipes?.length > 0 ? (
-        <Row gutter={[16, 24]} style={{ marginTop: 32 }}>
+        <Row gutter={[32, 32]} style={{ marginTop: 32 }}>
           {recipes.map(recipe => (
-            <Col xs={24} sm={24} md={14} lg={10} xl={8} xxl={5}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={8}>
               <RecipeItem
                 recipe={recipe}
                 showMoreBtn={user && user?.id === userProfile.id}

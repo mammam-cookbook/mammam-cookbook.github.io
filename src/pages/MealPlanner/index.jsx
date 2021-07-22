@@ -102,7 +102,14 @@ export default function MealPlanner() {
       return <Text>Chưa có bữa ăn</Text>
     }
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          paddingLeft: 16,
+          paddingRight: 16
+        }}
+      >
         {recipes?.map(item => (
           <RecipeItem
             recipe={item?.recipe}

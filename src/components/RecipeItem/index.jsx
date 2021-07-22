@@ -1,5 +1,6 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Menu, Popover } from 'antd'
+import { Avatar, Menu, Popover } from 'antd'
+import Paragraph from 'antd/lib/typography/Paragraph'
 import Text from 'antd/lib/typography/Text'
 import chart from 'assets/images/bar-chart.svg'
 import fire from 'assets/images/fire.svg'
@@ -9,7 +10,8 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiMoreVertical } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
-import { calcCalories, history } from 'ultis/functions'
+import { calcCalories, COLOR, history } from 'ultis/functions'
+import '../../App.less'
 import './index.css'
 
 export default function RecipeItem({
@@ -33,86 +35,85 @@ export default function RecipeItem({
   }
 
   const popoverContent = (
-    <Menu style={{ width: 200 }}>
+    <div style={{ width: 130 }}>
       {popoverList &&
         popoverList?.length > 0 &&
         popoverList?.map(item => (
-          <Menu.Item
+          <ButtonBase
             key={item?.key}
-            onClick={() => {
+            onClick={e => {
               setIsShowPopover(false)
               item?.onPress(recipe.id)
             }}
           >
-            {item?.title}
-          </Menu.Item>
+            <Text>{item?.title}</Text>
+          </ButtonBase>
         ))}
-    </Menu>
+    </div>
   )
   return (
-    <div
-      className="imgWrap"
-      style={{
-        position: 'relative',
-        borderRadius: 10,
-        ...style
-      }}
+    <ButtonBase
+      style={{ padding: 0, flex: 1, backgroundColor: 'transparent' }}
+      onClick={() => history.push(`/recipe/${recipe.id}`)}
     >
-      {recipe?.avatar && recipe?.avatar.length > 0 ? (
-        <div
-          className="imgMode"
-          style={{
-            width: '100%',
-            height: '100%',
-            borderRadius: 10,
-            backgroundImage: `url("${recipe?.avatar[0]}")`
-          }}
-        />
-      ) : (
-        <span className="imgSrcDefault" />
-      )}
-      {showMoreBtn && popoverList && (
-        <Popover
-          content={popoverContent}
-          placement="rightBottom"
-          trigger="click"
-          visible={isShowPopover}
-          onVisibleChange={visible => setIsShowPopover(visible)}
-        >
-          <Button
+      <div
+        className="imgWrap"
+        style={{
+          position: 'relative',
+          borderRadius: 10,
+          ...style
+        }}
+      >
+        {recipe?.avatar != null &&
+        recipe?.avatar.length > 0 &&
+        recipe?.avatar[0] ? (
+          <div
+            className="imgMode"
             style={{
-              position: 'absolute',
-              right: 24,
-              top: 24,
-              backgroundColor: 'transparent',
-              border: '0px'
+              backgroundImage: `url("${recipe?.avatar[0]}")`
             }}
-            onClick={() => onClickMore()}
-            icon={<FiMoreVertical size={24} color={'white'} />}
           />
-        </Popover>
-      )}
-
-      <ButtonBase onClick={() => history.push(`/recipe/${recipe.id}`)}>
+        ) : (
+          <div className="imgDefaultMode" />
+        )}
         <div className="bgRecipe">
-          <div className="txt">
+          <Paragraph
+            ellipsis={{
+              rows: 2,
+              expandable: false,
+              suffix: ''
+            }}
+            className="txt"
+            style={{ marginBottom: 0, color: 'black' }}
+          >
             <Text
-              style={{ flex: 1, fontWeight: 600, fontSize: 18, color: 'white' }}
+              style={{
+                flex: 1,
+                fontWeight: 600,
+                fontSize: 18,
+                color: 'black'
+              }}
             >
               {recipe?.title}
             </Text>
-          </div>
+          </Paragraph>
 
-          <div style={{ display: 'relative', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
             {recipe?.author?.avatar_url ? (
               <Avatar size={24} src={recipe?.author?.avatar_url} />
             ) : (
               <Avatar size={24} icon={<UserOutlined />} />
             )}
             <Text
+              className="author-name"
               style={{
                 fontSize: 16,
-                color: 'white',
+                color: COLOR.primary1,
                 marginLeft: 8,
                 fontWeight: 'bold'
               }}
@@ -120,56 +121,72 @@ export default function RecipeItem({
               {recipe?.author?.name}
             </Text>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: 8
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={hourglass} width={16} height={16} alt="" />
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'white',
-                  marginLeft: 4,
-                  fontWeight: 'bold'
-                }}
-              >
-                {recipe?.cooking_time} {t('create.min')}
-              </Text>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={chart} width={16} height={16} alt="" />
+        </div>
 
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'white',
-                  marginLeft: 4,
-                  fontWeight: 'bold'
-                }}
-              >
-                {LEVEL[recipe?.level]}
-              </Text>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={fire} width={16} height={16} alt="" />
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: 'white',
-                  marginLeft: 4,
-                  fontWeight: 'bold'
-                }}
-              >
-                {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
-              </Text>
-            </div>
+        <div className="detail">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={hourglass} width={20} height={20} alt="" />
+            <Text
+              style={{
+                fontSize: 16,
+                color: 'white',
+                marginLeft: 4,
+                fontWeight: 'bold'
+              }}
+            >
+              {recipe?.cooking_time} {t('create.min')}
+            </Text>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
+            <img src={chart} width={20} height={20} alt="" />
+            <Text
+              style={{
+                fontSize: 16,
+                color: 'white',
+                marginLeft: 4,
+                fontWeight: 'bold'
+              }}
+            >
+              {LEVEL[recipe?.level]}
+            </Text>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
+            <img src={fire} width={20} height={20} alt="" />
+            <Text
+              style={{
+                fontSize: 16,
+                color: 'white',
+                marginLeft: 4,
+                fontWeight: 'bold'
+              }}
+            >
+              {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
+            </Text>
           </div>
         </div>
-      </ButtonBase>
-    </div>
+
+        {showMoreBtn && popoverList && (
+          <Popover
+            content={popoverContent}
+            placement="rightBottom"
+            trigger="click"
+            visible={isShowPopover}
+            onVisibleChange={visible => setIsShowPopover(visible)}
+          >
+            <ButtonBase
+              style={{
+                position: 'absolute',
+                right: 6,
+                top: 12,
+                backgroundColor: 'transparent'
+              }}
+              onClick={() => onClickMore()}
+            >
+              <FiMoreVertical size={24} color={'white'} />
+            </ButtonBase>
+          </Popover>
+        )}
+      </div>
+    </ButtonBase>
   )
 }

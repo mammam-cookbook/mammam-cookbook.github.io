@@ -616,7 +616,14 @@ export default function SearchPage() {
         {isShowFilter && renderFilter()}
 
         {result && result?.length > 0 ? (
-          <Row gutter={[16, 16]} justify="start" style={{ marginTop: 40 }}>
+          <Row
+            gutter={[
+              { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 },
+              { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 }
+            ]}
+            justify="start"
+            style={{ marginTop: 40 }}
+          >
             {result.map(recipe => (
               <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                 <Row justify="center">

@@ -1,16 +1,10 @@
 .bgRecipe {
-  width: '100%';
-  min-height: 150px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
+  flex: 1;
+  height: 110px;
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
   padding: 16px;
-  background-color: rgba(196, 196, 196, 0.4);
-  border-radius: 10px;
-  backdrop-filter: blur(22px);
-  margin: 20px;
+  z-index: 900;
 }
 
 .txt {
@@ -18,13 +12,54 @@
 }
 
 .imgWrap {
-  width: 330px;
   height: 330px;
-  padding: 20px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .imgMode {
+  width: auto;
+  width: 100%;
+  max-width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 220px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.imgDefaultMode {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  border-radius: 10px 10px 0px 0px;
+  background-image: url(../../assets/images/no_direction_img.svg);
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 10px 10px 0px 0px;
+  top: 220px;
+  left: 0;
+  right: 0;
+  height: 0px;
+  opacity: 0;
+  background-color: rgba(196, 196, 196, 0.4);
+  backdrop-filter: blur(22px);
+  transition: 0.5s;
+}
+
+.imgWrap:hover > .detail {
+  top: 0;
+  height: 220px;
+  opacity: 1;
 }

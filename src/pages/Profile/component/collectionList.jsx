@@ -48,7 +48,10 @@ function CollectionListProfile() {
       <div className="chooseContainer">
         <div style={{ display: 'flex', height: '100%' }}>
           <Row
-            gutter={{ xs: 0, sm: 0, md: 16, lg: 16 }}
+            gutter={[
+              { xs: 24, sm: 24, md: 48, lg: 64, xl: 64, xxl: 64 },
+              { xs: 24, sm: 24, md: 48, lg: 64, xl: 64, xxl: 64 }
+            ]}
             justify="space-between"
             style={{ display: 'flex', flex: 1 }}
           >
@@ -78,9 +81,15 @@ function CollectionListProfile() {
                 )}
                 {collectionDetail?.recipes &&
                 collectionDetail?.recipes?.length > 0 ? (
-                  <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+                  <Row
+                    gutter={[
+                      { xs: 24, sm: 24, md: 24, lg: 32, xl: 32, xxl: 32 },
+                      { xs: 24, sm: 24, md: 24, lg: 32, xl: 32, xxl: 32 }
+                    ]}
+                    style={{ marginTop: 16 }}
+                  >
                     {collectionDetail?.recipes?.map(item => (
-                      <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
+                      <Col xs={24} sm={24} md={24} lg={24} xl={12} xxl={12}>
                         <RecipeItem
                           recipe={item?.recipe}
                           showMoreBtn={true}
@@ -121,87 +130,79 @@ function CollectionListProfile() {
               xs={24}
               sm={24}
               md={8}
-              lg={5}
-              xl={5}
-              xxl={5}
+              lg={6}
+              xl={6}
+              xxl={6}
               style={{
                 flexDirection: 'column',
                 backgroundColor: '#EEE',
                 borderRadius: 10,
-                padding: 8,
+                padding: 16,
                 width: '100%',
                 height: 'auto'
               }}
             >
-              <Row justify="center">
-                <Col>
-                  <Title style={{ marginTop: 16 }} level={5}>
-                    {t('profile.collection')}
-                  </Title>
-                  <Col>
-                    {collections.map((item, index) => (
-                      <ButtonBase
-                        style={{
-                          alignItems: 'center',
-                          backgroundColor:
-                            index === chosenIndex ? COLOR.primary3 : null,
-                          width: '100%',
-                          display: 'flex',
-                          flex: 1,
-                          whiteSpace: 'normal'
-                        }}
-                        onClick={() => setChosenIndex(index)}
-                      >
-                        <div
-                          style={{
-                            display: 'flex',
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'space-between'
-                          }}
-                        >
-                          <div>
-                            <Text style={{ fontWeight: 500, fontSize: 14 }}>
-                              {item.name}
-                            </Text>
-                          </div>
-                          <div>
-                            <Button
-                              onClick={() =>
-                                GlobalModal.alertMessage(
-                                  t('common.confirm'),
-                                  t('profile.confirmToDeleteCollection'),
-                                  MODAL_TYPE.CHOICE,
-                                  () => {
-                                    setChosenIndex(0)
-                                    dispatch(DeleteCollection.get(item.id))
-                                  }
-                                )
-                              }
-                              shape="circle"
-                              type="text"
-                              icon={<FiX size={16} color={COLOR.mainBlack} />}
-                            />
-                          </div>
-                        </div>
-                      </ButtonBase>
-                    ))}
-                  </Col>
-                  <Button
-                    onClick={() => setIsShow(true)}
+              <Title level={5}>{t('profile.collection')}</Title>
+              {collections.map((item, index) => (
+                <ButtonBase
+                  style={{
+                    alignItems: 'center',
+                    backgroundColor:
+                      index === chosenIndex ? COLOR.primary3 : null,
+                    width: '100%',
+                    display: 'flex',
+                    flex: 1,
+                    whiteSpace: 'normal'
+                  }}
+                  onClick={() => setChosenIndex(index)}
+                >
+                  <div
                     style={{
-                      marginTop: 24,
-                      width: '100%',
-                      whiteSpace: 'normal',
-                      height: 'auto',
-                      marginBottom: '10px'
+                      display: 'flex',
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
                     }}
-                    type="primary"
                   >
-                    {t('recipe.addNewCollection')}
-                  </Button>
-                </Col>
-              </Row>
+                    <div>
+                      <Text style={{ fontWeight: 500, fontSize: 14 }}>
+                        {item.name}
+                      </Text>
+                    </div>
+                    <div>
+                      <Button
+                        onClick={() =>
+                          GlobalModal.alertMessage(
+                            t('common.confirm'),
+                            t('profile.confirmToDeleteCollection'),
+                            MODAL_TYPE.CHOICE,
+                            () => {
+                              setChosenIndex(0)
+                              dispatch(DeleteCollection.get(item.id))
+                            }
+                          )
+                        }
+                        shape="circle"
+                        type="text"
+                        icon={<FiX size={16} color={COLOR.mainBlack} />}
+                      />
+                    </div>
+                  </div>
+                </ButtonBase>
+              ))}
+              <Button
+                onClick={() => setIsShow(true)}
+                style={{
+                  marginTop: 24,
+                  width: '100%',
+                  whiteSpace: 'normal',
+                  height: 'auto',
+                  marginBottom: '10px'
+                }}
+                type="primary"
+              >
+                {t('recipe.addNewCollection')}
+              </Button>
             </Col>
           </Row>
         </div>

@@ -12,15 +12,20 @@ import './home.css'
 import { GetHomeRecipe } from './redux/actions'
 const { TabPane } = Tabs
 
+const KEY = {
+  RECOMMEND: 'recommend',
+  HIGHLIGHT: 'highlights'
+}
+
 function Home() {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const user = useSelector(state => state.Auth.user)
   const { recommend, highlight } = useSelector(state => state.Home)
-  const [currentTab, setCurrentTab] = useState('1')
+  const [currentTab, setCurrentTab] = useState(KEY.RECOMMEND)
 
   useEffect(() => {
-    dispatch(GetHomeRecipe.get({ type: Number(currentTab) }))
+    dispatch(GetHomeRecipe.get({ type: currentTab }))
   }, [currentTab])
 
   return (
@@ -77,16 +82,23 @@ function Home() {
               <Text
                 style={{
                   fontWeight: 700,
-                  color: currentTab === '1' ? COLOR.primary1 : ''
+                  color: currentTab === KEY.RECOMMEND ? COLOR.primary1 : ''
                 }}
               >
                 {t('home.recommend').toLocaleUpperCase()}
               </Text>
             }
-            key="1"
+            key={KEY.RECOMMEND}
           >
             {recommend && recommend?.length > 0 ? (
-              <Row gutter={[16, 16]} justify="start" style={{ marginTop: 20 }}>
+              <Row
+                gutter={[
+                  { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 },
+                  { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 }
+                ]}
+                justify="start"
+                style={{ marginTop: 20, padding: 4 }}
+              >
                 {recommend.map(recipe => (
                   <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">
@@ -106,16 +118,23 @@ function Home() {
               <Text
                 style={{
                   fontWeight: 700,
-                  color: currentTab === '2' ? COLOR.primary1 : ''
+                  color: currentTab === KEY.HIGHLIGHT ? COLOR.primary1 : ''
                 }}
               >
                 {t('home.whatToEat').toLocaleUpperCase()}
               </Text>
             }
-            key="2"
+            key={KEY.HIGHLIGHT}
           >
             {highlight && highlight?.length > 0 ? (
-              <Row gutter={[16, 16]} justify="start" style={{ marginTop: 20 }}>
+              <Row
+                gutter={[
+                  { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 },
+                  { xs: 24, sm: 24, md: 40, lg: 40, xl: 40, xxl: 40 }
+                ]}
+                justify="start"
+                style={{ marginTop: 20, padding: 4 }}
+              >
                 {highlight.map(recipe => (
                   <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">
