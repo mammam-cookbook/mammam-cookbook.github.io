@@ -8,7 +8,12 @@ import { capitalizeFirstLetter, COLOR } from 'ultis/functions'
 
 const { Text } = Typography
 
-function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
+function RecipeIngredient({
+  style = {},
+  item,
+  onAddToChecklist = () => {},
+  ratio = 1
+}) {
   const { t } = useTranslation()
 
   return (
@@ -43,11 +48,11 @@ function RecipeIngredient({ style = {}, item, onAddToChecklist = () => {} }) {
         style={{ marginBottom: 0 }}
       >
         <Text style={styles.amountTxt}>
-          {item.amount} {item?.unit?.measurement_description}
+          {ratio * item.amount} {item?.unit?.measurement_description}
         </Text>
       </Paragraph>
 
-      <Text style={styles.calTxt}>{item?.calories} kcal</Text>
+      <Text style={styles.calTxt}>{ratio * item?.calories} kcal</Text>
     </div>
   )
 }

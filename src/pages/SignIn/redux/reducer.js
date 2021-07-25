@@ -12,6 +12,8 @@ import {
   GetMenu,
   GetMenuFailed,
   GetMenuSuccess,
+  GetNotification,
+  GetNotificationFailed,
   GetNotificationSuccess,
   GetProfileSuccess,
   RefreshTokenSuccess,
@@ -37,6 +39,9 @@ const initialState = {
   menu: [],
   language: i18n.language,
   notifications: [],
+  isLoadingNoti: false,
+  totalNoti: 0,
+  currentOffset: 0,
   recentOpenNoti: moment().valueOf(),
   pastUserOpenNoti: {},
   socket: null
@@ -110,10 +115,22 @@ export function authReducer(state = initialState, action) {
       return { ...state, isLoadingMenu: false, menu: action.payload }
     case GetMenuFailed.type:
       return { ...state, isLoadingMenu: false }
+    case GetNotification.type:
+      return { ...state, isLoadingNoti: true }
+    case GetNotificationFailed.type:
+      return { ...state, isLoadingNoti: false }
     case GetNotificationSuccess.type:
       return {
         ...state,
-        notifications: action.payload?.notifications?.rows || []
+        totalNoti: action.payload?.notifications?.count || 0,
+        notifications:
+          action.payload?.offset === 0
+            ? action.payload?.notifications?.rows || []
+            : state.notifications?.concat(
+                action.payload?.notifications?.rows || []
+              ),
+        currentOffset: action.payload?.offset,
+        isLoadingNoti: false
       }
     case UpdateCurrentOpenNoti.type:
       const now = moment().valueOf()

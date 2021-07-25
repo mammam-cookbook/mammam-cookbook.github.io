@@ -19,7 +19,7 @@ import ImageUpload from './components/imageUpload'
 import Ingredient from './components/ingredient'
 import Step from './components/step'
 import { MAX_COOKING_TIME } from './constants'
-import { CreateRecipe, SearchIngredient } from './redux/actions'
+import { CreateRecipe, SaveDraft, SearchIngredient } from './redux/actions'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
@@ -195,16 +195,27 @@ export default props => {
       }
       return tmp
     })
-    dispatch(
-      CreateRecipe.get({
-        ...values,
-        avatar: avalink,
-        steps,
-        ingredients,
-        ingredients_name,
-        status: type
-      })
-    )
+    if (type === RECIPE_STATUS.APPROVED) {
+      dispatch(
+        CreateRecipe.get({
+          ...values,
+          avatar: avalink,
+          steps,
+          ingredients,
+          ingredients_name
+        })
+      )
+    } else {
+      dispatch(
+        SaveDraft.get({
+          ...values,
+          avatar: avalink,
+          steps,
+          ingredients,
+          ingredients_name
+        })
+      )
+    }
   }
 
   if (!user) {

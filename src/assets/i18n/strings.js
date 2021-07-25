@@ -137,7 +137,8 @@ export const en = {
     medium: 'Medium',
     hard: 'Hard',
     measurePlaceholder: 'g',
-    ration: 'Ration'
+    ration: 'Ration',
+    publishThisRecipe: 'Publish this recipe'
   },
   recipe: {
     sendComment: 'Send',
@@ -178,7 +179,8 @@ export const en = {
     all: 'All',
     startTimer: 'Start timer',
     stopTimer: 'Stop timer',
-    done: 'Done'
+    done: 'Done',
+    draft: 'Draft'
   },
   validation: {
     contentRequired: '* Enter direction',
@@ -272,9 +274,17 @@ export const en = {
     cannotEditRecipe: 'You do not have permission to edit this recipe',
     backToHome: 'Back to home',
     createRecipeSuccess: 'Create recipe success',
+    saveDraftSuccess: 'Successfully saved draft. Go to profile to edit.',
     editRecipeSuccess: 'Edit recipe success',
     addToShoppingListSuccess: 'Added to shopping list',
-    addToMenuSuccess: 'Added to meal planner'
+    addToMenuSuccess: 'Added to meal planner',
+    alreadyInShoppingList: 'Ingredients has been added to shopping list before',
+    remind: 'Recipe for today',
+    remindMorning: 'Recipe for tomorrow breakfast',
+    remindNoon: 'Recipe for lunch',
+    remindNight: 'Recipe for dinner',
+    thisRecipeIsDraft:
+      'This recipe is draft. You cannot view it at the moment. Please comeback later'
   },
   contact: {
     contactUs: 'Contact us via email',
@@ -423,7 +433,8 @@ export const vi = {
     medium: 'Trung bình',
     hard: 'Khó',
     measurePlaceholder: 'g',
-    ration: 'Khẩu phần'
+    ration: 'Khẩu phần',
+    publishThisRecipe: 'Lưu bản chính thức'
   },
   recipe: {
     sendComment: 'Gửi',
@@ -464,7 +475,8 @@ export const vi = {
     all: 'Tất cả',
     startTimer: 'Đếm giờ',
     stopTimer: 'Dừng đếm',
-    done: 'Xong'
+    done: 'Xong',
+    draft: 'Nháp'
   },
   validation: {
     contentRequired: '* Nhập bước thực hiện',
@@ -560,10 +572,19 @@ export const vi = {
       'Bạn chưa đăng nhập. Vui lòng đăng nhập để sửa bài viết.',
     cannotEditRecipe: 'Không thể sửa bài viết này',
     backToHome: 'Về trang chủ',
-    createRecipeSuccess: 'Tạo công thức thàng công',
-    editRecipeSuccess: 'Thay đổi công thức thàng công',
+    createRecipeSuccess: 'Tạo công thức thành công',
+    saveDraftSuccess: 'Lưu nháp thành công. Tiếp tục đến hồ sơ để chỉnh sửa.',
+    editRecipeSuccess: 'Thay đổi công thức thành công',
     addToShoppingListSuccess: 'Đã thêm vào danh sách mua',
-    addToMenuSuccess: 'Đã thêm vào thực đơn'
+    addToMenuSuccess: 'Đã thêm vào thực đơn',
+    alreadyInShoppingList:
+      'Nguyên liệu đã được thêm vào danh sách mua trước đó',
+    remind: 'Công thức cho hôm nay',
+    remindMorning: 'Công thức cho sáng mai',
+    remindNoon: 'Công thức cho trưa hôm nay',
+    remindNight: 'Công thức cho tối nay',
+    thisRecipeIsDraft:
+      'Công thức này là bản nháp và không thể xem ở thời điểm hiện tại. Vui lòng trở lại sau'
   },
   contact: {
     contactUs: 'Liên hệ với chúng tôi qua email',

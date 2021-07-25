@@ -13,6 +13,7 @@ import { request } from 'ultis/api'
 import {
   getNotiContent,
   history,
+  LIMIT_ITEMS,
   MODAL_TYPE,
   NOTI_TYPE,
   ROLES
@@ -421,11 +422,15 @@ const getNotiListEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'GET',
-        url: 'notification'
+        url: 'notification',
+        param: { limit: LIMIT_ITEMS, offset: action?.payload?.offset ?? 0 }
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetNotificationSuccess.get(result.data)
+            return GetNotificationSuccess.get({
+              ...result.data,
+              offset: action?.payload?.offset ?? 0
+            })
           }
           return GetNotificationFailed.get(result)
         }),

@@ -4,6 +4,7 @@ import {
   Button,
   Col,
   Image,
+  Input,
   Menu,
   Popover,
   Progress,
@@ -12,6 +13,7 @@ import {
   Tabs,
   Typography
 } from 'antd'
+import noDirectionImg from 'assets/images/no_direction_img.svg'
 import ButtonBase from 'components/ButtonBase'
 import AppFooter from 'components/Footer'
 import GlobalModal from 'components/GlobalModal'
@@ -26,7 +28,6 @@ import { useTranslation } from 'react-i18next'
 import {
   FiBookmark,
   FiFacebook,
-  FiPrinter,
   FiSmile,
   FiUserCheck,
   FiUserPlus,
@@ -44,7 +45,8 @@ import {
   COLOR,
   MODAL_TYPE,
   REACTION,
-  REACTION_IMG
+  REACTION_IMG,
+  RECIPE_STATUS
 } from 'ultis/functions'
 import ModalAddCollection from './components/addToCollection'
 import ModalAddMenu from './components/addToMenu'
@@ -62,7 +64,6 @@ import {
   ReactRecipe,
   UpdateIsCountdown
 } from './redux/actions'
-import noDirectionImg from 'assets/images/no_direction_img.svg'
 
 const easyData = require('assets/lottie/easy.json')
 const hardData = require('assets/lottie/hard.json')
@@ -125,6 +126,7 @@ export default function RecipeDetail(props) {
   const [isShowReaction, setIsShowReaction] = useState(false)
   const [isShowPopover, setIsShowPopover] = useState(false)
   const [isShowDirectionPopover, setIsShowDirectionPopover] = useState(false)
+  const [viewRation, setViewRation] = useState(1)
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search)
@@ -166,6 +168,10 @@ export default function RecipeDetail(props) {
   useEffect(() => {
     dispatch(GetDetailRecipe.get({ recipeId: id }))
   }, [user])
+
+  useEffect(() => {
+    setViewRation(post?.ration ?? 1)
+  }, [post])
 
   useEffect(() => {
     if (
@@ -312,6 +318,38 @@ export default function RecipeDetail(props) {
     )
   }
 
+  if (
+    post?.status === RECIPE_STATUS.PENDING &&
+    (!user || user?.id !== post?.author?.id)
+  ) {
+    return (
+      <>
+        <AppHeader />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{ margin: 28 }}>
+            {t('notification.thisRecipeIsDraft')}
+          </Text>
+          <Button
+            size="large"
+            type="primary"
+            onClick={() => {
+              history.push('/')
+            }}
+          >
+            {t('notification.backToHome').toLocaleUpperCase()}
+          </Button>
+        </div>
+      </>
+    )
+  }
+
   return (
     <div>
       {!readMode && <AppHeader />}
@@ -403,50 +441,59 @@ export default function RecipeDetail(props) {
                   ))}
                 </div>
               )}
-              <div
+              <Row
+                gutter={[8, 16]}
                 style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  marginTop: 24
+                  marginTop: 24,
+                  marginBottom: 24,
+                  justifyContent: 'space-between'
                 }}
               >
-                <div style={styles.info}>
-                  <Text style={styles.grayInfo}>
-                    {t('create.time').toLocaleUpperCase()}
-                  </Text>
-                  <Text style={styles.orangeInfo}>
-                    {post.cooking_time} {t('create.min').toLocaleUpperCase()}
-                  </Text>
-                </div>
-                <div style={styles.info}>
-                  <Text style={styles.grayInfo}>
-                    {t('create.level').toLocaleUpperCase()}
-                  </Text>
-                  <Text style={styles.orangeInfo}>
-                    {LEVEL[post.level].toLocaleUpperCase()}
-                  </Text>
-                </div>
-                <div style={styles.info}>
-                  <Text style={styles.grayInfo}>
-                    {t('create.ration').toLocaleUpperCase()}
-                  </Text>
-                  <Text style={styles.orangeInfo}>{post.ration}</Text>
-                </div>
-                <div style={styles.info}>
-                  <Text style={styles.grayInfo}>
-                    {t('recipe.energy').toLocaleUpperCase()}
-                  </Text>
-                  <Text style={styles.orangeInfo}>
-                    {post?.ingredients?.reduce(calcCalories, 0).toFixed(0)} KCAL
-                  </Text>
-                </div>
-              </div>
+                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                  <div style={styles.info}>
+                    <Text style={styles.grayInfo}>
+                      {t('create.time').toLocaleUpperCase()}
+                    </Text>
+                    <Text style={styles.orangeInfo}>
+                      {post.cooking_time} {t('create.min').toLocaleUpperCase()}
+                    </Text>
+                  </div>
+                </Col>
+                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                  <div style={styles.info}>
+                    <Text style={styles.grayInfo}>
+                      {t('create.level').toLocaleUpperCase()}
+                    </Text>
+                    <Text style={styles.orangeInfo}>
+                      {LEVEL[post.level].toLocaleUpperCase()}
+                    </Text>
+                  </div>
+                </Col>
+                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                  <div style={styles.info}>
+                    <Text style={styles.grayInfo}>
+                      {t('create.ration').toLocaleUpperCase()}
+                    </Text>
+                    <Text style={styles.orangeInfo}>{post.ration}</Text>
+                  </div>
+                </Col>
+                <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={12}>
+                  <div style={styles.info}>
+                    <Text style={styles.grayInfo}>
+                      {t('recipe.energy').toLocaleUpperCase()}
+                    </Text>
+                    <Text style={styles.orangeInfo}>
+                      {post?.ingredients?.reduce(calcCalories, 0).toFixed(0)}{' '}
+                      KCAL
+                    </Text>
+                  </div>
+                </Col>
+              </Row>
 
               <div style={{ ...styles.spaceBetween }}>
                 <Button
-                  size="large"
-                  style={{ flex: 1, marginRight: 24 }}
+                  size="middle"
+                  style={{ flex: 1, marginRight: 12 }}
                   type="primary"
                   onClick={() =>
                     history.push(`/recipe/${id}?readMode=true&step=1`)
@@ -455,8 +502,8 @@ export default function RecipeDetail(props) {
                   {t('recipe.readDirection').toLocaleUpperCase()}
                 </Button>
                 <Button
-                  size="large"
-                  style={{ flex: 1, marginLeft: 24 }}
+                  size="middle"
+                  style={{ flex: 1, marginLeft: 12 }}
                   type="primary"
                   onClick={() => {
                     setIsShowMadeIt(true)
@@ -721,7 +768,10 @@ export default function RecipeDetail(props) {
                   <Row gutter={[16, 16]} style={{ marginTop: 20 }}>
                     {post.ingredients.map(item => (
                       <Col xxl={4} xl={6} lg={6} md={8} sm={8} xs={12}>
-                        <RecipeIngredient item={item} />
+                        <RecipeIngredient
+                          item={item}
+                          ratio={viewRation / post?.ration}
+                        />
                       </Col>
                     ))}
                   </Row>
@@ -729,9 +779,22 @@ export default function RecipeDetail(props) {
                     size="large"
                     style={{ marginTop: 24 }}
                     type="primary"
-                    onClick={() =>
-                      dispatch(AddToShoppingList.get({ recipe_id: id }))
-                    }
+                    onClick={() => {
+                      if (user) {
+                        dispatch(AddToShoppingList.get({ recipe_id: id }))
+                      } else {
+                        GlobalModal.alertMessage(
+                          null,
+                          t('signin.title'),
+                          MODAL_TYPE.CHOICE,
+                          () =>
+                            history.push({
+                              pathname: '/signin',
+                              state: { from: `/recipe/${id}` }
+                            })
+                        )
+                      }
+                    }}
                   >
                     {t('recipe.addToShoppingList')}
                   </Button>
@@ -786,7 +849,7 @@ export default function RecipeDetail(props) {
                 }}
                 className="side-container"
               >
-                <div style={styles.info}>
+                <div style={{ ...styles.info, marginBottom: 20 }}>
                   <Text style={styles.grayInfo}>
                     {t('create.time').toLocaleUpperCase()}
                   </Text>
@@ -794,7 +857,7 @@ export default function RecipeDetail(props) {
                     {post.cooking_time} {t('create.min').toLocaleUpperCase()}
                   </Text>
                 </div>
-                <div style={styles.info}>
+                <div style={{ ...styles.info, marginBottom: 20 }}>
                   <Text style={styles.grayInfo}>
                     {t('create.level').toLocaleUpperCase()}
                   </Text>
@@ -802,11 +865,27 @@ export default function RecipeDetail(props) {
                     {LEVEL[post.level].toLocaleUpperCase()}
                   </Text>
                 </div>
-                <div style={styles.info}>
+                <div style={{ ...styles.info, marginBottom: 20 }}>
                   <Text style={styles.grayInfo}>
                     {t('create.ration').toLocaleUpperCase()}
                   </Text>
-                  <Text style={styles.orangeInfo}>{post.ration}</Text>
+                  <Input
+                    style={{
+                      width: 120,
+                      alignSelf: 'center',
+                      textAlign: 'center',
+                      ...styles.orangeInfo
+                    }}
+                    value={viewRation}
+                    onChange={event => {
+                      const number = Number(event?.target?.value)
+                      if (!number || number < 1) {
+                        setViewRation(1)
+                      } else setViewRation(number)
+                    }}
+                    placeholder={'2'}
+                    type="number"
+                  />
                 </div>
                 <div style={styles.info}>
                   <Text style={styles.grayInfo}>
@@ -1033,10 +1112,10 @@ export default function RecipeDetail(props) {
 
 const styles = {
   info: {
-    textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: 12
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   spaceBetween: {
     display: 'flex',
@@ -1049,7 +1128,7 @@ const styles = {
     backgroundPosition: 'center 40%',
     borderRadius: 100
   },
-  grayInfo: { color: COLOR.grayText, fontWeight: 600 },
+  grayInfo: { color: COLOR.grayText, fontWeight: 600, fontSize: 15 },
   orangeInfo: { color: COLOR.primary1, fontWeight: 700, fontSize: 18 },
   iconButton: {
     marginBottom: 24,

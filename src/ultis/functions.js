@@ -51,7 +51,8 @@ export const NOTI_TYPE = Object.freeze({
   LIKE: 'like',
   COMMENT: 'comment',
   FOLLOW: 'follow',
-  REPLY: 'reply'
+  REPLY: 'reply',
+  REMIND: 'remind'
 })
 
 export const REACTION = ['easy peasy', 'yum', 'yuck', 'tough nut']

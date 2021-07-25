@@ -1,4 +1,4 @@
-import { Button, Col, Row, Select, Steps, Typography } from 'antd'
+import { Button, Col, Row, Select, Spin, Steps, Switch, Typography } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import Paragraph from 'antd/lib/typography/Paragraph'
 import CInput from 'components/CInput'
@@ -26,10 +26,12 @@ import {
   ROLES
 } from 'ultis/functions'
 import * as yup from 'yup'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const { Text, Title } = Typography
 const AntdStep = Steps.Step
 const { Option } = Select
+const loadingIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />
 
 let timeout = null
 let currentValue = ''
@@ -178,7 +180,7 @@ export default props => {
     }
   }
 
-  const submitRecipe = async (values, type = RECIPE_STATUS.APPROVED) => {
+  const submitRecipe = async values => {
     const avalink = values.avatar.map(item => {
       if (typeof item === 'string') {
         return item
@@ -223,10 +225,28 @@ export default props => {
           avatar: avalink,
           steps,
           ingredients,
-          ingredients_name,
-          status: type
+          ingredients_name
         }
       })
+    )
+  }
+
+  if (!post || id !== post.id) {
+    return (
+      <>
+        <AppHeader />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 48
+          }}
+        >
+          <Spin indicator={loadingIcon} />
+        </div>
+      </>
     )
   }
 
@@ -237,7 +257,7 @@ export default props => {
   ) {
     return (
       <>
-        <AppHeader from="create" />
+        <AppHeader />
         <div
           style={{
             display: 'flex',
@@ -276,7 +296,7 @@ export default props => {
 
   return (
     <>
-      <AppHeader from="create" />
+      <AppHeader />
       <Formik
         initialValues={{
           title: post?.title,
@@ -297,8 +317,8 @@ export default props => {
             post?.categories && post?.categories?.length > 0
               ? post?.categories?.map(item => item.category_id)
               : [],
-          hashtags: [],
-          steps: post?.steps
+          steps: post?.steps,
+          status: post?.status
         }}
         isInitialValid={false}
         validationSchema={validationRecipeSchema}
@@ -355,6 +375,23 @@ export default props => {
               {currentStep === 0 && (
                 <div style={{ display: 'flex' }} className="row-container">
                   <div style={style.leftColumn}>
+                    <div style={{ ...style.spaceBetween, marginTop: 16 }}>
+                      <Title level={4}>
+                        {t('create.publishThisRecipe').toLocaleUpperCase()}
+                      </Title>
+                      <Switch
+                        defaultChecked={
+                          values?.status === RECIPE_STATUS.APPROVED
+                        }
+                        onChange={checked => {
+                          if (checked) {
+                            setFieldValue('status', RECIPE_STATUS.APPROVED)
+                          } else {
+                            setFieldValue('status', RECIPE_STATUS.PENDING)
+                          }
+                        }}
+                      />
+                    </div>
                     <div style={{ flex: 1 }}>
                       <Title level={4}>
                         {t('create.title').toLocaleUpperCase()}

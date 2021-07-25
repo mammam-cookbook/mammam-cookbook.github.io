@@ -167,7 +167,10 @@ const addShoppingListEpic$ = action$ =>
             )
             return AddToShoppingListSuccess.get(result.data)
           }
-          GlobalModal.alertMessage()
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            i18n.t('notification.alreadyInShoppingList')
+          )
           return AddToShoppingListFailed.get(result)
         }),
         catchError(error => {

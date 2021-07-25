@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FiMoreVertical } from 'react-icons/fi'
 import { useDispatch } from 'react-redux'
-import { calcCalories, COLOR, history } from 'ultis/functions'
+import { calcCalories, COLOR, history, RECIPE_STATUS } from 'ultis/functions'
 import '../../App.less'
 import './index.css'
 
@@ -94,6 +94,9 @@ export default function RecipeItem({
                 color: 'black'
               }}
             >
+              {recipe?.status === RECIPE_STATUS.PENDING
+                ? `[${t('recipe.draft')}] `
+                : ''}
               {recipe?.title}
             </Text>
           </Paragraph>
