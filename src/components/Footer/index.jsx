@@ -59,6 +59,27 @@ function AppFooter() {
           style={{
             display: 'flex',
             flexDirection: 'column',
+            marginTop: 32,
+            marginLeft: 8
+          }}
+        >
+          <Title level={5} style={{ fontWeight: 700 }}>
+            {t('common.aboutUs')}
+          </Title>
+          <div>
+            <Button
+              type="text"
+              style={{ fontWeight: 500, padding: 0 }}
+              onClick={() => history.push('/contact')}
+            >
+              {t('common.contact')}
+            </Button>
+          </div>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
             marginTop: 32
           }}
         >

@@ -3,6 +3,7 @@ import enUS from 'antd/lib/locale/en_US'
 import viVN from 'antd/lib/locale/vi_VN'
 import GlobalModal from 'components/GlobalModal'
 import { store } from 'core/store'
+import Contact from 'pages/Contact'
 import CreatePasswordPage from 'pages/CreatePassword'
 import CreateRecipe from 'pages/CreateRecipe'
 import Dashboard from 'pages/Dashboard'
@@ -23,6 +24,7 @@ import {
 } from 'pages/SignIn/redux/actions'
 import SignUp from 'pages/SignUp'
 import React, { useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { HashRouter as Router, Route } from 'react-router-dom'
@@ -31,7 +33,6 @@ import 'slick-carousel/slick/slick.css'
 import { getNotiContent, history, MAM_TITLE, NOTI_TYPE } from 'ultis/functions'
 import { socketService } from 'ultis/socket'
 import './App.less'
-import { Helmet } from 'react-helmet'
 
 function App() {
   const { language, user, socket, token } = useSelector(state => state.Auth)
@@ -108,6 +109,7 @@ function App() {
         <Route path="/meal-planner" component={MealPlanner} />
         <Route path="/admin" component={Dashboard} />
         <Route path="/policy" component={Policy} />
+        <Route path="/contact" component={Contact} />
       </Router>
       <GlobalModal />
     </ConfigProvider>

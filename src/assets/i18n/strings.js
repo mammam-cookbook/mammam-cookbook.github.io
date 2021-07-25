@@ -24,7 +24,9 @@ export const en = {
     privacyPolicy: 'Privacy policy',
     app: 'App',
     underDevelopment:
-      'This function is under development. Please comeback later.'
+      'This function is under development. Please comeback later.',
+    contact: 'Contact',
+    aboutUs: 'About Us'
   },
   auth: {
     login: 'Sign In',
@@ -273,6 +275,14 @@ export const en = {
     editRecipeSuccess: 'Edit recipe success',
     addToShoppingListSuccess: 'Added to shopping list',
     addToMenuSuccess: 'Added to meal planner'
+  },
+  contact: {
+    contactUs: 'Contact us via email',
+    survey: 'Help us improve this project by taking the survey',
+    here: 'here',
+    submitForm:
+      "If you don't have time for the above survey or simply want to report bugs or want to contribute to making the project better, please fill out the form below. We appreciate all of your contributions.",
+    sendSuccess: 'Successfully sent. We appreciate your contributions'
   }
 }
 
@@ -300,7 +310,9 @@ export const vi = {
     privacyPolicy: 'Chính sách quyền riêng tư',
     app: 'Ứng dụng',
     underDevelopment:
-      'Chức năng này đang trong quá trình phát triển. Vui lòng quay lại sau'
+      'Chức năng này đang trong quá trình phát triển. Vui lòng quay lại sau',
+    contact: 'Liên hệ',
+    aboutUs: 'Về chúng tôi'
   },
   auth: {
     login: 'Đăng nhập',
@@ -552,5 +564,15 @@ export const vi = {
     editRecipeSuccess: 'Thay đổi công thức thàng công',
     addToShoppingListSuccess: 'Đã thêm vào danh sách mua',
     addToMenuSuccess: 'Đã thêm vào thực đơn'
+  },
+  contact: {
+    contactUs: 'Liên hệ với chúng tôi qua email',
+    survey:
+      'Hãy giúp chúng tôi hoàn thiện dự án này bằng cách tham gia khảo sát',
+    here: 'tại đây',
+    submitForm:
+      'Nếu bạn chưa có thời gian dành cho khảo sát hoặc chỉ đơn giản muốn báo lỗi hoặc muốn đóng góp giúp dự án tốt hơn, vui lòng điền thông tin vào khung dưới đây. Chúng tôi trân trọng cảm ơn mọi đóng góp của bạn.',
+    sendSuccess:
+      'Đã gửi thành công. Chúng tôi trân trọng cảm ơn đóng góp của bạn'
   }
 }
