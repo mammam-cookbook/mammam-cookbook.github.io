@@ -17,6 +17,12 @@ object-assign
 */
 
 /*!
+      Copyright (c) 2017 Jed Watson.
+      Licensed under the MIT License (MIT), see
+      http://jedwatson.github.io/classnames
+    */
+
+/*!
    Transformation Matrix v2.0
    (c) Epistemex 2014-2015
    www.epistemex.com
@@ -63,6 +69,15 @@ object-assign
  *
  * @author   Feross Aboukhadijeh <http://feross.org>
  * @license  MIT
+ */
+
+/*!
+ * UAParser.js v0.7.24
+ * Lightweight JavaScript-based User-Agent string parser
+ * https://github.com/faisalman/ua-parser-js
+ *
+ * Copyright © 2012-2021 Faisal Salman <f@faisalman.com>
+ * Licensed under MIT License
  */
 
 /*! *****************************************************************************

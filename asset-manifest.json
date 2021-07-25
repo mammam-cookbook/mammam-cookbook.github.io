@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.febb82ff.chunk.css",
-    "main.js": "/static/js/main.074b5a1e.chunk.js",
-    "runtime-main.js": "/static/js/runtime-main.98f53f2e.js",
-    "static/css/2.0d516a82.chunk.css": "/static/css/2.0d516a82.chunk.css",
-    "static/js/2.ba7ddaf2.chunk.js": "/static/js/2.ba7ddaf2.chunk.js",
-    "static/js/3.430534ff.chunk.js": "/static/js/3.430534ff.chunk.js",
+    "main.css": "/static/css/main.77912785.chunk.css",
+    "main.js": "/static/js/main.f72e19e4.chunk.js",
+    "runtime-main.js": "/static/js/runtime-main.ce91fe53.js",
+    "static/css/2.460e66ed.chunk.css": "/static/css/2.460e66ed.chunk.css",
+    "static/js/2.f8090eff.chunk.js": "/static/js/2.f8090eff.chunk.js",
+    "static/js/3.50e20f08.chunk.js": "/static/js/3.50e20f08.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.ba7ddaf2.chunk.js.LICENSE.txt": "/static/js/2.ba7ddaf2.chunk.js.LICENSE.txt",
+    "static/js/2.f8090eff.chunk.js.LICENSE.txt": "/static/js/2.f8090eff.chunk.js.LICENSE.txt",
     "static/media/bar-chart.80591105.svg": "/static/media/bar-chart.80591105.svg",
     "static/media/easy peasy.feaf6308.png": "/static/media/easy peasy.feaf6308.png",
     "static/media/fire.a346e28e.svg": "/static/media/fire.a346e28e.svg",
@@ -26,10 +26,10 @@
     "static/media/yum.7c085026.png": "/static/media/yum.7c085026.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.98f53f2e.js",
-    "static/css/2.0d516a82.chunk.css",
-    "static/js/2.ba7ddaf2.chunk.js",
-    "static/css/main.febb82ff.chunk.css",
-    "static/js/main.074b5a1e.chunk.js"
+    "static/js/runtime-main.ce91fe53.js",
+    "static/css/2.460e66ed.chunk.css",
+    "static/js/2.f8090eff.chunk.js",
+    "static/css/main.77912785.chunk.css",
+    "static/js/main.f72e19e4.chunk.js"
   ]
 }
