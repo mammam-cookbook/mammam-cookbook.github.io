@@ -13,12 +13,16 @@ import {
   GetCollectionsSuccess,
   GetFollowerSuccess,
   GetFollowingSuccess,
+  GetHistory,
+  GetHistoryFailed,
+  GetHistorySuccess,
   GetRecipeOfUser,
   GetRecipeOfUserFailed,
   GetRecipeOfUserSuccess
 } from './actions'
 const initialState = {
   collections: [],
+  historyList: [],
   collectionDetail: {},
   recipes: [],
   followers: [],
@@ -27,11 +31,29 @@ const initialState = {
   isLoadingCollectionDetail: false,
   isLoadingRecipe: false,
   userProfile: null,
-  isLoadingProfile: false
+  isLoadingProfile: false,
+  isLoadingHistory: false
 }
 
 export function profileReducer(state = initialState, action) {
   switch (action.type) {
+    case GetHistory.type:
+      return {
+        ...state,
+        isLoadingHistory: true
+      }
+    case GetHistorySuccess.type:
+      return {
+        ...state,
+        historyList:
+          action.payload && action?.payload?.length > 0 ? action.payload : [],
+        isLoadingHistory: false
+      }
+    case GetHistoryFailed.type:
+      return {
+        ...state,
+        isLoadingHistory: false
+      }
     case GetCollections.type:
       return {
         ...state,

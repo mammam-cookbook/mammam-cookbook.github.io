@@ -7,6 +7,7 @@ import { GetProfile } from 'pages/SignIn/redux/actions'
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  FiAward,
   FiBookmark,
   FiFileText,
   FiLock,
@@ -23,6 +24,7 @@ import ChangePasswordTab from './component/changePassTab'
 import CollectionListProfile from './component/collectionList'
 import FollowerListProfile from './component/followerList'
 import FollowingListProfile from './component/followingList'
+import HistoryPoint from './component/history'
 import RecipeListProfile from './component/recipeList'
 import RecommendOptimization from './component/recommentOptimization'
 import ShoppingListProfile from './component/shoppingList'
@@ -99,6 +101,8 @@ export default function ProfilePage() {
         return <ShoppingListProfile />
       case PROFILE_PAGE.CUSTOMIZE:
         return <RecommendOptimization />
+      case PROFILE_PAGE.HISTORY:
+        return <HistoryPoint />
       default:
         return <RecipeListProfile userId={currentUser} />
     }
@@ -274,6 +278,17 @@ export default function ProfilePage() {
                     icon={<FiSliders size={16} style={styles.icon} />}
                   >
                     {t('profile.customize')}
+                  </Menu.Item>
+                )}
+                {!otherUser && (
+                  <Menu.Item
+                    style={{ color: 'white' }}
+                    className="customItem"
+                    id="txtItem"
+                    key={PROFILE_PAGE.HISTORY}
+                    icon={<FiAward size={16} style={styles.icon} />}
+                  >
+                    {t('profile.historyPoint')}
                   </Menu.Item>
                 )}
               </Menu>

@@ -69,3 +69,19 @@ export const DeleteRecipeFailed = defineAction('DELETE_RECIPE_FAILED')
 export const GetShoppingList = defineAction('GET_SHOPPING_LIST')
 export const GetShoppingListSuccess = defineAction('GET_SHOPPING_LIST_SUCCESS')
 export const GetShoppingListFailed = defineAction('GET_SHOPPING_LIST_FAILED')
+
+export const GetHistory = defineAction('GET_HISTORY_REQUEST')
+export const GetHistorySuccess = defineAction('GET_HISTORY_SUCCESS')
+export const GetHistoryFailed = defineAction('GET_HISTORY_FAILED')
+
+export const GetCustomization = defineAction('GET_CUSTOMIZATION_REQUEST')
+export const GetCustomizationSuccess = defineAction('GET_CUSTOMIZATION_SUCCESS')
+export const GetCustomizationFailed = defineAction('GET_CUSTOMIZATION_FAILED')
+
+export const UpdateCustomization = defineAction('UPDATE_CUSTOMIZATION_REQUEST')
+export const UpdateCustomizationSuccess = defineAction(
+  'UPDATE_CUSTOMIZATION_SUCCESS'
+)
+export const UpdateCustomizationFailed = defineAction(
+  'UPDATE_CUSTOMIZATION_FAILED'
+)

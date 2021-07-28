@@ -4,6 +4,7 @@ import { SearchRecipes } from 'pages/SearchRecipe/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
+import i18n from 'ultis/i18n'
 import {
   AddRecipeToCollection,
   AddRecipeToCollectionFailed,
@@ -29,12 +30,18 @@ import {
   GetCollections,
   GetCollectionsFailed,
   GetCollectionsSuccess,
+  GetCustomization,
+  GetCustomizationFailed,
+  GetCustomizationSuccess,
   GetFollower,
   GetFollowerFailed,
   GetFollowerSuccess,
   GetFollowing,
   GetFollowingFailed,
   GetFollowingSuccess,
+  GetHistory,
+  GetHistoryFailed,
+  GetHistorySuccess,
   GetRecipeOfUser,
   GetRecipeOfUserFailed,
   GetRecipeOfUserSuccess,
@@ -46,7 +53,10 @@ import {
   UnFollowUserSuccess,
   UpdateCollection,
   UpdateCollectionFailed,
-  UpdateCollectionSuccess
+  UpdateCollectionSuccess,
+  UpdateCustomization,
+  UpdateCustomizationFailed,
+  UpdateCustomizationSuccess
 } from './actions'
 
 const getCollectionsEpic$ = action$ =>
@@ -373,6 +383,76 @@ const getShoppingListEpic$ = action$ =>
     })
   )
 
+const getHistoryEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetHistory.type),
+    exhaustMap(action => {
+      const user = store?.getState().Auth?.user
+      return request({
+        method: 'GET',
+        url: `user/${user?.id}/history`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetHistorySuccess.get(result?.data?.history)
+          }
+          return GetHistoryFailed.get(result)
+        }),
+        catchError(error => {
+          return GetHistoryFailed.get(error)
+        })
+      )
+    })
+  )
+
+const getCustomizationEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetCustomization.type),
+    exhaustMap(action => {
+      const user = store?.getState().Auth?.user
+      return request({
+        method: 'GET',
+        url: `user/${user?.id}/customization`
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetCustomizationSuccess.get(result?.data?.custom)
+          }
+          return GetCustomizationFailed.get(result)
+        }),
+        catchError(error => {
+          return GetCustomizationFailed.get(error)
+        })
+      )
+    })
+  )
+
+const updateCustomizationEpic$ = action$ =>
+  action$.pipe(
+    ofType(UpdateCustomization.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: `user/customization`,
+        param: action?.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetCustomization.get())
+            GlobalModal.alertMessage(null, i18n.t('profile.saveCustomSuccess'))
+            return UpdateCustomizationSuccess.get(result?.data)
+          }
+          GlobalModal.alertMessage()
+          return UpdateCustomizationFailed.get(result)
+        }),
+        catchError(error => {
+          GlobalModal.alertMessage()
+          return UpdateCustomizationFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const profileEpics = combineEpics(
   getCollectionsEpic$,
   createCollectionsEpic$,
@@ -387,5 +467,8 @@ export const profileEpics = combineEpics(
   followUserEpic$,
   getRecipeUserEpic$,
   deleteRecipeEpic$,
-  getShoppingListEpic$
+  getShoppingListEpic$,
+  getHistoryEpic$,
+  getCustomizationEpic$,
+  updateCustomizationEpic$
 )

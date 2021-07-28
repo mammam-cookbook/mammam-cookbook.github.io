@@ -1,5 +1,6 @@
 import moment from 'moment'
 import {
+  GetCustomizationSuccess,
   GetFollowerSuccess,
   GetFollowingSuccess
 } from 'pages/Profile/redux/actions'
@@ -100,6 +101,11 @@ export function authReducer(state = initialState, action) {
           state.user != null && state.user?.id === action.payload?.userId
             ? { ...state.user, following: [...action.payload?.data] }
             : state.user
+      }
+    case GetCustomizationSuccess.type:
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload }
       }
     case GetFollowerSuccess.type:
       return {

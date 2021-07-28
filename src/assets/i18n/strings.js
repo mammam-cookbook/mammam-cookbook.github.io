@@ -260,7 +260,17 @@ export const en = {
     bronze: 'Bronze',
     gold: 'Gold',
     silver: 'Silver',
-    diamond: 'Diamond'
+    diamond: 'Diamond',
+    historyPoint: 'Point history',
+    createRecipe: 'You created new recipe',
+    joinInChallenge: 'Made this recipe',
+    noHistory: 'There is no history. Create new recipe to get your first point',
+    currentPoint: 'Current point',
+    dislikeIngres: 'Which ingredients do you dislike?',
+    dislikePlaceholder: 'Shrimp',
+    yourLevel: 'Which level of recipe do you want to view?',
+    saveCustomSuccess: 'Successfully saved your customization',
+    notChangedCustom: "You haven't changed anything"
   },
   notification: {
     liked: 'reacted to your',
@@ -557,7 +567,18 @@ export const vi = {
     bronze: 'Đồng',
     gold: 'Vàng',
     silver: 'Bạc',
-    diamond: 'Kim cương'
+    diamond: 'Kim cương',
+    historyPoint: 'Lịch sử điểm',
+    createRecipe: 'Tạo công thức mới',
+    joinInChallenge: 'Tham gia thử thách tại công thức này',
+    noHistory:
+      'Chưa có lịch sử điểm. Đăng công thức ngay để mau chóng thăng hạng',
+    currentPoint: 'Điểm hiện tại',
+    dislikeIngres: 'Bạn không thích nguyên liệu nào?',
+    dislikePlaceholder: 'Tôm',
+    yourLevel: 'Bạn muốn xem công thức ở cấp độ nào?',
+    saveCustomSuccess: 'Lưu thông tin thành công',
+    notChangedCustom: 'Bạn chưa thay đổi thông tin nào'
   },
   notification: {
     liked: 'đã thích công thức',

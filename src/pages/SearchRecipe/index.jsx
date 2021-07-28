@@ -22,6 +22,40 @@ const { TabPane } = Tabs
 const { Option } = Select
 const COOKING_FILTER = [15, 20, 30, 45, 60, 120, 180, 240]
 
+export const FilterItem = props => {
+  const { title, index, onClick } = props
+  return (
+    <div style={styles.filterBtn}>
+      <Text>{title}</Text>
+      <Button
+        type="link"
+        onClick={() => onClick(index)}
+        icon={<FiX size={16} color={'black'} />}
+      />
+    </div>
+  )
+}
+
+export const CategoryFilterItem = ({ title, isCheck, onClick }) => {
+  return (
+    <ButtonBase onClick={() => onClick(!isCheck)} style={styles.categoryBtn}>
+      <Text
+        style={{
+          fontSize: 14,
+          color: isCheck ? COLOR.primary1 : COLOR.mainBlack,
+          fontWeight: 700,
+          textAlign: 'center'
+        }}
+      >
+        {title}
+      </Text>
+      {isCheck && (
+        <FiCheck size={20} color={COLOR.primary1} style={{ marginLeft: 8 }} />
+      )}
+    </ButtonBase>
+  )
+}
+
 export default function SearchPage() {
   const dispatch = useDispatch()
   const history = useHistory()
@@ -158,25 +192,11 @@ export default function SearchPage() {
     }
     return (
       <Col md={6} lg={4} sm={8}>
-        <ButtonBase onClick={() => onClick()} style={styles.categoryBtn}>
-          <Text
-            style={{
-              fontSize: 14,
-              color: isCheck ? COLOR.primary1 : COLOR.mainBlack,
-              fontWeight: 700,
-              textAlign: 'center'
-            }}
-          >
-            {item[i18n.language]}
-          </Text>
-          {isCheck && (
-            <FiCheck
-              size={20}
-              color={COLOR.primary1}
-              style={{ marginLeft: 8 }}
-            />
-          )}
-        </ButtonBase>
+        <CategoryFilterItem
+          title={item[i18n.language]}
+          isCheck={isCheck}
+          onClick={onClick}
+        />
       </Col>
     )
   }
@@ -288,20 +308,6 @@ export default function SearchPage() {
           </div>
         </Col>
       </Row>
-    )
-  }
-
-  function FilterItem(props) {
-    const { title, index, onClick } = props
-    return (
-      <div style={styles.filterBtn}>
-        <Text>{title}</Text>
-        <Button
-          type="link"
-          onClick={() => onClick(index)}
-          icon={<FiX size={16} color={'black'} />}
-        />
-      </div>
     )
   }
 
@@ -697,7 +703,8 @@ const styles = {
     borderRadius: 50,
     paddingLeft: 8,
     paddingRight: 8,
-    boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)'
+    boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.15)',
+    height: '100%'
     // marginTop: 8
   },
   inputSearchStyle: {
