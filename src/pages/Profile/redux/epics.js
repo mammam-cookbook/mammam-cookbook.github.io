@@ -372,7 +372,7 @@ const getShoppingListEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetShoppingListSuccess.get(result?.data?.recipes)
+            return GetShoppingListSuccess.get(result?.data?.shopingList)
           }
           return GetShoppingListFailed.get(result)
         }),

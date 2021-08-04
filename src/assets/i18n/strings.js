@@ -273,7 +273,8 @@ export const en = {
     dislikePlaceholder: 'Shrimp',
     yourLevel: 'Which level of recipe do you want to view?',
     saveCustomSuccess: 'Successfully saved your customization',
-    notChangedCustom: "You haven't changed anything"
+    notChangedCustom: "You haven't changed anything",
+    noShoppingList: 'There is no shopping list'
   },
   notification: {
     liked: 'reacted to your',
@@ -584,7 +585,8 @@ export const vi = {
     dislikePlaceholder: 'Tôm',
     yourLevel: 'Bạn muốn xem công thức ở cấp độ nào?',
     saveCustomSuccess: 'Lưu thông tin thành công',
-    notChangedCustom: 'Bạn chưa thay đổi thông tin nào'
+    notChangedCustom: 'Bạn chưa thay đổi thông tin nào',
+    noShoppingList: 'Không có danh sách mua nào'
   },
   notification: {
     liked: 'đã thích công thức',
