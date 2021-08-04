@@ -56,6 +56,7 @@
   background-color: rgba(196, 196, 196, 0.4);
   backdrop-filter: blur(22px);
   transition: 0.5s;
+  padding: 12px;
 }
 
 .imgWrap:hover > .detail {

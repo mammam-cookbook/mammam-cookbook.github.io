@@ -34,6 +34,7 @@ const initialState = {
   refreshToken: null,
   refreshTokenExp: null,
   user: null,
+  followingObject: {},
   isLoading: false,
   prevLogin: null,
   isLoadingMenu: false,
@@ -95,12 +96,17 @@ export function authReducer(state = initialState, action) {
             : state.user
       }
     case GetFollowingSuccess.type:
+      let followObject = {}
+      action.payload?.data?.forEach(
+        follow => (followObject[follow?.following_id] = follow)
+      )
       return {
         ...state,
         user:
           state.user != null && state.user?.id === action.payload?.userId
             ? { ...state.user, following: [...action.payload?.data] }
-            : state.user
+            : state.user,
+        followingObject: followObject
       }
     case GetCustomizationSuccess.type:
       return {

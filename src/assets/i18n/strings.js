@@ -180,7 +180,10 @@ export const en = {
     startTimer: 'Start timer',
     stopTimer: 'Stop timer',
     done: 'Done',
-    draft: 'Draft'
+    draft: 'Draft',
+    and: 'and',
+    other: 'other',
+    others: 'others'
   },
   validation: {
     contentRequired: '* Enter direction',
@@ -486,7 +489,10 @@ export const vi = {
     startTimer: 'Đếm giờ',
     stopTimer: 'Dừng đếm',
     done: 'Xong',
-    draft: 'Nháp'
+    draft: 'Nháp',
+    and: 'và',
+    other: 'người khác',
+    others: 'người khác'
   },
   validation: {
     contentRequired: '* Nhập bước thực hiện',

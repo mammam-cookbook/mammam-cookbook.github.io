@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Menu, Popover } from 'antd'
+import { Avatar, Popover } from 'antd'
 import Paragraph from 'antd/lib/typography/Paragraph'
 import Text from 'antd/lib/typography/Text'
 import chart from 'assets/images/bar-chart.svg'
@@ -8,8 +8,9 @@ import hourglass from 'assets/images/hourglass.svg'
 import ButtonBase from 'components/ButtonBase'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiMoreVertical } from 'react-icons/fi'
-import { useDispatch } from 'react-redux'
+import { FaUtensils } from 'react-icons/fa'
+import { FiMoreVertical, FiSmile } from 'react-icons/fi'
+import { useSelector } from 'react-redux'
 import { calcCalories, COLOR, history, RECIPE_STATUS } from 'ultis/functions'
 import '../../App.less'
 import './index.css'
@@ -22,7 +23,36 @@ export default function RecipeItem({
 }) {
   const { t } = useTranslation()
   const [isShowPopover, setIsShowPopover] = useState(false)
-  const dispatch = useDispatch()
+  const { user, followingObject } = useSelector(state => state?.Auth)
+
+  const getFollowingLikes = () => {
+    let name = []
+    for (let i = 0; i < recipe?.reactions?.length; i++) {
+      if (followingObject[recipe?.reactions[i]?.author?.id]) {
+        name.push(recipe?.reactions[i]?.author?.name)
+        if (name.length > 2) {
+          break
+        }
+      }
+    }
+    return name
+  }
+  const getFollowingChallenges = () => {
+    let name = []
+    for (let i = 0; i < recipe?.challenges?.length; i++) {
+      if (followingObject[recipe?.challenges[i]?.author?.id]) {
+        name.push(recipe?.challenges[i]?.author?.name)
+        if (name.length > 2) {
+          break
+        }
+      }
+    }
+    return name
+  }
+
+  const followingLikes = user && followingObject ? getFollowingLikes() : []
+  const followingChallenges =
+    user && followingObject ? getFollowingChallenges() : []
 
   const LEVEL = {
     easy: t('create.easy'),
@@ -131,7 +161,7 @@ export default function RecipeItem({
             <img src={hourglass} width={20} height={20} alt="" />
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 14,
                 color: 'white',
                 marginLeft: 4,
                 fontWeight: 'bold'
@@ -144,7 +174,7 @@ export default function RecipeItem({
             <img src={chart} width={20} height={20} alt="" />
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 14,
                 color: 'white',
                 marginLeft: 4,
                 fontWeight: 'bold'
@@ -157,7 +187,7 @@ export default function RecipeItem({
             <img src={fire} width={20} height={20} alt="" />
             <Text
               style={{
-                fontSize: 16,
+                fontSize: 14,
                 color: 'white',
                 marginLeft: 4,
                 fontWeight: 'bold'
@@ -165,6 +195,62 @@ export default function RecipeItem({
             >
               {recipe?.ingredients?.reduce(calcCalories, 0).toFixed(0)} kcal
             </Text>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
+            <FiSmile size={20} color={'white'} />
+            <Paragraph
+              style={{
+                marginBottom: 0,
+                fontSize: 14,
+                color: 'white',
+                marginLeft: 4,
+                fontWeight: 'bold',
+                textAlign: 'center'
+              }}
+              ellipsis={{
+                rows: 2,
+                expandable: false,
+                suffix: ''
+              }}
+            >
+              {followingLikes?.length > 0
+                ? `${followingLikes.join(', ')} ${t('recipe.and')} ${
+                    recipe?.reactions?.length - followingLikes?.length
+                  } ${
+                    recipe?.reactions?.length - followingLikes?.length > 1
+                      ? t('recipe.others')
+                      : t('recipe.other')
+                  }`
+                : recipe?.reactions?.length ?? 0}
+            </Paragraph>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: 8 }}>
+            <FaUtensils size={20} color={'white'} />
+            <Paragraph
+              style={{
+                marginBottom: 0,
+                fontSize: 14,
+                color: 'white',
+                marginLeft: 4,
+                fontWeight: 'bold',
+                textAlign: 'center'
+              }}
+              ellipsis={{
+                rows: 2,
+                expandable: false,
+                suffix: ''
+              }}
+            >
+              {followingChallenges?.length > 0
+                ? `${followingChallenges.join(', ')} ${t('recipe.and')} ${
+                    recipe?.challenges?.length - followingChallenges?.length
+                  } ${
+                    recipe?.challenges?.length - followingChallenges?.length > 1
+                      ? t('recipe.others')
+                      : t('recipe.other')
+                  }`
+                : recipe?.challenges?.length ?? 0}
+            </Paragraph>
           </div>
         </div>
 
