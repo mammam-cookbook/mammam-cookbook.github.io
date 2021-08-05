@@ -51,7 +51,7 @@ export default function Direction({ item, index }) {
       </Title>
       <div style={{ display: 'flex' }}>
         <Image.PreviewGroup>
-          {item.images.map((img, index) => (
+          {item?.images?.map((img, index) => (
             <div
               style={{
                 width: '32%',

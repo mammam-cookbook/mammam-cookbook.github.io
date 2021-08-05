@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Button } from 'antd'
+import { Avatar, Button, Col, Row } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import ButtonBase from 'components/ButtonBase'
 import GlobalModal from 'components/GlobalModal'
@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router'
 import { COLOR, MODAL_TYPE } from 'ultis/functions'
-
+import '../styles.css'
 function UserItem(props) {
   const { user } = props
   const { t } = useTranslation()
@@ -33,30 +33,21 @@ function UserItem(props) {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'row',
-        border: `1px solid #828282`,
-        alignItems: 'center',
-        borderRadius: 10,
-        padding: 16
-      }}
-    >
-      {user.avatar_url ? (
-        <Avatar size={100} src={user.avatar_url} />
-      ) : (
-        <Avatar size={100} icon={<UserOutlined />} />
-      )}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginLeft: 12,
-          marginRight: 8
-        }}
-      >
+    <Col className={'card'} style={{
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10,
+      padding: 16,
+      backgroundColor: 'white'
+
+    }}>
+      <Row justify={'center'}>
+        {user.avatar_url ? (
+          <Avatar size={100} src={user.avatar_url} />
+        ) : (
+          <Avatar size={100} icon={<UserOutlined />} />
+        )}</Row>
+      <Row justify={'center'}>
         <ButtonBase
           onClick={() =>
             history.push(`/profile?page=${PROFILE_PAGE.RECIPE}&user=${user.id}`)
@@ -73,6 +64,8 @@ function UserItem(props) {
             {user?.name}
           </Text>
         </ButtonBase>
+      </Row>
+      <Row justify={'center'}>
         <Text
           style={{
             fontWeight: 700
@@ -80,6 +73,8 @@ function UserItem(props) {
         >
           {t(`profile.${user?.rank}`)}
         </Text>
+      </Row>
+      <Row justify={'center'}>
         <Text
           style={{
             fontWeight: 500,
@@ -88,6 +83,8 @@ function UserItem(props) {
         >
           {user?.recipes ?? 0} {t('home.recipes').toLocaleLowerCase()}
         </Text>
+      </Row>
+      <Row justify={'center'}>
         {mainUser ? (
           mainUser?.id !== user.id ? (
             <Button
@@ -118,8 +115,8 @@ function UserItem(props) {
             {t('profile.follow')}
           </Button>
         )}
-      </div>
-    </div>
+      </Row>
+    </Col>
   )
 }
 

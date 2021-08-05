@@ -17,9 +17,13 @@ export function homeReducer(state = initialState, action) {
       return {
         ...state,
         recommend:
-          action.payload?.type === 1 ? action.payload?.data : state.recommend,
+          action.payload?.type === 'recommend'
+            ? action.payload?.data
+            : state.recommend,
         highlight:
-          action.payload?.type === 2 ? action.payload?.data : state.highlight,
+          action.payload?.type === 'highlights'
+            ? action.payload?.data
+            : state.highlight,
         isLoading: false
       }
     case GetHomeRecipeFailed.type:
