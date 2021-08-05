@@ -496,7 +496,7 @@ export default function SearchPage() {
             </Badge>
           }
           key="time"
-          // style={{ padding: 24 }}
+        // style={{ padding: 24 }}
         >
           {/* <Text>{t('search.cookingTimeLessThan')}</Text> */}
           <div
@@ -607,7 +607,7 @@ export default function SearchPage() {
             </Title>
             <Row gutter={[16, 24]} style={{ marginTop: 16 }}>
               {resultUser.map(user => (
-                <Col md={12} lg={8} sm={24}>
+                <Col span={4} xs={20} sm={16} md={12} lg={8} xl={4}>
                   <UserItem user={user} />
                 </Col>
               ))}

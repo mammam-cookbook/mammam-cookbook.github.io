@@ -100,7 +100,7 @@ function Home() {
                 style={{ marginTop: 20, padding: 4 }}
               >
                 {recommend.map(recipe => (
-                  <Col span={4} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
+                  <Col span={8} xs={24} md={12} lg={8} sm={24} xl={6} xxl={6}>
                     <Row justify="center">
                       <RecipeItem recipe={recipe} />
                     </Row>

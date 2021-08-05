@@ -16,7 +16,7 @@ history.listen(window => {
 
 export const DOMAIN = 'https://api.mammam.me/api'
 // export const DOMAIN = 'http://localhost:3001/api'
-export const __DEV__ = false
+export const __DEV__ = true
 
 export const LIMIT_ITEMS = 16
 export const COLOR = {
