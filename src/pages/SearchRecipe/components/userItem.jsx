@@ -38,7 +38,8 @@ function UserItem(props) {
       justifyContent: 'center',
       borderRadius: 10,
       padding: 16,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      paddingBottom: 32,
 
     }}>
       <Row justify={'center'}>
