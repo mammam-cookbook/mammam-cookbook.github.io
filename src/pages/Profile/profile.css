@@ -22,7 +22,7 @@
   justify-content: center;
 }
 
-#menuContainer {
+#profileContainer {
   display: flex;
   width: auto;
   flex-direction: column;
@@ -30,6 +30,11 @@
   align-items: center;
   padding-top: calc(40px + 1vmin);
   margin-top: calc(28px + 1vmin);
+  box-shadow:
+  0 2.9px 3.2px rgba(0, 0, 0, 0.028),
+  0 9.8px 10.7px rgba(0, 0, 0, 0.042),
+  0 44px 48px rgba(0, 0, 0, 0.07)
+;
 }
 
 #adminName {
@@ -306,30 +311,4 @@
 
 #txtItem {
   font-weight: 600;
-}
-
-.header-dashboard {
-  filter: drop-shadow(5px -1px 6px rgba(0, 0, 0, 0.25));
-background-color: white;
-display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-}
-
-.logo {
-  height: 32px;
-  width: 35px;
-  margin: 16px;
-  background-image: url("../../assets/logo.svg");
-}
-
-.flex-setting {
-  display: flex;
-  flex-direction: row-reverse;
-  width: 100%;
-}
-
-.footer-background {
-  background: #FEFFDF;
 }

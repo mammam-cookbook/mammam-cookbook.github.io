@@ -30,6 +30,7 @@ import RecommendOptimization from './component/recommentOptimization'
 import ShoppingListProfile from './component/shoppingList'
 import UserInfoTab from './component/userInfoTab'
 import { PROFILE_PAGE } from './constant'
+import './profile.css'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -131,10 +132,10 @@ export default function ProfilePage() {
     <>
       <AppHeader />
       <div className="body-container" style={{ paddingBottom: 60 }}>
-        <Row justify="start" gutter={{ xs: 0, sm: 0, md: 16, lg: 16 }}>
-          <Col span={6} sm={24} xs={24} md={8} lg={8} xl={6} xxl={6}>
+        <Row justify="start" gutter={{ xs: 0, sm: 0, md: 16, lg: 32 }}>
+          <Col span={6} sm={24} xs={24} md={8} lg={8} xl={6} xxl={6} >
             <div
-              id="menuContainer"
+              id="profileContainer"
               style={{
                 backgroundColor: '#EEE',
                 borderRadius: 10
@@ -158,7 +159,8 @@ export default function ProfilePage() {
                     fontSize: 18,
                     fontWeight: 700,
                     marginTop: 24,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    color: COLOR.primary1,
                   }}
                 >
                   {userProfile?.name}
@@ -178,7 +180,6 @@ export default function ProfilePage() {
                   style={{
                     fontSize: 14,
                     fontWeight: 700,
-                    color: COLOR.primary1,
                     textAlign: 'center'
                   }}
                 >

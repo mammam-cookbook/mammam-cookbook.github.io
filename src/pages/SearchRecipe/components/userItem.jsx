@@ -68,7 +68,9 @@ function UserItem(props) {
       <Row justify={'center'}>
         <Text
           style={{
-            fontWeight: 700
+            fontSize: 14,
+            fontWeight: 700,
+            textAlign: 'center'
           }}
         >
           {t(`profile.${user?.rank}`)}

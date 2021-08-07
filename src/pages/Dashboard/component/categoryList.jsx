@@ -4,7 +4,7 @@ import {
   LoadingOutlined,
   PlusCircleOutlined
 } from '@ant-design/icons'
-import { Button, Modal, Space, Spin, Table } from 'antd'
+import { Button, Col, Modal, Row, Space, Spin, Table } from 'antd'
 import Title from 'antd/lib/typography/Title'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -173,15 +173,16 @@ function CategoryList() {
     <>
       <div className="chooseContainer">
         <Title level={3}>{t('create.categories')}</Title>
-        <Button
-          type="primary"
-          icon={<PlusCircleOutlined />}
-          style={{ width: 'auto', marginBottom: 16, marginTop: 32 }}
-          onClick={() => onAddNewCategory()}
-          size="large"
-        >
-          {t('dashboard.addNewCategory')}
-        </Button>
+        <Row style={{ marginBottom: 32 }} justify={'space-between'}>
+          <Col flex={5} />
+          <Col flex={1}>
+            <Row justify={'end'}>
+              <Button type="primary" shape="round" icon={<PlusCircleOutlined />} size={'large'} onClick={() => onAddNewCategory()} onClick={() => onAddNewCategory()}>
+                {t('dashboard.addNewCategory')}
+              </Button>
+            </Row>
+          </Col>
+        </Row>
         <Table columns={categoryColumns} dataSource={realList} />
       </div>
       <AddCategoryModal

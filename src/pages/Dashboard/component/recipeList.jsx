@@ -4,7 +4,7 @@ import {
   LoadingOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import { Avatar, Modal, Space, Spin, Table, Tabs } from 'antd'
+import { Avatar, Modal, Row, Space, Spin, Table, Tabs } from 'antd'
 import Title from 'antd/lib/typography/Title'
 import { DeleteRecipe } from 'pages/Profile/redux/actions'
 import { SearchRecipes } from 'pages/SearchRecipe/redux/actions'
@@ -202,11 +202,13 @@ function RecipeList() {
   return (
     <div className="chooseContainer">
       <Title level={3}>{t('home.recipes')}</Title>
-      <Table
-        columns={recipeColumns}
-        dataSource={list}
-        onChange={handleChange}
-      />
+      <Row style={{ paddingTop: 48 }}>
+        <Table
+          columns={recipeColumns}
+          dataSource={list}
+          onChange={handleChange}
+        />
+      </Row>
     </div>
   )
 }

@@ -1,30 +1,21 @@
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Menu, Spin } from 'antd'
-import Text from 'antd/lib/typography/Text'
+import { Avatar, Col, Layout, Menu, Row, Spin } from 'antd'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaChalkboardTeacher } from 'react-icons/fa'
-import { FiBookOpen, FiGrid, FiUsers } from 'react-icons/fi'
+import { FiEdit, FiGrid, FiList, FiLogOut } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { COLOR, ROLES } from 'ultis/functions'
 import CategoryList from './component/categoryList'
+import RecipeList from './component/recipeList'
 import { PAGE } from './constant'
 import './dashboard.css'
 import { SetCurrentPage } from './redux/actions'
-import {
-  FiBookmark,
-  FiFacebook,
-  FiPrinter,
-  FiSmile,
-  FiUserPlus,
-  FiX,
-  FiLogOut,
-  FiChevronRight,
-  FiChevronLeft
-} from 'react-icons/fi'
-import RecipeList from './component/recipeList'
+import Text from 'antd/lib/typography/Text'
+import DashboardPage from './component/dashboardPage'
+
+const { Header, Footer, Sider, Content } = Layout;
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
@@ -38,7 +29,8 @@ function Dashboard() {
   const isLoadingDashboard = useSelector(
     state => state.Dashboard.isLoadingDashboard
   )
-  const [collaspe, setCollaspe] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
+  const [selected, setSelect] = useState(PAGE.DASHBOARD)
 
   useEffect(() => {
     if (!user || user?.role === ROLES.USER) {
@@ -57,6 +49,7 @@ function Dashboard() {
   const currentPage = useSelector(state => state.Dashboard.currentPage)
 
   const onMenuSelect = e => {
+    setSelect(e.key);
     dispatch(SetCurrentPage.get({ currentPage: e.key }))
   }
 
@@ -67,14 +60,12 @@ function Dashboard() {
 
   const renderRightDashboard = () => {
     switch (currentPage) {
+      case PAGE.DASHBOARD:
+        return <DashboardPage />
       case PAGE.CATEGORY:
         return <CategoryList />
       case PAGE.RECIPE:
         return <RecipeList />
-      // case PAGE.TEACHER:
-      //   return <TeacherList />
-      // case PAGE.STUDENT:
-      //   return <StudentList />
       default:
         return <CategoryList />
     }
@@ -89,117 +80,81 @@ function Dashboard() {
   }
 
   return (
-    <div id="dashboardBg">
-      <div id="menuContainer">
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            padding: 8
-          }}
-        >
-          <Button
-            shape="circle"
-            type="text"
-            onClick={() => handleSignOut()}
-            icon={<FiLogOut size={24} color={'white'} />}
-          />
-          <Button
-            shape="circle"
-            type="text"
-            onClick={() => setCollaspe(!collaspe)}
-            icon={
-              collaspe ? (
-                <FiChevronRight size={24} color={'white'} />
-              ) : (
-                <FiChevronLeft size={24} color={'white'} />
-              )
-            }
-          />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 16
-          }}
-        >
-          {user?.avatar_url ? (
-            <Avatar size={40} src={user?.avatar_url} />
-          ) : (
-            <Avatar size={40} icon={<UserOutlined />} />
-          )}
-          {!collaspe && (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                marginLeft: 8
-              }}
+
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header className="header-dashboard" style={{
+        padding: 24, backgroundColor: 'white'
+      }}>
+        <span id="logoText">MAM</span>
+      </Header>
+      <Layout>
+        <Sider theme="light" collapsible collapsed={collapsed} onCollapse={() => setCollapsed(!collapsed)} style={{ paddingTop: 64 }} width={250}>
+          <Row style={{ paddingTop: 36, paddingBottom: 36 }} align={'middle'} justify={'center'}>
+            {user?.avatar_url ? (
+              <Avatar size={46} src={user?.avatar_url} />
+            ) : (
+              <Avatar size={46} icon={<UserOutlined />} />
+            )}
+            {!collapsed ? <Col style={{ marginLeft: 16 }} >
+              <Col>
+                <Text style={{ fontSize: 15, color: '#192A3E', fontWeight: 700 }}>
+                  {user?.name}
+                </Text>
+              </Col>
+              <Col>
+                <Text style={{ fontSize: 12, color: COLOR.grayText }}>
+                  {user?.email}
+                </Text>
+              </Col>
+
+            </Col> : <div />}
+          </Row>
+          <Menu style={{ height: '90%', backgroundColor: 'white' }} theme="dark" defaultSelectedKeys={[PAGE.DASHBOARD]} mode="inline" onClick={onMenuSelect}>
+            <Menu.Item
+              style={{ fontSize: 16, color: selected === PAGE.DASHBOARD ? 'white' : '#828282', fontWeight: selected === PAGE.DASHBOARD ? "bold" : "normal" }}
+              className="customItem"
+              key={PAGE.DASHBOARD}
+              icon={<FiGrid size={20} style={{ marginRight: 8 }} />}
             >
-              <Text style={{ fontSize: 14, color: 'white', fontWeight: 500 }}>
-                {user?.name}
-              </Text>
-              <Text style={{ fontSize: 11, color: COLOR.grayText }}>
-                {user?.email}
-              </Text>
-            </div>
-          )}
-        </div>
-        <Menu
-          defaultSelectedKeys={[PAGE.CATEGORY]}
-          selectedKeys={[currentPage]}
-          mode="inline"
-          onClick={onMenuSelect}
-          inlineCollapsed={collaspe}
-          style={{ backgroundColor: COLOR.primary1, marginTop: 24 }}
-        >
-          <Menu.Item
-            style={{ color: 'white' }}
-            className="customItem"
-            key={PAGE.CATEGORY}
-            icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
-          >
-            {t('create.categories')}
-          </Menu.Item>
-          <Menu.Item
-            style={{ color: 'white' }}
-            className="customItem"
-            key={PAGE.RECIPE}
-            icon={<FiGrid size={16} style={{ marginRight: 8 }} />}
-          >
-            Công thức
-          </Menu.Item>
-          {/* <Menu.Item
-            style={{ color: 'white' }}
-            className="customItem"
-            key={PAGE.COURSE}
-            icon={<FiBookOpen size={16} style={{ marginRight: 8 }} />}
-          >
-            Courses
-          </Menu.Item>
-          <Menu.Item
-            style={{ color: 'white' }}
-            className="customItem"
-            key={PAGE.TEACHER}
-            icon={<FaChalkboardTeacher size={14} style={{ marginRight: 8 }} />}
-          >
-            Teachers
-          </Menu.Item>
-          <Menu.Item
-            style={{ color: 'white' }}
-            className="customItem"
-            key={PAGE.STUDENT}
-            icon={<FiUsers size={16} style={{ marginRight: 8 }} />}
-          >
-            Students
-          </Menu.Item> */}
-        </Menu>
-      </div>
-      {renderRightDashboard()}
-    </div>
+              {t('auth.dashboard')}
+
+            </Menu.Item>
+            <Menu.Item
+              style={{ fontSize: 16, color: selected === PAGE.CATEGORY ? 'white' : '#828282', fontWeight: selected === PAGE.CATEGORY ? "bold" : "normal" }}
+              className="customItem"
+              key={PAGE.CATEGORY}
+              icon={<FiList size={20} style={{ marginRight: 8 }} />}
+            >
+              {t('create.categories')}
+            </Menu.Item>
+            <Menu.Item
+              style={{ fontSize: 16, color: selected === PAGE.RECIPE ? 'white' : '#828282', fontWeight: selected === PAGE.RECIPE ? "bold" : "normal" }}
+              className="customItem"
+              key={PAGE.RECIPE}
+              icon={<FiEdit size={20} style={{ marginRight: 8 }} />}
+            >
+              Công thức
+            </Menu.Item>
+
+            <Menu.Item
+              style={{ fontSize: 16, color: '#828282' }}
+              className="customItem"
+              key={'logout'}
+              onClick={() => handleSignOut()}
+              icon={<FiLogOut size={20} style={{ marginRight: 8 }} />}
+            >
+              {t('auth.logout')}
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Layout className="site-layout" style={{ marginTop: 48 }}>
+          <Content style={{ margin: 24, marginRight: 64, marginLeft: 64, overflow: 'initial' }}>
+            {renderRightDashboard()}
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>Copyrights &copy; 2021 All Rights Reseverd by MAM.</Footer>
+        </Layout>
+      </Layout>
+    </Layout>
   )
 }
 
