@@ -17,7 +17,7 @@ import {
 const initialState = {
   isLoading: false,
   isLoadingDashboard: false,
-  currentPage: PAGE.CATEGORY,
+  currentPage: PAGE.DASHBOARD,
   detailPage: null,
   categoryList: [],
   userList: [],

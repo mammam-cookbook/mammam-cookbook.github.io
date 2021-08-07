@@ -46,6 +46,9 @@ function CollectionListProfile() {
   return (
     <>
       <div className="chooseContainer">
+
+        <Title level={4}>{t('profile.collection')}</Title>
+
         <div style={{ display: 'flex', height: '100%' }}>
           <Row
             gutter={[
@@ -80,7 +83,7 @@ function CollectionListProfile() {
                   <Title level={4}>{t('profile.noCollections')}</Title>
                 )}
                 {collectionDetail?.recipes &&
-                collectionDetail?.recipes?.length > 0 ? (
+                  collectionDetail?.recipes?.length > 0 ? (
                   <Row
                     gutter={[
                       { xs: 24, sm: 24, md: 24, lg: 32, xl: 32, xxl: 32 },

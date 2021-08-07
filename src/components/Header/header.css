@@ -215,8 +215,8 @@ footer
 ------
 */
 .ant-layout-footer {
-  background: #111 !important;
-  color: #fff !important;
+  background: #FEFFDF !important;
+  color: #F38B12 !important;
   padding: 60px 0 !important;
   text-align: center;
 }
