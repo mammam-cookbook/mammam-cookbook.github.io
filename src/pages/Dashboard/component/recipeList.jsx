@@ -202,13 +202,12 @@ function RecipeList() {
   return (
     <div className="chooseContainer">
       <Title level={3}>{t('home.recipes')}</Title>
-      <Row style={{ paddingTop: 48 }}>
-        <Table
-          columns={recipeColumns}
-          dataSource={list}
-          onChange={handleChange}
-        />
-      </Row>
+      <Table
+        style={{ marginTop: 48 }}
+        columns={recipeColumns}
+        dataSource={list}
+        onChange={handleChange}
+      />
     </div>
   )
 }
