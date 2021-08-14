@@ -22,6 +22,9 @@ import {
   DeleteProblem,
   DeleteProblemFailed,
   DeleteProblemSuccess,
+  DeleteUser,
+  DeleteUserFailed,
+  DeleteUserSuccess,
   GetAllCategories,
   GetAllCategoriesFailed,
   GetAllCategoriesSuccess,
@@ -246,13 +249,44 @@ const deleteProblemEpic$ = action$ =>
     })
   )
 
+const deleteUserEpic$ = action$ =>
+  action$.pipe(
+    ofType(DeleteUser.type),
+    exhaustMap(action => {
+      return request({
+        method: 'DELETE',
+        url: `admin/user`,
+        param: {
+          user_id: action?.payload
+        }
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(
+              SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 })
+            )
+            return DeleteUserSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
+          return DeleteUserFailed.get(result)
+        }),
+        catchError(error => {
+          return DeleteUserFailed.get(error)
+        })
+      )
+    })
+  )
+
 const banUserEpic$ = action$ =>
   action$.pipe(
     ofType(BanUser.type),
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'ban',
+        url: 'admin/ban',
         param: { user_id: action.payload }
       }).pipe(
         map(result => {
@@ -281,7 +315,7 @@ const unBanUserEpic$ = action$ =>
     exhaustMap(action => {
       return request({
         method: 'POST',
-        url: 'unban',
+        url: 'admin/unban',
         param: { user_id: action.payload }
       }).pipe(
         map(result => {
@@ -314,5 +348,6 @@ export const dashboardEpics = combineEpics(
   addProblemEpic$,
   getProblemsEpic$,
   banUserEpic$,
-  unBanUserEpic$
+  unBanUserEpic$,
+  deleteUserEpic$
 )

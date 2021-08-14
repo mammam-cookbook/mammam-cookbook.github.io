@@ -41,3 +41,7 @@ export const BanUserFailed = defineAction('BAN_USER_FAILED')
 export const UnBanUser = defineAction('UNBAN_USER_REQUEST')
 export const UnBanUserSuccess = defineAction('UNBAN_USER_SUCCESS')
 export const UnBanUserFailed = defineAction('UNBAN_USER_FAILED')
+
+export const DeleteUser = defineAction('DELETE_USER_REQUEST')
+export const DeleteUserSuccess = defineAction('DELETE_USER_SUCCESS')
+export const DeleteUserFailed = defineAction('DELETE_USER_FAILED')

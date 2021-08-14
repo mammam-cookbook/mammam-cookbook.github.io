@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR, LIMIT_ITEMS } from 'ultis/functions'
 import '../dashboard.css'
-import { BanUser, UnBanUser } from '../redux/actions'
+import { BanUser, DeleteUser, UnBanUser } from '../redux/actions'
 import { getColumnSearchProps } from './searchInput'
 
 const { TabPane } = Tabs
@@ -82,19 +82,19 @@ function UserList() {
         })
       )
     }
-  }, [userList])
+  }, [isLoading])
 
   const handleDelete = record => {
     Modal.confirm({
       title: t('common.confirm'),
       icon: <DeleteOutlined style={{ color: COLOR.primary1 }} />,
-      content: t('profile.confirmToDeleteRecipe'),
+      content: 'Xác nhận xóa người dùng này?',
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       centered: true,
       okButtonProps: { style: { backgroundColor: COLOR.primary1 } },
       onOk: () => {
-        dispatch(DeleteRecipe.get(record.id))
+        dispatch(DeleteUser.get(record.id))
         Modal.destroyAll()
       }
     })
@@ -129,6 +129,22 @@ function UserList() {
 
   const recipeColumns = [
     {
+      title: 'Ảnh',
+      dataIndex: 'avatar_url',
+      key: 'avatar_url',
+      render: (value, record) => {
+        return (
+          <Space>
+            {record?.avatar_url ? (
+              <Avatar size={40} src={record?.avatar_url} />
+            ) : (
+              <Avatar size={40} icon={<UserOutlined />} />
+            )}
+          </Space>
+        )
+      }
+    },
+    {
       ...getColumnSearchProps(
         'name',
         'Enter name to find',
@@ -141,19 +157,7 @@ function UserList() {
       title: 'Tên',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      render: (value, record) => {
-        return (
-          <Space>
-            {record?.avatar_url ? (
-              <Avatar size={40} src={record?.avatar_url} />
-            ) : (
-              <Avatar size={40} icon={<UserOutlined />} />
-            )}
-            <span>{value}</span>
-          </Space>
-        )
-      }
+      sorter: (a, b) => a.name.localeCompare(b.name)
     },
     {
       title: 'Phân quyền',
