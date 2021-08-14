@@ -3,7 +3,14 @@ import { Avatar, Col, Layout, Menu, Row, Spin } from 'antd'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FiAlertCircle, FiEdit, FiGrid, FiList, FiLogOut } from 'react-icons/fi'
+import {
+  FiAlertCircle,
+  FiEdit,
+  FiGrid,
+  FiList,
+  FiLogOut,
+  FiUsers
+} from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { COLOR, ROLES } from 'ultis/functions'
@@ -15,6 +22,7 @@ import { SetCurrentPage } from './redux/actions'
 import Text from 'antd/lib/typography/Text'
 import DashboardPage from './component/dashboardPage'
 import ProblemList from './component/problemList'
+import UserList from './component/userList'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -65,6 +73,8 @@ function Dashboard() {
         return <DashboardPage />
       case PAGE.CATEGORY:
         return <CategoryList />
+      case PAGE.USER:
+        return <UserList />
       case PAGE.RECIPE:
         return <RecipeList />
       case PAGE.PROBLEM:
@@ -174,6 +184,18 @@ function Dashboard() {
               icon={<FiEdit size={20} style={{ marginRight: 8 }} />}
             >
               {t('home.recipes')}
+            </Menu.Item>
+            <Menu.Item
+              style={{
+                fontSize: 16,
+                color: selected === PAGE.USER ? 'white' : '#828282',
+                fontWeight: selected === PAGE.USER ? 'bold' : 'normal'
+              }}
+              className="customItem"
+              key={PAGE.USER}
+              icon={<FiUsers size={20} style={{ marginRight: 8 }} />}
+            >
+              Người dùng
             </Menu.Item>
             <Menu.Item
               style={{

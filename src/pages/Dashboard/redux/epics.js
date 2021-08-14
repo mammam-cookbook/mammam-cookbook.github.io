@@ -1,8 +1,10 @@
 import GlobalModal from 'components/GlobalModal'
 import { store } from 'core/store'
+import { SearchUsers } from 'pages/SearchRecipe/redux/actions'
 import { combineEpics, ofType } from 'redux-observable'
 import { catchError, exhaustMap, map } from 'rxjs/operators'
 import { request } from 'ultis/api'
+import { LIMIT_ITEMS } from 'ultis/functions'
 import i18n from 'ultis/i18n'
 import {
   AddCategory,
@@ -11,6 +13,9 @@ import {
   AddProblem,
   AddProblemFailed,
   AddProblemSuccess,
+  BanUser,
+  BanUserFailed,
+  BanUserSuccess,
   DeleteCategory,
   DeleteCategoryFailed,
   DeleteCategorySuccess,
@@ -23,12 +28,9 @@ import {
   GetAllProblem,
   GetAllProblemFailed,
   GetAllProblemSuccess,
-  GetUserProfile,
-  GetUserProfileFailed,
-  GetUserProfileSuccess,
-  GetUsers,
-  GetUsersFailed,
-  GetUsersSuccess,
+  UnBanUser,
+  UnBanUserFailed,
+  UnBanUserSuccess,
   UpdateCategory,
   UpdateCategoryFailed,
   UpdateCategorySuccess,
@@ -243,52 +245,60 @@ const deleteProblemEpic$ = action$ =>
       )
     })
   )
-const getUsersEpic$ = action$ =>
+
+const banUserEpic$ = action$ =>
   action$.pipe(
-    ofType(GetUsers.type),
+    ofType(BanUser.type),
     exhaustMap(action => {
       return request({
-        method: 'GET',
-        url: 'users',
-        param: action.payload
+        method: 'POST',
+        url: 'ban',
+        param: { user_id: action.payload }
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetUsersSuccess.get(result.data)
+            store.dispatch(
+              SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 })
+            )
+            return BanUserSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
             i18n.t('common.information'),
             result.data?.message
           )
-          return GetUsersFailed.get(result)
+          return BanUserFailed.get(result)
         }),
         catchError(error => {
-          return GetUsersFailed.get(error)
+          return BanUserFailed.get(error)
         })
       )
     })
   )
 
-const getUserProfileEpic$ = action$ =>
+const unBanUserEpic$ = action$ =>
   action$.pipe(
-    ofType(GetUserProfile.type),
+    ofType(UnBanUser.type),
     exhaustMap(action => {
       return request({
-        method: 'GET',
-        url: `users/${action.payload}`
+        method: 'POST',
+        url: 'unban',
+        param: { user_id: action.payload }
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return GetUserProfileSuccess.get(result.data)
+            store.dispatch(
+              SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 })
+            )
+            return UnBanUserSuccess.get(result.data)
           }
           GlobalModal.alertMessage(
             i18n.t('common.information'),
             result.data?.message
           )
-          return GetUserProfileFailed.get(result)
+          return UnBanUserFailed.get(result)
         }),
         catchError(error => {
-          return GetUserProfileFailed.get(error)
+          return UnBanUserFailed.get(error)
         })
       )
     })
@@ -299,10 +309,10 @@ export const dashboardEpics = combineEpics(
   addCategoryEpic$,
   updateCategoryEpic$,
   deleteCategoryEpic$,
-  getUsersEpic$,
-  getUserProfileEpic$,
   deleteProblemEpic$,
   updateProblemEpic$,
   addProblemEpic$,
-  getProblemsEpic$
+  getProblemsEpic$,
+  banUserEpic$,
+  unBanUserEpic$
 )

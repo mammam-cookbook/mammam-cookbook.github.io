@@ -506,7 +506,20 @@ export default function RecipeDetail(props) {
                   style={{ flex: 1, marginLeft: 12 }}
                   type="primary"
                   onClick={() => {
-                    setIsShowMadeIt(true)
+                    if (user) {
+                      setIsShowMadeIt(true)
+                    } else {
+                      GlobalModal.alertMessage(
+                        null,
+                        t('signin.title'),
+                        MODAL_TYPE.CHOICE,
+                        () =>
+                          history.push({
+                            pathname: '/signin',
+                            state: { from: `/recipe/${id}` }
+                          })
+                      )
+                    }
                   }}
                 >
                   {t('recipe.iMadeIt').toLocaleUpperCase()}

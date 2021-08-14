@@ -55,7 +55,10 @@ const searchUserEpic$ = action$ =>
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            return SearchUsersSuccess.get(result?.data?.userlist)
+            return SearchUsersSuccess.get({
+              ...result?.data?.userlist,
+              currentOffset: action.payload?.offset
+            })
           }
           return SearchUsersFailed.get(result)
         }),

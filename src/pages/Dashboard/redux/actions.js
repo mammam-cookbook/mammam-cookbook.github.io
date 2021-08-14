@@ -18,14 +18,6 @@ export const DeleteCategory = defineAction('DELETE_CATEGORY_REQUEST')
 export const DeleteCategorySuccess = defineAction('DELETE_CATEGORY_SUCCESS')
 export const DeleteCategoryFailed = defineAction('DELETE_CATEGORY_FAILED')
 
-export const GetUsers = defineAction('GET_USERS_REQUEST')
-export const GetUsersSuccess = defineAction('GET_USERS_SUCCESS')
-export const GetUsersFailed = defineAction('GET_USERS_FAILED')
-
-export const GetUserProfile = defineAction('GET_USER_PROFILE_REQUEST')
-export const GetUserProfileSuccess = defineAction('GET_USER_PROFILE_SUCCESS')
-export const GetUserProfileFailed = defineAction('GET_USER_PROFILE_FAILED')
-
 export const GetAllProblem = defineAction('GET_PROBLEMS_REQUEST')
 export const GetAllProblemSuccess = defineAction('GET_PROBLEMS_SUCCESS')
 export const GetAllProblemFailed = defineAction('GET_PROBLEMS_FAILED')
@@ -41,3 +33,11 @@ export const UpdateProblemFailed = defineAction('UPDATE_PROBLEM_FAILED')
 export const DeleteProblem = defineAction('DELETE_PROBLEM_REQUEST')
 export const DeleteProblemSuccess = defineAction('DELETE_PROBLEM_SUCCESS')
 export const DeleteProblemFailed = defineAction('DELETE_PROBLEM_FAILED')
+
+export const BanUser = defineAction('BAN_USER_REQUEST')
+export const BanUserSuccess = defineAction('BAN_USER_SUCCESS')
+export const BanUserFailed = defineAction('BAN_USER_FAILED')
+
+export const UnBanUser = defineAction('UNBAN_USER_REQUEST')
+export const UnBanUserSuccess = defineAction('UNBAN_USER_SUCCESS')
+export const UnBanUserFailed = defineAction('UNBAN_USER_FAILED')

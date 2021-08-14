@@ -2,7 +2,10 @@ import { PAGE } from 'pages/Dashboard/constant'
 import {
   SearchRecipes,
   SearchRecipesFailed,
-  SearchRecipesSuccess
+  SearchRecipesSuccess,
+  SearchUsers,
+  SearchUsersFailed,
+  SearchUsersSuccess
 } from 'pages/SearchRecipe/redux/actions'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import {
@@ -12,9 +15,6 @@ import {
   GetAllProblem,
   GetAllProblemFailed,
   GetAllProblemSuccess,
-  GetUsers,
-  GetUsersFailed,
-  GetUsersSuccess,
   SetCurrentPage
 } from './actions'
 const initialState = {
@@ -26,7 +26,9 @@ const initialState = {
   problemList: [],
   userList: [],
   userDetail: null,
-  recipeList: []
+  recipeList: [],
+  currentUserOffset: 0,
+  canLoadMoreUser: true
 }
 
 export function dashboardReducer(state = initialState, action) {
@@ -43,12 +45,6 @@ export function dashboardReducer(state = initialState, action) {
       return { ...state, problemList: action.payload, isLoading: false }
     case GetAllProblemFailed.type:
       return { ...state, isLoading: false }
-    case GetUsers.type:
-      return { ...state, isLoading: true }
-    case GetUsersSuccess.type:
-      return { ...state, userList: action.payload, isLoading: false }
-    case GetUsersFailed.type:
-      return { ...state, isLoading: false }
     case SearchRecipes.type:
       return {
         ...state,
@@ -61,6 +57,27 @@ export function dashboardReducer(state = initialState, action) {
         recipeList: action.payload.rows
       }
     case SearchRecipesFailed.type:
+      return {
+        ...state,
+        isLoading: false
+      }
+    case SearchUsers.type:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case SearchUsersSuccess.type:
+      return {
+        ...state,
+        isLoading: false,
+        userList:
+          action.payload?.currentOffset === 0
+            ? action.payload.rows
+            : state.userList.concat(action.payload.rows),
+        currentUserOffset: action.payload?.currentOffset,
+        canLoadMoreUser: action.payload?.currentOffset < action.payload?.count
+      }
+    case SearchUsersFailed.type:
       return {
         ...state,
         isLoading: false
