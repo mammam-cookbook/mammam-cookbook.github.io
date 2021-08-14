@@ -9,6 +9,9 @@ import {
   GetAllCategories,
   GetAllCategoriesFailed,
   GetAllCategoriesSuccess,
+  GetAllProblem,
+  GetAllProblemFailed,
+  GetAllProblemSuccess,
   GetUsers,
   GetUsersFailed,
   GetUsersSuccess,
@@ -20,6 +23,7 @@ const initialState = {
   currentPage: PAGE.DASHBOARD,
   detailPage: null,
   categoryList: [],
+  problemList: [],
   userList: [],
   userDetail: null,
   recipeList: []
@@ -32,6 +36,12 @@ export function dashboardReducer(state = initialState, action) {
     case GetAllCategoriesSuccess.type:
       return { ...state, categoryList: action.payload, isLoading: false }
     case GetAllCategoriesFailed.type:
+      return { ...state, isLoading: false }
+    case GetAllProblem.type:
+      return { ...state, isLoading: true }
+    case GetAllProblemSuccess.type:
+      return { ...state, problemList: action.payload, isLoading: false }
+    case GetAllProblemFailed.type:
       return { ...state, isLoading: false }
     case GetUsers.type:
       return { ...state, isLoading: true }

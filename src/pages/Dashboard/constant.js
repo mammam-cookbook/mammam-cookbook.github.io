@@ -1,6 +1,9 @@
 export const PAGE = {
   DASHBOARD: 'DASHBOARD',
   CATEGORY: 'CATEGORY',
+  PROBLEM: 'PROBLEM',
+  REPORT: 'REPORT',
+  USER: 'USER',
   RECIPE: 'RECIPE'
 }
 

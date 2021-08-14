@@ -201,7 +201,11 @@ export const en = {
     stepRequired: 'Add at least 1 step',
     thumbnailRequired: 'Select recipe thumbnail',
     categoryRule: 'Category name cannot contain special characters',
-    categoryRequired: '* Enter category name'
+    categoryRequired: '* Enter category name',
+    problemCodeRule: 'Problem code cannot contain special characters',
+    problemCodeRequired: '* Enter problem code',
+    problemRule: 'Problem description cannot contain special characters',
+    problemRequired: '* Enter problem description'
   },
   dashboard: {
     addNewCategory: 'Add new category',
@@ -511,7 +515,11 @@ export const vi = {
     stepRequired: 'Thêm ít nhất 1 bước thực hiện',
     thumbnailRequired: 'Chọn hình đại diện cho công thức',
     categoryRule: 'Tên phân loại không chứa kí tự đặc biệt',
-    categoryRequired: '* Nhập tên phân loại'
+    categoryRequired: '* Nhập tên phân loại',
+    problemCodeRule: 'Mã vấn đề không chứa kí tự đặc biệt',
+    problemCodeRequired: '* Nhập mã vấn đề',
+    problemRule: 'Mô tả vấn đề không chứa kí tự đặc biệt',
+    problemRequired: '* Nhập mô tả vấn đề'
   },
   dashboard: {
     addNewCategory: 'Thêm phân loại',

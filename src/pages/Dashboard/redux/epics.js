@@ -8,18 +8,21 @@ import {
   AddCategory,
   AddCategoryFailed,
   AddCategorySuccess,
+  AddProblem,
+  AddProblemFailed,
+  AddProblemSuccess,
   DeleteCategory,
   DeleteCategoryFailed,
   DeleteCategorySuccess,
-  DeleteCourse,
-  DeleteCourseFailed,
-  DeleteCourseSuccess,
+  DeleteProblem,
+  DeleteProblemFailed,
+  DeleteProblemSuccess,
   GetAllCategories,
   GetAllCategoriesFailed,
   GetAllCategoriesSuccess,
-  GetAllCourses,
-  GetAllCoursesFailed,
-  GetAllCoursesSuccess,
+  GetAllProblem,
+  GetAllProblemFailed,
+  GetAllProblemSuccess,
   GetUserProfile,
   GetUserProfileFailed,
   GetUserProfileSuccess,
@@ -28,7 +31,10 @@ import {
   GetUsersSuccess,
   UpdateCategory,
   UpdateCategoryFailed,
-  UpdateCategorySuccess
+  UpdateCategorySuccess,
+  UpdateProblem,
+  UpdateProblemFailed,
+  UpdateProblemSuccess
 } from './actions'
 
 const getCategoriesEpic$ = action$ =>
@@ -68,7 +74,10 @@ const addCategoryEpic$ = action$ =>
             store.dispatch(GetAllCategories.get())
             return AddCategorySuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return AddCategoryFailed.get(result)
         }),
         catchError(error => {
@@ -92,7 +101,10 @@ const updateCategoryEpic$ = action$ =>
             store.dispatch(GetAllCategories.get())
             return UpdateCategorySuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return UpdateCategoryFailed.get(result)
         }),
         catchError(error => {
@@ -115,7 +127,10 @@ const deleteCategoryEpic$ = action$ =>
             store.dispatch(GetAllCategories.get())
             return DeleteCategorySuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return DeleteCategoryFailed.get(result)
         }),
         catchError(error => {
@@ -125,33 +140,109 @@ const deleteCategoryEpic$ = action$ =>
     })
   )
 
-const deleteCourseEpic$ = action$ =>
+const getProblemsEpic$ = action$ =>
   action$.pipe(
-    ofType(DeleteCourse.type),
+    ofType(GetAllProblem.type),
     exhaustMap(action => {
       return request({
-        method: 'DELETE',
-        url: `course/${action.payload}`
+        method: 'GET',
+        url: 'problem'
       }).pipe(
         map(result => {
           if (result.status === 200) {
-            store.dispatch(GetAllCourses.get())
-            const currentUser = store.getState().Dashboard.userDetail
-            if (currentUser) {
-              store.dispatch(GetUserProfile.get(currentUser.id))
-            }
-            return DeleteCourseSuccess.get(result.data)
+            return GetAllProblemSuccess.get(result.data?.problem?.rows)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
-          return DeleteCourseFailed.get(result)
+          return GetAllProblemFailed.get(result)
         }),
         catchError(error => {
-          return DeleteCourseFailed.get(error)
+          return GetAllProblemFailed.get(error)
         })
       )
     })
   )
 
+const addProblemEpic$ = action$ =>
+  action$.pipe(
+    ofType(AddProblem.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'problem',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetAllProblem.get())
+            return AddProblemSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
+          return AddProblemFailed.get(result)
+        }),
+        catchError(error => {
+          return AddProblemFailed.get(error)
+        })
+      )
+    })
+  )
+
+const updateProblemEpic$ = action$ =>
+  action$.pipe(
+    ofType(UpdateProblem.type),
+    exhaustMap(action => {
+      return request({
+        method: 'PUT',
+        url: `problem/${action.payload.id}`,
+        param: action.payload.data
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetAllProblem.get())
+            return UpdateProblemSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
+          return UpdateProblemFailed.get(result)
+        }),
+        catchError(error => {
+          return UpdateProblemFailed.get(error)
+        })
+      )
+    })
+  )
+
+const deleteProblemEpic$ = action$ =>
+  action$.pipe(
+    ofType(DeleteProblem.type),
+    exhaustMap(action => {
+      return request({
+        method: 'DELETE',
+        url: `problem`,
+        param: {
+          id: action?.payload
+        }
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            store.dispatch(GetAllProblem.get())
+            return DeleteProblemSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
+          return DeleteProblemFailed.get(result)
+        }),
+        catchError(error => {
+          return DeleteProblemFailed.get(error)
+        })
+      )
+    })
+  )
 const getUsersEpic$ = action$ =>
   action$.pipe(
     ofType(GetUsers.type),
@@ -190,34 +281,14 @@ const getUserProfileEpic$ = action$ =>
           if (result.status === 200) {
             return GetUserProfileSuccess.get(result.data)
           }
-          GlobalModal.alertMessage('Information', result.data?.message)
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
           return GetUserProfileFailed.get(result)
         }),
         catchError(error => {
           return GetUserProfileFailed.get(error)
-        })
-      )
-    })
-  )
-
-const getCourseListEpic$ = action$ =>
-  action$.pipe(
-    ofType(GetAllCourses.type),
-    exhaustMap(action => {
-      return request({
-        method: 'GET',
-        url: `course`,
-        param: action.payload
-      }).pipe(
-        map(result => {
-          if (result.status === 200) {
-            return GetAllCoursesSuccess.get(result.data)
-          }
-          GlobalModal.alertMessage('Information', result.data?.message)
-          return GetAllCoursesFailed.get(result)
-        }),
-        catchError(error => {
-          return GetAllCoursesFailed.get(error)
         })
       )
     })
@@ -230,6 +301,8 @@ export const dashboardEpics = combineEpics(
   deleteCategoryEpic$,
   getUsersEpic$,
   getUserProfileEpic$,
-  getCourseListEpic$,
-  deleteCourseEpic$
+  deleteProblemEpic$,
+  updateProblemEpic$,
+  addProblemEpic$,
+  getProblemsEpic$
 )

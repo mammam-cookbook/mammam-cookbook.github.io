@@ -11,52 +11,29 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR } from 'ultis/functions'
 import '../dashboard.css'
-import { DeleteCategory, GetAllCategories } from '../redux/actions'
-import AddCategoryModal from './addCategory'
+import { DeleteProblem, GetAllProblem } from '../redux/actions'
+import AddProblemModal from './addProblem'
 import { getColumnSearchProps } from './searchInput'
 
 const loadingIcon = (
   <LoadingOutlined style={{ fontSize: 30, color: COLOR.primary1 }} spin />
 )
 
-function CategoryList() {
-  const categoryList = useSelector(state => state.Dashboard.categoryList)
+function ProblemList() {
+  const problemList = useSelector(state => state.Dashboard.problemList)
   const isLoading = useSelector(state => state.Dashboard.isLoading)
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchColumn] = useState('')
   const refInput = useRef()
   const { t } = useTranslation()
-  let realList = []
-  categoryList?.forEach(item => {
-    realList.push({
-      vi: item.vi,
-      en: item.en,
-      parentVi: null,
-      parentEn: null,
-      id: item.id,
-      parentId: item.parent_category_id
-    })
-    item?.childrenCategories &&
-      item?.childrenCategories.length > 0 &&
-      item?.childrenCategories.forEach(subCat => {
-        realList.push({
-          vi: subCat.vi,
-          en: subCat.en,
-          parentVi: item.vi,
-          parentEn: item.en,
-          id: subCat.id,
-          parentId: subCat.parent_category_id
-        })
-      })
-  })
   const [edit, setEdit] = useState({ isShow: false, category: null })
 
   useEffect(() => {
-    dispatch(GetAllCategories.get())
+    dispatch(GetAllProblem.get())
   }, [])
 
-  const onAddNewCategory = () => {
+  const onAddNewProblem = () => {
     setEdit({ isShow: true, category: null })
   }
 
@@ -68,13 +45,13 @@ function CategoryList() {
     Modal.confirm({
       title: t('common.confirm'),
       icon: <DeleteOutlined style={{ color: COLOR.primary1 }} />,
-      content: t('dashboard.confirmToDeleteCategory'),
+      content: 'Xác nhận xóa vấn đề này?',
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       centered: true,
       okButtonProps: { style: { backgroundColor: COLOR.primary1 } },
       onOk: () => {
-        dispatch(DeleteCategory.get(record.id))
+        dispatch(DeleteProblem.get(record.id))
         Modal.destroyAll()
       }
     })
@@ -83,7 +60,7 @@ function CategoryList() {
   const categoryColumns = [
     {
       ...getColumnSearchProps(
-        'vi',
+        'key',
         t('dashboard.enterTitleToFind'),
         searchText,
         setSearchText,
@@ -91,14 +68,14 @@ function CategoryList() {
         setSearchColumn,
         refInput
       ),
-      title: t('common.vi'),
-      dataIndex: 'vi',
-      key: 'vi',
-      sorter: (a, b) => a.vi.localeCompare(b.vi)
+      title: 'Mã vấn đề',
+      dataIndex: 'key',
+      key: 'key',
+      sorter: (a, b) => a.key.localeCompare(b.key)
     },
     {
       ...getColumnSearchProps(
-        'en',
+        'description',
         t('dashboard.enterTitleToFind'),
         searchText,
         setSearchText,
@@ -106,40 +83,10 @@ function CategoryList() {
         setSearchColumn,
         refInput
       ),
-      title: t('common.en'),
-      dataIndex: 'en',
-      key: 'en',
-      sorter: (a, b) => a.en.localeCompare(b.en)
-    },
-    {
-      ...getColumnSearchProps(
-        'parentVi',
-        t('dashboard.enterTitleToFind'),
-        searchText,
-        setSearchText,
-        searchedColumn,
-        setSearchColumn,
-        refInput
-      ),
-      title: t('dashboard.parentCategoryVi'),
-      dataIndex: 'parentVi',
-      key: 'parentVi',
-      sorter: (a, b) => a.parentVi.localeCompare(b.parentVi)
-    },
-    {
-      ...getColumnSearchProps(
-        'parentEn',
-        t('dashboard.enterTitleToFind'),
-        searchText,
-        setSearchText,
-        searchedColumn,
-        setSearchColumn,
-        refInput
-      ),
-      title: t('dashboard.parentCategoryEn'),
-      dataIndex: 'parentEn',
-      key: 'parentEn',
-      sorter: (a, b) => a.parentEn.localeCompare(b.parentEn)
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
+      sorter: (a, b) => a.description.localeCompare(b.description)
     },
     {
       title: t('common.action'),
@@ -172,7 +119,7 @@ function CategoryList() {
   return (
     <>
       <div className="chooseContainer">
-        <Title level={3}>{t('create.categories')}</Title>
+        <Title level={3}>Vấn đề</Title>
         <Row style={{ marginBottom: 32 }} justify={'space-between'}>
           <Col flex={5} />
           <Col flex={1}>
@@ -182,24 +129,24 @@ function CategoryList() {
                 shape="round"
                 icon={<PlusCircleOutlined />}
                 size={'large'}
-                onClick={() => onAddNewCategory()}
+                onClick={() => onAddNewProblem()}
               >
-                {t('dashboard.addNewCategory')}
+                Thêm loại vấn đề
               </Button>
             </Row>
           </Col>
         </Row>
-        <Table columns={categoryColumns} dataSource={realList} />
+        <Table columns={categoryColumns} dataSource={problemList} />
       </div>
-      <AddCategoryModal
+      <AddProblemModal
         visible={edit.isShow}
         onClose={() => {
           setEdit({ isShow: false, category: null })
         }}
-        category={edit.category}
+        problem={edit.category}
       />
     </>
   )
 }
 
-export default CategoryList
+export default ProblemList
