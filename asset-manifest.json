@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.7414a266.chunk.css",
-    "main.js": "/static/js/main.683a0b84.chunk.js",
+    "main.css": "/static/css/main.46b34f7e.chunk.css",
+    "main.js": "/static/js/main.7906aa31.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.477b723e.js",
     "static/css/2.dce1f893.chunk.css": "/static/css/2.dce1f893.chunk.css",
-    "static/js/2.c8b44629.chunk.js": "/static/js/2.c8b44629.chunk.js",
+    "static/js/2.c2cff9a6.chunk.js": "/static/js/2.c2cff9a6.chunk.js",
     "static/js/3.637eb9fb.chunk.js": "/static/js/3.637eb9fb.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.c8b44629.chunk.js.LICENSE.txt": "/static/js/2.c8b44629.chunk.js.LICENSE.txt",
+    "static/js/2.c2cff9a6.chunk.js.LICENSE.txt": "/static/js/2.c2cff9a6.chunk.js.LICENSE.txt",
     "static/media/bar-chart.80591105.svg": "/static/media/bar-chart.80591105.svg",
     "static/media/easy peasy.feaf6308.png": "/static/media/easy peasy.feaf6308.png",
     "static/media/fire.a346e28e.svg": "/static/media/fire.a346e28e.svg",
@@ -15,8 +15,8 @@
     "static/media/google-play-badge-en.f902960a.png": "/static/media/google-play-badge-en.f902960a.png",
     "static/media/google-play-badge-vi.c530cdf0.png": "/static/media/google-play-badge-vi.c530cdf0.png",
     "static/media/hourglass.b92f376c.svg": "/static/media/hourglass.b92f376c.svg",
-    "static/media/dashboard.css": "/static/media/logo.9633e9bd.svg",
-    "static/media/logo_footer.45bf486c.svg": "/static/media/logo_footer.45bf486c.svg",
+    "static/media/dashboard.css": "/static/media/logo.2a70a274.svg",
+    "static/media/logo_footer.1f5a31ce.svg": "/static/media/logo_footer.1f5a31ce.svg",
     "static/media/index.css": "/static/media/search-banner.13897e41.png",
     "static/media/signin.aab78583.png": "/static/media/signin.aab78583.png",
     "static/media/signup.93b6840d.png": "/static/media/signup.93b6840d.png",
@@ -28,8 +28,8 @@
   "entrypoints": [
     "static/js/runtime-main.477b723e.js",
     "static/css/2.dce1f893.chunk.css",
-    "static/js/2.c8b44629.chunk.js",
-    "static/css/main.7414a266.chunk.css",
-    "static/js/main.683a0b84.chunk.js"
+    "static/js/2.c2cff9a6.chunk.js",
+    "static/css/main.46b34f7e.chunk.css",
+    "static/js/main.7906aa31.chunk.js"
   ]
 }
