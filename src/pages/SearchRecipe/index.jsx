@@ -60,7 +60,7 @@ export default function SearchPage() {
   const dispatch = useDispatch()
   const history = useHistory()
   const { t } = useTranslation()
-  const user = useSelector(state => state.Auth.user)
+  const { user, language } = useSelector(state => state.Auth)
   const categoryList = useSelector(state => state.Dashboard.categoryList)
   const [currentTab, setCurrentTab] = useState('ingredients')
   const [categoriesFilter, setCategoriesFilter] = useState([])
@@ -472,7 +472,7 @@ export default function SearchPage() {
                       color: currentTab === item.id ? COLOR.primary1 : ''
                     }}
                   >
-                    {item[i18n.language].toLocaleUpperCase()}
+                    {item[language].toLocaleUpperCase()}
                   </Text>
                 </Badge>
               }
@@ -496,7 +496,7 @@ export default function SearchPage() {
             </Badge>
           }
           key="time"
-        // style={{ padding: 24 }}
+          // style={{ padding: 24 }}
         >
           {/* <Text>{t('search.cookingTimeLessThan')}</Text> */}
           <div
