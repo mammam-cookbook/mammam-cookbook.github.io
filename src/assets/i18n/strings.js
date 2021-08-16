@@ -26,7 +26,8 @@ export const en = {
     underDevelopment:
       'This function is under development. Please comeback later.',
     contact: 'Contact',
-    aboutUs: 'About Us'
+    aboutUs: 'About Us',
+    report: 'Report'
   },
   auth: {
     login: 'Sign In',
@@ -340,7 +341,8 @@ export const vi = {
     underDevelopment:
       'Chức năng này đang trong quá trình phát triển. Vui lòng quay lại sau',
     contact: 'Liên hệ',
-    aboutUs: 'Về chúng tôi'
+    aboutUs: 'Về chúng tôi',
+    report: 'Báo cáo'
   },
   auth: {
     login: 'Đăng nhập',

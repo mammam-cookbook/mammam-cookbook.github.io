@@ -32,7 +32,8 @@ const searchRecipeEpic$ = action$ =>
                         : item?._source?.dataValues
                     )
                   : [],
-              currentPage: action.payload.offset / LIMIT_ITEMS + 1
+              currentPage: action.payload.offset / LIMIT_ITEMS + 1,
+              currentOffset: action.payload.offset
             })
           }
           return SearchRecipesFailed.get(result)

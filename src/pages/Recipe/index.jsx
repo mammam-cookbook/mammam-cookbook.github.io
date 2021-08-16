@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next'
 import {
   FiBookmark,
   FiFacebook,
+  FiFlag,
   FiSmile,
   FiUserCheck,
   FiUserPlus,
@@ -58,6 +59,7 @@ import RecipeIngredient from './components/ingredient'
 import IngredientList from './components/ingredientList'
 import ModalMadeIt from './components/madeItModal'
 import ModalReaction from './components/reactionModal'
+import ModalReport from './components/reportModal'
 import {
   AddToShoppingList,
   GetDetailRecipe,
@@ -126,6 +128,7 @@ export default function RecipeDetail(props) {
   const [isShowReaction, setIsShowReaction] = useState(false)
   const [isShowPopover, setIsShowPopover] = useState(false)
   const [isShowDirectionPopover, setIsShowDirectionPopover] = useState(false)
+  const [isShowReport, setIsShowReport] = useState(false)
   const [viewRation, setViewRation] = useState(1)
 
   const useQuery = () => {
@@ -201,6 +204,16 @@ export default function RecipeDetail(props) {
   const onClickSave = () => {
     if (user) {
       setIsShowPopover(!isShowPopover)
+    } else {
+      GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
+        history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
+      )
+    }
+  }
+
+  const onClickReport = () => {
+    if (user) {
+      setIsShowReport(prev => !prev)
     } else {
       GlobalModal.alertMessage(null, t('signin.title'), MODAL_TYPE.CHOICE, () =>
         history.push({ pathname: '/signin', state: { from: `/recipe/${id}` } })
@@ -661,6 +674,13 @@ export default function RecipeDetail(props) {
               >
                 <FiFacebook size={24} color={COLOR.primary1} />
               </FacebookShareButton>
+              <Button
+                style={styles.iconButton}
+                shape="circle"
+                type="text"
+                onClick={onClickReport}
+                icon={<FiFlag size={24} color={COLOR.primary1} />}
+              />
               {/* <Button
                 style={styles.iconButton}
                 shape="circle"
@@ -735,6 +755,13 @@ export default function RecipeDetail(props) {
                 >
                   <FiFacebook size={24} color={COLOR.primary1} />
                 </FacebookShareButton>
+                <Button
+                  style={styles.iconButton}
+                  shape="circle"
+                  type="text"
+                  onClick={onClickReport}
+                  icon={<FiFlag size={24} color={COLOR.primary1} />}
+                />
                 {/* <Button
                   style={styles.iconButton}
                   shape="circle"
@@ -1112,6 +1139,11 @@ export default function RecipeDetail(props) {
         recipeId={id}
         isShow={isShowMadeIt}
         closeModal={() => setIsShowMadeIt(false)}
+      />
+      <ModalReport
+        recipeId={id}
+        isShow={isShowReport}
+        closeModal={() => setIsShowReport(false)}
       />
       <ModalReaction
         reactionList={post?.reactions}

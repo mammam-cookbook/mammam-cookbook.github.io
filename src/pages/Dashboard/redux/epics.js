@@ -13,6 +13,9 @@ import {
   AddProblem,
   AddProblemFailed,
   AddProblemSuccess,
+  AddReport,
+  AddReportFailed,
+  AddReportSuccess,
   BanUser,
   BanUserFailed,
   BanUserSuccess,
@@ -31,6 +34,9 @@ import {
   GetAllProblem,
   GetAllProblemFailed,
   GetAllProblemSuccess,
+  GetAllReport,
+  GetAllReportFailed,
+  GetAllReportSuccess,
   UnBanUser,
   UnBanUserFailed,
   UnBanUserSuccess,
@@ -338,6 +344,57 @@ const unBanUserEpic$ = action$ =>
     })
   )
 
+const getReportsEpic$ = action$ =>
+  action$.pipe(
+    ofType(GetAllReport.type),
+    exhaustMap(action => {
+      return request({
+        method: 'GET',
+        url: 'report'
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            return GetAllReportSuccess.get(result.data?.report?.rows)
+          }
+          return GetAllReportFailed.get(result)
+        }),
+        catchError(error => {
+          return GetAllReportFailed.get(error)
+        })
+      )
+    })
+  )
+
+const addReportEpic$ = action$ =>
+  action$.pipe(
+    ofType(AddReport.type),
+    exhaustMap(action => {
+      return request({
+        method: 'POST',
+        url: 'report',
+        param: action.payload
+      }).pipe(
+        map(result => {
+          if (result.status === 200) {
+            GlobalModal.alertMessage(
+              i18n.t('common.information'),
+              'Báo cáo thành công. Chúng tôi sẽ xem xét báo cáo của bạn.'
+            )
+            return AddReportSuccess.get(result.data)
+          }
+          GlobalModal.alertMessage(
+            i18n.t('common.information'),
+            result.data?.message
+          )
+          return AddReportFailed.get(result)
+        }),
+        catchError(error => {
+          return AddReportFailed.get(error)
+        })
+      )
+    })
+  )
+
 export const dashboardEpics = combineEpics(
   getCategoriesEpic$,
   addCategoryEpic$,
@@ -349,5 +406,7 @@ export const dashboardEpics = combineEpics(
   getProblemsEpic$,
   banUserEpic$,
   unBanUserEpic$,
-  deleteUserEpic$
+  deleteUserEpic$,
+  addReportEpic$,
+  getReportsEpic$
 )

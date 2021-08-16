@@ -15,6 +15,9 @@ import {
   GetAllProblem,
   GetAllProblemFailed,
   GetAllProblemSuccess,
+  GetAllReport,
+  GetAllReportFailed,
+  GetAllReportSuccess,
   SetCurrentPage
 } from './actions'
 const initialState = {
@@ -24,11 +27,14 @@ const initialState = {
   detailPage: null,
   categoryList: [],
   problemList: [],
+  reportList: [],
   userList: [],
   userDetail: null,
   recipeList: [],
   currentUserOffset: 0,
-  canLoadMoreUser: true
+  canLoadMoreUser: true,
+  currentRecipeOffset: 0,
+  canLoadMoreRecipe: true
 }
 
 export function dashboardReducer(state = initialState, action) {
@@ -45,6 +51,12 @@ export function dashboardReducer(state = initialState, action) {
       return { ...state, problemList: action.payload, isLoading: false }
     case GetAllProblemFailed.type:
       return { ...state, isLoading: false }
+    case GetAllReport.type:
+      return { ...state, isLoading: true }
+    case GetAllReportSuccess.type:
+      return { ...state, reportList: action.payload, isLoading: false }
+    case GetAllReportFailed.type:
+      return { ...state, isLoading: false }
     case SearchRecipes.type:
       return {
         ...state,
@@ -54,7 +66,12 @@ export function dashboardReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        recipeList: action.payload.rows
+        recipeList:
+          action.payload?.currentOffset === 0
+            ? action.payload.rows
+            : state.recipeList.concat(action.payload.rows),
+        currentRecipeOffset: action.payload?.currentOffset,
+        canLoadMoreRecipe: action.payload?.currentOffset < action.payload?.total
       }
     case SearchRecipesFailed.type:
       return {

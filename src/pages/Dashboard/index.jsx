@@ -1,11 +1,13 @@
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Col, Layout, Menu, Row, Spin } from 'antd'
+import Text from 'antd/lib/typography/Text'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FiAlertCircle,
   FiEdit,
+  FiFlag,
   FiGrid,
   FiList,
   FiLogOut,
@@ -15,14 +17,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { COLOR, ROLES } from 'ultis/functions'
 import CategoryList from './component/categoryList'
+import DashboardPage from './component/dashboardPage'
+import ProblemList from './component/problemList'
 import RecipeList from './component/recipeList'
+import ReportList from './component/reportList'
+import UserList from './component/userList'
 import { PAGE } from './constant'
 import './dashboard.css'
 import { SetCurrentPage } from './redux/actions'
-import Text from 'antd/lib/typography/Text'
-import DashboardPage from './component/dashboardPage'
-import ProblemList from './component/problemList'
-import UserList from './component/userList'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -58,8 +60,10 @@ function Dashboard() {
   const currentPage = useSelector(state => state.Dashboard.currentPage)
 
   const onMenuSelect = e => {
-    setSelect(e.key)
-    dispatch(SetCurrentPage.get({ currentPage: e.key }))
+    if (e.key !== 'logout') {
+      setSelect(e.key)
+      dispatch(SetCurrentPage.get({ currentPage: e.key }))
+    }
   }
 
   const handleSignOut = () => {
@@ -79,6 +83,8 @@ function Dashboard() {
         return <RecipeList />
       case PAGE.PROBLEM:
         return <ProblemList />
+      case PAGE.REPORT:
+        return <ReportList />
       default:
         return <CategoryList />
     }
@@ -144,7 +150,6 @@ function Dashboard() {
           <Menu
             style={{ height: '90%', backgroundColor: 'white' }}
             theme="dark"
-            defaultSelectedKeys={[PAGE.DASHBOARD]}
             selectedKeys={[currentPage]}
             mode="inline"
             onClick={onMenuSelect}
@@ -155,7 +160,6 @@ function Dashboard() {
                 color: selected === PAGE.DASHBOARD ? 'white' : '#828282',
                 fontWeight: selected === PAGE.DASHBOARD ? 'bold' : 'normal'
               }}
-              className="customItem"
               key={PAGE.DASHBOARD}
               icon={<FiGrid size={20} style={{ marginRight: 8 }} />}
             >
@@ -167,7 +171,6 @@ function Dashboard() {
                 color: selected === PAGE.CATEGORY ? 'white' : '#828282',
                 fontWeight: selected === PAGE.CATEGORY ? 'bold' : 'normal'
               }}
-              className="customItem"
               key={PAGE.CATEGORY}
               icon={<FiList size={20} style={{ marginRight: 8 }} />}
             >
@@ -179,7 +182,6 @@ function Dashboard() {
                 color: selected === PAGE.RECIPE ? 'white' : '#828282',
                 fontWeight: selected === PAGE.RECIPE ? 'bold' : 'normal'
               }}
-              className="customItem"
               key={PAGE.RECIPE}
               icon={<FiEdit size={20} style={{ marginRight: 8 }} />}
             >
@@ -191,7 +193,6 @@ function Dashboard() {
                 color: selected === PAGE.USER ? 'white' : '#828282',
                 fontWeight: selected === PAGE.USER ? 'bold' : 'normal'
               }}
-              className="customItem"
               key={PAGE.USER}
               icon={<FiUsers size={20} style={{ marginRight: 8 }} />}
             >
@@ -203,15 +204,24 @@ function Dashboard() {
                 color: selected === PAGE.PROBLEM ? 'white' : '#828282',
                 fontWeight: selected === PAGE.PROBLEM ? 'bold' : 'normal'
               }}
-              className="customItem"
               key={PAGE.PROBLEM}
               icon={<FiAlertCircle size={20} style={{ marginRight: 8 }} />}
             >
               Vấn đề
             </Menu.Item>
             <Menu.Item
+              style={{
+                fontSize: 16,
+                color: selected === PAGE.REPORT ? 'white' : '#828282',
+                fontWeight: selected === PAGE.REPORT ? 'bold' : 'normal'
+              }}
+              key={PAGE.REPORT}
+              icon={<FiFlag size={20} style={{ marginRight: 8 }} />}
+            >
+              Báo cáo
+            </Menu.Item>
+            <Menu.Item
               style={{ fontSize: 16, color: '#828282' }}
-              className="customItem"
               key={'logout'}
               onClick={() => handleSignOut()}
               icon={<FiLogOut size={20} style={{ marginRight: 8 }} />}

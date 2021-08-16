@@ -4,15 +4,16 @@ import {
   LoadingOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import { Avatar, Modal, Row, Space, Spin, Table, Tabs } from 'antd'
+import { Avatar, Modal, Space, Table, Tabs } from 'antd'
 import Title from 'antd/lib/typography/Title'
+import noData from 'assets/images/no_direction_img.svg'
 import { DeleteRecipe } from 'pages/Profile/redux/actions'
 import { SearchRecipes } from 'pages/SearchRecipe/redux/actions'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { calcCalories, COLOR } from 'ultis/functions'
+import { calcCalories, COLOR, LIMIT_ITEMS } from 'ultis/functions'
 import '../dashboard.css'
 import { getColumnSearchProps } from './searchInput'
 
@@ -23,8 +24,8 @@ const loadingIcon = (
 )
 
 function RecipeList() {
-  const list = useSelector(state => state.Dashboard.recipeList)
-  const isLoading = useSelector(state => state.Dashboard.isLoading)
+  const { recipeList, isLoading, currentRecipeOffset, canLoadMoreRecipe } =
+    useSelector(state => state.Dashboard)
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchColumn] = useState('')
@@ -34,8 +35,19 @@ function RecipeList() {
   const history = useHistory()
 
   useEffect(() => {
-    dispatch(SearchRecipes.get({}))
+    dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
   }, [])
+
+  useEffect(() => {
+    if (!isLoading && canLoadMoreRecipe) {
+      dispatch(
+        SearchRecipes.get({
+          limit: LIMIT_ITEMS,
+          offset: currentRecipeOffset + LIMIT_ITEMS
+        })
+      )
+    }
+  }, [isLoading])
 
   const handleEdit = (value, record) => {
     history.push(`/edit/${record.id}`)
@@ -79,7 +91,13 @@ function RecipeList() {
       render: (value, record) => {
         return (
           <Space>
-            <Avatar shape="square" size={56} src={record?.avatar?.[0]} />
+            {record?.avatar &&
+            record?.avatar?.length > 0 &&
+            record?.avatar[0] != null ? (
+              <Avatar shape="square" size={56} src={record?.avatar?.[0]} />
+            ) : (
+              <Avatar shape="square" size={56} src={noData} />
+            )}
             <span>{value}</span>
           </Space>
         )
@@ -98,7 +116,7 @@ function RecipeList() {
       title: 'Author',
       dataIndex: 'author',
       key: 'author',
-      sorter: (a, b) => a.author.name.localeCompare(b.author.name),
+      sorter: (a, b) => a.author?.name.localeCompare(b.author?.name),
       render: (value, record) => {
         return (
           <Space>
@@ -107,7 +125,7 @@ function RecipeList() {
             ) : (
               <Avatar size={40} icon={<UserOutlined />} />
             )}
-            <span>{value.name}</span>
+            <span>{value?.name}</span>
           </Space>
         )
       }
@@ -191,13 +209,13 @@ function RecipeList() {
     }
   ]
 
-  if (isLoading) {
-    return (
-      <div className="chooseContainer">
-        <Spin indicator={loadingIcon} />
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="chooseContainer">
+  //       <Spin indicator={loadingIcon} />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="chooseContainer">
@@ -205,8 +223,9 @@ function RecipeList() {
       <Table
         style={{ marginTop: 48 }}
         columns={recipeColumns}
-        dataSource={list}
+        dataSource={recipeList}
         onChange={handleChange}
+        pagination={{ showSizeChanger: false }}
       />
     </div>
   )
