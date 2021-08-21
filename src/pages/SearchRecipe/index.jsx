@@ -193,7 +193,7 @@ export default function SearchPage() {
     return (
       <Col md={6} lg={4} sm={8}>
         <CategoryFilterItem
-          title={item[i18n.language]}
+          title={item[language]}
           isCheck={isCheck}
           onClick={onClick}
         />

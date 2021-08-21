@@ -1,6 +1,7 @@
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Col, Layout, Menu, Row, Spin } from 'antd'
 import Text from 'antd/lib/typography/Text'
+import { SearchRecipes, SearchUsers } from 'pages/SearchRecipe/redux/actions'
 import { SignOut } from 'pages/SignIn/redux/actions'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,7 +16,7 @@ import {
 } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { COLOR, ROLES } from 'ultis/functions'
+import { COLOR, LIMIT_ITEMS, ROLES } from 'ultis/functions'
 import CategoryList from './component/categoryList'
 import DashboardPage from './component/dashboardPage'
 import ProblemList from './component/problemList'
@@ -37,9 +38,15 @@ function Dashboard() {
   const dispatch = useDispatch()
   const user = useSelector(state => state.Auth.user)
   const { t } = useTranslation()
-  const isLoadingDashboard = useSelector(
-    state => state.Dashboard.isLoadingDashboard
-  )
+  const {
+    isLoadingDashboard,
+    isLoadingRecipe,
+    canLoadMoreRecipe,
+    currentRecipeOffset,
+    isLoadingUser,
+    canLoadMoreUser,
+    currentUserOffset
+  } = useSelector(state => state.Dashboard)
   const [collapsed, setCollapsed] = useState(false)
   const [selected, setSelect] = useState(PAGE.DASHBOARD)
 
@@ -49,13 +56,33 @@ function Dashboard() {
     }
   }, [user])
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (history.action === 'POP') {
-  //       dispatch(SignOut.get())
-  //     }
-  //   }
-  // }, [history])
+  useEffect(() => {
+    if (!isLoadingUser && canLoadMoreUser) {
+      dispatch(
+        SearchUsers.get({
+          keyword: '',
+          limit: LIMIT_ITEMS,
+          offset: currentUserOffset + LIMIT_ITEMS
+        })
+      )
+    }
+  }, [isLoadingUser])
+
+  useEffect(() => {
+    dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
+    dispatch(SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 }))
+  }, [])
+
+  useEffect(() => {
+    if (!isLoadingRecipe && canLoadMoreRecipe) {
+      dispatch(
+        SearchRecipes.get({
+          limit: LIMIT_ITEMS,
+          offset: currentRecipeOffset + LIMIT_ITEMS
+        })
+      )
+    }
+  }, [isLoadingRecipe])
 
   const currentPage = useSelector(state => state.Dashboard.currentPage)
 
@@ -196,7 +223,7 @@ function Dashboard() {
               key={PAGE.USER}
               icon={<FiUsers size={20} style={{ marginRight: 8 }} />}
             >
-              Người dùng
+              {t('dashboard.user')}
             </Menu.Item>
             <Menu.Item
               style={{
@@ -207,7 +234,7 @@ function Dashboard() {
               key={PAGE.PROBLEM}
               icon={<FiAlertCircle size={20} style={{ marginRight: 8 }} />}
             >
-              Vấn đề
+              {t('dashboard.problem')}
             </Menu.Item>
             <Menu.Item
               style={{
@@ -218,7 +245,7 @@ function Dashboard() {
               key={PAGE.REPORT}
               icon={<FiFlag size={20} style={{ marginRight: 8 }} />}
             >
-              Báo cáo
+              {t('dashboard.report')}
             </Menu.Item>
             <Menu.Item
               style={{ fontSize: 16, color: '#828282' }}

@@ -34,20 +34,20 @@ function RecipeList() {
   const { t } = useTranslation()
   const history = useHistory()
 
-  useEffect(() => {
-    dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(SearchRecipes.get({ limit: LIMIT_ITEMS, offset: 0 }))
+  // }, [])
 
-  useEffect(() => {
-    if (!isLoading && canLoadMoreRecipe) {
-      dispatch(
-        SearchRecipes.get({
-          limit: LIMIT_ITEMS,
-          offset: currentRecipeOffset + LIMIT_ITEMS
-        })
-      )
-    }
-  }, [isLoading])
+  // useEffect(() => {
+  //   if (!isLoading && canLoadMoreRecipe) {
+  //     dispatch(
+  //       SearchRecipes.get({
+  //         limit: LIMIT_ITEMS,
+  //         offset: currentRecipeOffset + LIMIT_ITEMS
+  //       })
+  //     )
+  //   }
+  // }, [isLoading])
 
   const handleEdit = (value, record) => {
     history.push(`/edit/${record.id}`)
@@ -84,7 +84,7 @@ function RecipeList() {
         setSearchColumn,
         refInput
       ),
-      title: 'Name',
+      title: t('dashboard.name'),
       dataIndex: 'title',
       key: 'title',
       sorter: (a, b) => a.title.localeCompare(b.title),
@@ -113,7 +113,7 @@ function RecipeList() {
       //   setSearchColumn,
       //   refInput
       // ),
-      title: 'Author',
+      title: t('dashboard.author'),
       dataIndex: 'author',
       key: 'author',
       sorter: (a, b) => a.author?.name.localeCompare(b.author?.name),
@@ -184,7 +184,7 @@ function RecipeList() {
     //   }
     // },
     {
-      title: 'Lượt thích',
+      title: t('dashboard.reactionCount'),
       dataIndex: 'countReaction',
       key: 'countReaction',
       sorter: (a, b) => a.countReaction - b.countReaction

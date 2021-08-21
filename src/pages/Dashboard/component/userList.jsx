@@ -7,12 +7,10 @@ import {
 import { Avatar, Modal, Space, Table, Tabs } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
-import { DeleteRecipe } from 'pages/Profile/redux/actions'
-import { SearchUsers } from 'pages/SearchRecipe/redux/actions'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
-import { COLOR, LIMIT_ITEMS } from 'ultis/functions'
+import { COLOR } from 'ultis/functions'
 import '../dashboard.css'
 import { BanUser, DeleteUser, UnBanUser } from '../redux/actions'
 import { getColumnSearchProps } from './searchInput'
@@ -68,27 +66,27 @@ function UserList() {
     }
   ]
 
-  useEffect(() => {
-    dispatch(SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 }))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(SearchUsers.get({ keyword: '', limit: LIMIT_ITEMS, offset: 0 }))
+  // }, [])
 
-  useEffect(() => {
-    if (!isLoading && canLoadMoreUser) {
-      dispatch(
-        SearchUsers.get({
-          keyword: '',
-          limit: LIMIT_ITEMS,
-          offset: currentUserOffset + LIMIT_ITEMS
-        })
-      )
-    }
-  }, [isLoading])
+  // useEffect(() => {
+  //   if (!isLoading && canLoadMoreUser) {
+  //     dispatch(
+  //       SearchUsers.get({
+  //         keyword: '',
+  //         limit: LIMIT_ITEMS,
+  //         offset: currentUserOffset + LIMIT_ITEMS
+  //       })
+  //     )
+  //   }
+  // }, [isLoading])
 
   const handleDelete = record => {
     Modal.confirm({
       title: t('common.confirm'),
       icon: <DeleteOutlined style={{ color: COLOR.primary1 }} />,
-      content: 'Xác nhận xóa người dùng này?',
+      content: t('dashboard.confirmToDeleteUser'),
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       centered: true,
@@ -106,8 +104,8 @@ function UserList() {
       icon: <MinusCircleOutlined style={{ color: COLOR.primary1 }} />,
       content:
         record?.status === 1
-          ? 'Xác nhận khóa tài khoản này?'
-          : 'Xác nhận mở khóa tài khoản này?',
+          ? t('dashboard.confirmToBlockUser')
+          : t('dashboard.confirmToUnblockUser'),
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       centered: true,
@@ -129,7 +127,7 @@ function UserList() {
 
   const recipeColumns = [
     {
-      title: 'Ảnh',
+      title: t('dashboard.avatar'),
       dataIndex: 'avatar_url',
       key: 'avatar_url',
       render: (value, record) => {
@@ -154,13 +152,13 @@ function UserList() {
         setSearchColumn,
         refInput
       ),
-      title: 'Tên',
+      title: t('dashboard.name'),
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => a.name.localeCompare(b.name)
     },
     {
-      title: 'Phân quyền',
+      title: t('dashboard.role'),
       dataIndex: 'role',
       key: 'role',
       filters: USER_TYPE,
@@ -168,13 +166,13 @@ function UserList() {
       onFilter: (value, record) => record.role === value
     },
     {
-      title: 'Số công thức',
+      title: t('dashboard.recipeCount'),
       dataIndex: 'recipes',
       key: 'recipes',
       sorter: (a, b) => a.recipes - b.recipes
     },
     {
-      title: 'Hạng',
+      title: t('dashboard.rank'),
       dataIndex: 'rank',
       key: 'rank',
       render: (value, record) => {
@@ -187,13 +185,13 @@ function UserList() {
       onFilter: (value, record) => record.rank === value
     },
     {
-      title: 'Điểm',
+      title: t('dashboard.point'),
       dataIndex: 'point',
       key: 'point',
       sorter: (a, b) => a.point - b.point
     },
     {
-      title: 'Trạng thái',
+      title: t('dashboard.status'),
       key: 'status',
       dataIndex: 'status',
       render: (value, record) => {
@@ -236,7 +234,7 @@ function UserList() {
 
   return (
     <div className="chooseContainer">
-      <Title level={3}>Người dùng</Title>
+      <Title level={3}>{t('dashboard.user')}</Title>
       <Table
         style={{ marginTop: 48 }}
         columns={recipeColumns}

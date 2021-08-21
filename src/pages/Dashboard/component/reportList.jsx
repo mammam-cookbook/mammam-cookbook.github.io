@@ -1,9 +1,5 @@
-import {
-  DeleteOutlined,
-  LoadingOutlined,
-  UserOutlined
-} from '@ant-design/icons'
-import { Avatar, Modal, Space, Spin, Table } from 'antd'
+import { LoadingOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Space, Spin, Table } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import noData from 'assets/images/no_direction_img.svg'
@@ -12,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { COLOR } from 'ultis/functions'
 import '../dashboard.css'
-import { DeleteProblem, GetAllProblem, GetAllReport } from '../redux/actions'
+import { GetAllProblem, GetAllReport } from '../redux/actions'
 import AddProblemModal from './addProblem'
 import { getColumnSearchProps } from './searchInput'
 
@@ -41,30 +37,8 @@ function ReportList() {
     dispatch(GetAllProblem.get())
   }, [])
 
-  console.log(problemList)
-
   const handleChange = (pagination, filters, sorter) => {
     setFilterInfo(filters)
-  }
-
-  const handleEdit = (value, record) => {
-    setEdit({ isShow: true, category: record })
-  }
-
-  const handleDelete = record => {
-    Modal.confirm({
-      title: t('common.confirm'),
-      icon: <DeleteOutlined style={{ color: COLOR.primary1 }} />,
-      content: 'Xác nhận xóa vấn đề này?',
-      okText: t('common.confirm'),
-      cancelText: t('common.cancel'),
-      centered: true,
-      okButtonProps: { style: { backgroundColor: COLOR.primary1 } },
-      onOk: () => {
-        dispatch(DeleteProblem.get(record.id))
-        Modal.destroyAll()
-      }
-    })
   }
 
   const categoryColumns = [
@@ -78,7 +52,7 @@ function ReportList() {
       //   setSearchColumn,
       //   refInput
       // ),
-      title: 'Công thức',
+      title: t('dashboard.recipe'),
       dataIndex: 'recipe',
       key: 'recipe',
       sorter: (a, b) => a.recipe.title.localeCompare(b.recipe.title),
@@ -108,7 +82,7 @@ function ReportList() {
       //   setSearchColumn,
       //   refInput
       // ),
-      title: 'Người báo cáo',
+      title: t('dashboard.reporter'),
       dataIndex: 'author',
       key: 'author',
       sorter: (a, b) => a.author.name.localeCompare(b.author.name),
@@ -126,7 +100,7 @@ function ReportList() {
       }
     },
     {
-      title: 'Loại vấn đề',
+      title: t('dashboard.problemType'),
       dataIndex: 'reportProblem',
       key: 'reportProblem',
       render: (value, record) => {
@@ -154,7 +128,7 @@ function ReportList() {
         setSearchColumn,
         refInput
       ),
-      title: 'Mô tả',
+      title: t('dashboard.description'),
       dataIndex: 'note',
       key: 'note',
       sorter: (a, b) => a.note.localeCompare(b.note)

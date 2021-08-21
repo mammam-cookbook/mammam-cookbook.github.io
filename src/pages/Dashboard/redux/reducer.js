@@ -34,7 +34,9 @@ const initialState = {
   currentUserOffset: 0,
   canLoadMoreUser: true,
   currentRecipeOffset: 0,
-  canLoadMoreRecipe: true
+  canLoadMoreRecipe: true,
+  isLoadingUser: false,
+  isLoadingRecipe: false
 }
 
 export function dashboardReducer(state = initialState, action) {
@@ -60,12 +62,12 @@ export function dashboardReducer(state = initialState, action) {
     case SearchRecipes.type:
       return {
         ...state,
-        isLoading: true
+        isLoadingRecipe: true
       }
     case SearchRecipesSuccess.type:
       return {
         ...state,
-        isLoading: false,
+        isLoadingRecipe: false,
         recipeList:
           action.payload?.currentOffset === 0
             ? action.payload.rows
@@ -76,17 +78,17 @@ export function dashboardReducer(state = initialState, action) {
     case SearchRecipesFailed.type:
       return {
         ...state,
-        isLoading: false
+        isLoadingRecipe: false
       }
     case SearchUsers.type:
       return {
         ...state,
-        isLoading: true
+        isLoadingUser: true
       }
     case SearchUsersSuccess.type:
       return {
         ...state,
-        isLoading: false,
+        isLoadingUser: false,
         userList:
           action.payload?.currentOffset === 0
             ? action.payload.rows
@@ -97,7 +99,7 @@ export function dashboardReducer(state = initialState, action) {
     case SearchUsersFailed.type:
       return {
         ...state,
-        isLoading: false
+        isLoadingUser: false
       }
     case SetCurrentPage.type:
       return {

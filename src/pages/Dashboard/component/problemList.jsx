@@ -45,7 +45,7 @@ function ProblemList() {
     Modal.confirm({
       title: t('common.confirm'),
       icon: <DeleteOutlined style={{ color: COLOR.primary1 }} />,
-      content: 'Xác nhận xóa vấn đề này?',
+      content: t('common.confirmToDeleteProblem'),
       okText: t('common.confirm'),
       cancelText: t('common.cancel'),
       centered: true,
@@ -68,7 +68,7 @@ function ProblemList() {
         setSearchColumn,
         refInput
       ),
-      title: 'Mã vấn đề',
+      title: t('dashboard.problemCode'),
       dataIndex: 'key',
       key: 'key',
       sorter: (a, b) => a.key.localeCompare(b.key)
@@ -83,7 +83,7 @@ function ProblemList() {
         setSearchColumn,
         refInput
       ),
-      title: 'Mô tả',
+      title: t('dashboard.description'),
       dataIndex: 'description',
       key: 'description',
       sorter: (a, b) => a.description.localeCompare(b.description)
@@ -94,10 +94,10 @@ function ProblemList() {
       render: (value, record) => {
         return (
           <Space>
-            <EditOutlined
+            {/* <EditOutlined
               style={{ fontSize: 20 }}
               onClick={() => handleEdit(value, record)}
-            />
+            /> */}
             <DeleteOutlined
               style={{ fontSize: 20, color: '#FF0000' }}
               onClick={() => handleDelete(record)}
@@ -119,7 +119,7 @@ function ProblemList() {
   return (
     <>
       <div className="chooseContainer">
-        <Title level={3}>Vấn đề</Title>
+        <Title level={3}>{t('dashboard.problem')}</Title>
         <Row style={{ marginBottom: 32 }} justify={'space-between'}>
           <Col flex={5} />
           <Col flex={1}>
@@ -131,7 +131,7 @@ function ProblemList() {
                 size={'large'}
                 onClick={() => onAddNewProblem()}
               >
-                Thêm loại vấn đề
+                {t('dashboard.addNewProblem')}
               </Button>
             </Row>
           </Col>

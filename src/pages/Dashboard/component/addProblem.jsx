@@ -48,7 +48,11 @@ function AddProblemModal(props) {
 
   return (
     <Modal
-      title={props.problem ? 'Cập nhật vấn đề' : 'Thêm vấn đề'}
+      title={
+        props.problem
+          ? t('dashboard.updateProblem')
+          : t('dashboard.addNewProblem')
+      }
       visible={props.visible || false}
       onCancel={onCancel}
       centered
@@ -77,7 +81,7 @@ function AddProblemModal(props) {
           return (
             <Form>
               <Row align="middle" style={{ marginBottom: 16 }}>
-                <Col span={8}>Mã vấn đề</Col>
+                <Col span={8}>{t('dashboard.problemCode')}</Col>
                 <Col span={16}>
                   <CInput
                     value={values.key}
@@ -90,7 +94,7 @@ function AddProblemModal(props) {
                 </Col>
               </Row>
               <Row align="middle" style={{ marginBottom: 16 }}>
-                <Col span={8}>Mô tả</Col>
+                <Col span={8}>{t('dashboard.description')}</Col>
                 <Col span={16}>
                   <CInput
                     value={values.description}
