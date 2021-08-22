@@ -137,15 +137,17 @@ export default function SearchPage() {
     //   values['categories'] = categoriesFilter
     // }
     if (noIngredient && noIngredient?.length > 0) {
-      values['excludeIngredients'] = noIngredient
+      values['excludeIngredients'] = noIngredient.map(item =>
+        item?.toLocaleLowerCase()
+      )
     }
     if (ingredient && ingredient?.length > 0) {
-      values['ingredients'] = ingredient
+      values['ingredients'] = ingredient.map(item => item?.toLocaleLowerCase())
     }
     // else if (ingredientsFilter && ingredientsFilter?.length > 0) {
     //   values['ingredients'] = ingredientsFilter
     // }
-    if (cookingTime) {
+    if (cookingTime && cookingTime > 0) {
       values['toCookingTime'] = cookingTime
       values['fromCookingTime'] = 0
     }
@@ -163,7 +165,13 @@ export default function SearchPage() {
     temp.splice(index, 1)
     let temp2 = categoriesFilterItem
     temp2.splice(index, 1)
-    onFilter(temp, ingredientsFilter, noIngredientsFilter)
+    onFilter(
+      temp,
+      ingredientsFilter,
+      noIngredientsFilter,
+      timeFilter,
+      sortOrder
+    )
     setCategoriesFilter(temp)
     setCategoriesFilterItem(temp2)
   }
@@ -179,7 +187,13 @@ export default function SearchPage() {
         temp.splice(index, 1)
         let temp2 = categoriesFilterItem
         temp2.splice(index, 1)
-        onFilter(temp, ingredientsFilter, noIngredientsFilter)
+        onFilter(
+          temp,
+          ingredientsFilter,
+          noIngredientsFilter,
+          timeFilter,
+          sortOrder
+        )
         setCategoriesFilter(temp)
         setCategoriesFilterItem(temp2)
       } else {
@@ -187,7 +201,13 @@ export default function SearchPage() {
         temp.push(item.id)
         let temp2 = categoriesFilterItem
         temp2.push(item)
-        onFilter(temp, ingredientsFilter, noIngredientsFilter)
+        onFilter(
+          temp,
+          ingredientsFilter,
+          noIngredientsFilter,
+          timeFilter,
+          sortOrder
+        )
         setCategoriesFilter(temp)
         setCategoriesFilterItem(temp2)
       }
@@ -217,7 +237,13 @@ export default function SearchPage() {
     if (event?.target?.defaultValue?.length > 0 && event.key === 'Enter') {
       let temp = ingredientsFilter
       temp.push(event?.target?.defaultValue)
-      onFilter(categoriesFilter, temp, noIngredientsFilter)
+      onFilter(
+        categoriesFilter,
+        temp,
+        noIngredientsFilter,
+        timeFilter,
+        sortOrder
+      )
       setIngredientsFilter(temp)
       setIngredientsText('')
     }
@@ -227,7 +253,7 @@ export default function SearchPage() {
     if (event?.target?.defaultValue?.length > 0 && event.key === 'Enter') {
       let temp = noIngredientsFilter
       temp.push(event?.target?.defaultValue)
-      onFilter(categoriesFilter, ingredientsFilter, temp)
+      onFilter(categoriesFilter, ingredientsFilter, temp, timeFilter, sortOrder)
       setNoIngredientsFilter(temp)
       setNoIngredientsText('')
     }
@@ -236,14 +262,14 @@ export default function SearchPage() {
   const onRemoveIngreFilter = index => {
     let temp = ingredientsFilter
     temp.splice(index, 1)
-    onFilter(categoriesFilter, temp, noIngredientsFilter)
+    onFilter(categoriesFilter, temp, noIngredientsFilter, timeFilter, sortOrder)
     setIngredientsFilter(temp)
   }
 
   const onRemoveNoIngreFilter = index => {
     let temp = noIngredientsFilter
     temp.splice(index, 1)
-    onFilter(categoriesFilter, ingredientsFilter, temp)
+    onFilter(categoriesFilter, ingredientsFilter, temp, timeFilter, sortOrder)
     setNoIngredientsFilter(temp)
   }
 
@@ -389,7 +415,16 @@ export default function SearchPage() {
                       : `<${timeFilter / 60} ${t('search.hour')}`
                   }
                   index={0}
-                  onClick={index => setTimeFilter(-1)}
+                  onClick={index => {
+                    onFilter(
+                      categoriesFilter,
+                      ingredientsFilter,
+                      noIngredientsFilter,
+                      null,
+                      sortOrder
+                    )
+                    setTimeFilter(-1)
+                  }}
                 />
               )}
             </div>
@@ -649,7 +684,7 @@ export default function SearchPage() {
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <Pagination
               style={{ marginTop: 48, alignSelf: 'center' }}
-              defaultCurrent={currentPage}
+              current={currentPage}
               defaultPageSize={LIMIT_ITEMS}
               total={totalItems}
               onChange={(page, pageSize) =>
