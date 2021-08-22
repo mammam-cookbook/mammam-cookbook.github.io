@@ -30,11 +30,8 @@
   align-items: center;
   padding-top: calc(40px + 1vmin);
   margin-top: calc(28px + 1vmin);
-  box-shadow:
-  0 2.9px 3.2px rgba(0, 0, 0, 0.028),
-  0 9.8px 10.7px rgba(0, 0, 0, 0.042),
-  0 44px 48px rgba(0, 0, 0, 0.07)
-;
+  box-shadow: 0 2.9px 3.2px rgba(0, 0, 0, 0.028),
+    0 9.8px 10.7px rgba(0, 0, 0, 0.042), 0 44px 48px rgba(0, 0, 0, 0.07);
 }
 
 #adminName {
@@ -195,23 +192,6 @@
   min-width: calc(150px + 0.5vmin);
   margin-bottom: 24px;
 }
-
-#boxStatistic {
-  border: 1px solid #2e4170;
-  box-sizing: border-box;
-  border-radius: 8px;
-  display: flex;
-  flex: 1;
-  width: calc(990px + 0.5vmin);
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
 .rowAdd {
   display: flex;
   flex-direction: row;

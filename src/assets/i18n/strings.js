@@ -244,7 +244,11 @@ export const en = {
     problemType: 'Problem type',
     updateProblem: 'Update problem',
     hi: 'Hi',
-    reactionCount: 'Reactions'
+    reactionCount: 'Reactions',
+    day: 'Day',
+    week: 'Week',
+    month: 'Month',
+    year: 'Year'
   },
   search: {
     user: 'Users',
@@ -587,7 +591,11 @@ export const vi = {
     problemType: 'Loại vấn đề',
     updateProblem: 'Cập nhật vấn đề',
     hi: 'Xin chào',
-    reactionCount: 'Lượt thích'
+    reactionCount: 'Lượt thích',
+    day: 'Ngày',
+    week: 'Tuần',
+    month: 'Tháng',
+    year: 'Năm'
   },
   search: {
     user: 'Mọi người',
