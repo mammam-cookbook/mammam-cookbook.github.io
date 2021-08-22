@@ -157,14 +157,14 @@ function UserList() {
       key: 'name',
       sorter: (a, b) => a.name.localeCompare(b.name)
     },
-    {
-      title: t('dashboard.role'),
-      dataIndex: 'role',
-      key: 'role',
-      filters: USER_TYPE,
-      filteredValue: filteredInfo ? filteredInfo.role : null,
-      onFilter: (value, record) => record.role === value
-    },
+    // {
+    //   title: t('dashboard.role'),
+    //   dataIndex: 'role',
+    //   key: 'role',
+    //   filters: USER_TYPE,
+    //   filteredValue: filteredInfo ? filteredInfo.role : null,
+    //   onFilter: (value, record) => record.role === value
+    // },
     {
       title: t('dashboard.recipeCount'),
       dataIndex: 'recipes',
@@ -175,14 +175,15 @@ function UserList() {
       title: t('dashboard.rank'),
       dataIndex: 'rank',
       key: 'rank',
+      sorter: (a, b) => a.rank.localeCompare(b.rank),
       render: (value, record) => {
         return (
           <Text>{record?.role === 'user' ? t(`profile.${value}`) : ''}</Text>
         )
-      },
-      filters: RANK_TYPE,
-      filteredValue: filteredInfo ? filteredInfo.rank : null,
-      onFilter: (value, record) => record.rank === value
+      }
+      // filters: RANK_TYPE,
+      // filteredValue: filteredInfo ? filteredInfo.rank : null,
+      // onFilter: (value, record) => record.rank === value
     },
     {
       title: t('dashboard.point'),

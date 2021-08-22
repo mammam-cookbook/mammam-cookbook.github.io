@@ -45,10 +45,12 @@ function Dashboard() {
     currentRecipeOffset,
     isLoadingUser,
     canLoadMoreUser,
-    currentUserOffset
+    currentUserOffset,
+    currentPage
   } = useSelector(state => state.Dashboard)
   const [collapsed, setCollapsed] = useState(false)
-  const [selected, setSelect] = useState(PAGE.DASHBOARD)
+
+  const [selected, setSelect] = useState(currentPage)
 
   useEffect(() => {
     if (!user || user?.role === ROLES.USER) {
@@ -83,8 +85,6 @@ function Dashboard() {
       )
     }
   }, [isLoadingRecipe])
-
-  const currentPage = useSelector(state => state.Dashboard.currentPage)
 
   const onMenuSelect = e => {
     if (e.key !== 'logout') {
@@ -184,8 +184,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.DASHBOARD ? 'white' : '#828282',
-                fontWeight: selected === PAGE.DASHBOARD ? 'bold' : 'normal'
+                color: currentPage === PAGE.DASHBOARD ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.DASHBOARD ? 'bold' : 'normal'
               }}
               key={PAGE.DASHBOARD}
               icon={<FiGrid size={20} style={{ marginRight: 8 }} />}
@@ -195,8 +195,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.CATEGORY ? 'white' : '#828282',
-                fontWeight: selected === PAGE.CATEGORY ? 'bold' : 'normal'
+                color: currentPage === PAGE.CATEGORY ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.CATEGORY ? 'bold' : 'normal'
               }}
               key={PAGE.CATEGORY}
               icon={<FiList size={20} style={{ marginRight: 8 }} />}
@@ -206,8 +206,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.RECIPE ? 'white' : '#828282',
-                fontWeight: selected === PAGE.RECIPE ? 'bold' : 'normal'
+                color: currentPage === PAGE.RECIPE ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.RECIPE ? 'bold' : 'normal'
               }}
               key={PAGE.RECIPE}
               icon={<FiEdit size={20} style={{ marginRight: 8 }} />}
@@ -217,8 +217,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.USER ? 'white' : '#828282',
-                fontWeight: selected === PAGE.USER ? 'bold' : 'normal'
+                color: currentPage === PAGE.USER ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.USER ? 'bold' : 'normal'
               }}
               key={PAGE.USER}
               icon={<FiUsers size={20} style={{ marginRight: 8 }} />}
@@ -228,8 +228,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.PROBLEM ? 'white' : '#828282',
-                fontWeight: selected === PAGE.PROBLEM ? 'bold' : 'normal'
+                color: currentPage === PAGE.PROBLEM ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.PROBLEM ? 'bold' : 'normal'
               }}
               key={PAGE.PROBLEM}
               icon={<FiAlertCircle size={20} style={{ marginRight: 8 }} />}
@@ -239,8 +239,8 @@ function Dashboard() {
             <Menu.Item
               style={{
                 fontSize: 16,
-                color: selected === PAGE.REPORT ? 'white' : '#828282',
-                fontWeight: selected === PAGE.REPORT ? 'bold' : 'normal'
+                color: currentPage === PAGE.REPORT ? 'white' : '#828282',
+                fontWeight: currentPage === PAGE.REPORT ? 'bold' : 'normal'
               }}
               key={PAGE.REPORT}
               icon={<FiFlag size={20} style={{ marginRight: 8 }} />}

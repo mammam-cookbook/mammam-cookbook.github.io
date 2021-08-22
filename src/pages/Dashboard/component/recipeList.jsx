@@ -104,18 +104,18 @@ function RecipeList() {
       }
     },
     {
-      // ...getColumnSearchProps(
-      //   'author.name',
-      //   'Enter name to find',
-      //   searchText,
-      //   setSearchText,
-      //   searchedColumn,
-      //   setSearchColumn,
-      //   refInput
-      // ),
+      ...getColumnSearchProps(
+        'author.name',
+        'Enter name to find',
+        searchText,
+        setSearchText,
+        searchedColumn,
+        setSearchColumn,
+        refInput
+      ),
       title: t('dashboard.author'),
-      dataIndex: 'author',
-      key: 'author',
+      dataIndex: 'author.name',
+      key: 'author.name',
       sorter: (a, b) => a.author?.name.localeCompare(b.author?.name),
       render: (value, record) => {
         return (
@@ -125,7 +125,7 @@ function RecipeList() {
             ) : (
               <Avatar size={40} icon={<UserOutlined />} />
             )}
-            <span>{value?.name}</span>
+            <span>{record?.author?.name}</span>
           </Space>
         )
       }
@@ -157,32 +157,6 @@ function RecipeList() {
         )
       }
     },
-    // {
-    //   title: 'ingredients',
-    //   dataIndex: 'ingredients',
-    //   key: 'ingredients',
-    //   sorter: (a, b) => a.ingredients?.length - b.ingredients?.length,
-    //   render: (value, record) => {
-    //     return (
-    //       <Space>
-    //         <span>{value.length}</span>
-    //       </Space>
-    //     )
-    //   }
-    // },
-    // {
-    //   title: 'steps',
-    //   dataIndex: 'steps',
-    //   key: 'steps',
-    //   sorter: (a, b) => a.steps?.length - b.steps?.length,
-    //   render: (value, record) => {
-    //     return (
-    //       <Space>
-    //         <span>{value.length}</span>
-    //       </Space>
-    //     )
-    //   }
-    // },
     {
       title: t('dashboard.reactionCount'),
       dataIndex: 'countReaction',

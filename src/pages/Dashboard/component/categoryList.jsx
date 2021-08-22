@@ -124,7 +124,8 @@ function CategoryList() {
       title: t('dashboard.parentCategoryVi'),
       dataIndex: 'parentVi',
       key: 'parentVi',
-      sorter: (a, b) => a.parentVi.localeCompare(b.parentVi)
+      sorter: (a, b) =>
+        a.parentVi && b.parentVi ? a.parentVi.localeCompare(b.parentVi) : -1
     },
     {
       ...getColumnSearchProps(
@@ -139,7 +140,8 @@ function CategoryList() {
       title: t('dashboard.parentCategoryEn'),
       dataIndex: 'parentEn',
       key: 'parentEn',
-      sorter: (a, b) => a.parentEn.localeCompare(b.parentEn)
+      sorter: (a, b) =>
+        a.parentEn && b.parentEn ? a.parentEn.localeCompare(b.parentEn) : -1
     },
     {
       title: t('common.action'),

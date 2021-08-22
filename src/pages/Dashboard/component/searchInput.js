@@ -75,7 +75,12 @@ export const getColumnSearchProps = (
       />
     ),
     onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+      getValueFromPath(dataIndex, record) != null
+        ? getValueFromPath(dataIndex, record)
+            ?.toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        : false,
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
         setTimeout(() => refInput.current.select())
@@ -87,7 +92,7 @@ export const getColumnSearchProps = (
           highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text.toString()}
+          textToHighlight={text?.toString()}
         />
       ) : (
         text
@@ -110,4 +115,10 @@ const handleSearch = (
 const handleReset = (clearFilters, setSearchText) => {
   clearFilters()
   setSearchText('')
+}
+
+export const getValueFromPath = (path, obj = {}) => {
+  return path.split('.').reduce((value, entry) => {
+    return value ? value[entry] : null
+  }, obj)
 }

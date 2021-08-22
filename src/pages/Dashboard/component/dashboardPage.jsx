@@ -237,22 +237,28 @@ function DashboardPage() {
         </Title>
         <Row gutter={32} style={{ paddingTop: 32 }}>
           <Col span={6}>
-            <Card onClick={() => setSelectList(0)}>
+            <Card
+              onClick={() => setSelectList(0)}
+              style={selectList === 0 ? { borderColor: COLOR.primary1 } : {}}
+            >
               <Statistic
                 title={t('dashboard.totalUser')}
                 value={userList?.length ?? 0}
-                valueStyle={{ color: '#cf1322' }}
-                suffix={<ArrowDownOutlined />}
+                // valueStyle={{ color: '#cf1322' }}
+                // suffix={<ArrowDownOutlined />}
               />
             </Card>
           </Col>
           <Col span={6}>
-            <Card onClick={() => setSelectList(1)}>
+            <Card
+              onClick={() => setSelectList(1)}
+              style={selectList === 1 ? { borderColor: COLOR.primary1 } : {}}
+            >
               <Statistic
                 title={t('dashboard.totalRecipe')}
                 value={recipeList?.length ?? 0}
-                valueStyle={{ color: '#3f8600' }}
-                suffix={<ArrowUpOutlined />}
+                // valueStyle={{ color: '#3f8600' }}
+                // suffix={<ArrowUpOutlined />}
               />
             </Card>
           </Col>
@@ -292,7 +298,7 @@ function DashboardPage() {
                   <XAxis height={50} dataKey="name">
                     <Label
                       value={statisticData.xtype}
-                      style={{ fontFamily: 'Montserrat' }}
+                      style={{ fontFamily: 'Montserrat', fontSize: 12 }}
                       offset={0}
                       position="insideBottom"
                     />
@@ -305,7 +311,8 @@ function DashboardPage() {
                           : t('home.recipes'),
                       angle: -90,
                       position: 'insideLeft',
-                      fontFamily: 'Montserrat'
+                      fontFamily: 'Montserrat',
+                      fontSize: 12
                     }}
                     width={110}
                     tickFormatter={number => {
