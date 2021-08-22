@@ -171,7 +171,7 @@ function AppHeader(props) {
           >
             {t('home.browse')}
           </Button>
-          <Button
+          {/* <Button
             type="link"
             onClick={() =>
               GlobalModal.alertMessage(null, t('common.underDevelopment'))
@@ -179,7 +179,7 @@ function AppHeader(props) {
             style={{ marginRight: 16 }}
           >
             {t('home.recipes').toLocaleUpperCase()}
-          </Button>
+          </Button> */}
           {user && (
             <Button
               type="link"
@@ -384,7 +384,7 @@ function AppHeader(props) {
               >
                 {t('home.browse')}
               </Button>
-              <Button
+              {/* <Button
                 type="link"
                 onClick={() =>
                   GlobalModal.alertMessage(null, t('common.underDevelopment'))
@@ -392,7 +392,7 @@ function AppHeader(props) {
                 style={{ marginTop: 12, padding: 0 }}
               >
                 {t('home.recipes').toLocaleUpperCase()}
-              </Button>
+              </Button> */}
               {user && (
                 <Button
                   type="link"
