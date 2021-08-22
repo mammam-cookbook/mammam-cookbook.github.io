@@ -147,7 +147,9 @@ export default function SearchPage() {
     // }
     if (cookingTime) {
       values['toCookingTime'] = cookingTime
+      values['fromCookingTime'] = 0
     }
+
     if (sort) {
       values[sort] = 'DESC'
     } else if (sortOrder) {
